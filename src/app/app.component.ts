@@ -35,12 +35,12 @@ import { LanguageService } from './app-language.service';
       </div>
       <div class="list my-4">
         <span
-          *ngFor="let ingredient of ingredientList; last as isLast"
+          *ngFor="let ingredient of ingredientList; last as iLast"
           role="button"
           class="badge cursor-pointer"
           [class.text-bg-warning]="ingredient.selected"
           [class.text-bg-light]="!ingredient.selected"
-          [class.me-1]="!isLast"
+          [class.me-1]="!iLast"
           (click)="selectIngredient(ingredient)"
         >
           {{
@@ -52,11 +52,17 @@ import { LanguageService } from './app-language.service';
       </div>
       <button class="btn btn-primary" (click)="submit()">Odeslat</button>
       <div class="row mt-4" *ngIf="recipeList.length">
-        <div *ngFor="let recipe of recipeList; last as isLast" class="card" [class.mb-3]="!isLast">
+        <div *ngFor="let recipe of recipeList; last as rLast" class="card" [class.mb-3]="!rLast">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.name }}</h5>
             <p class="card-text">
-              <span *ngFor="let child of recipe.ingredientList">{{ child.name }},</span>
+              <span
+                *ngFor="let child of recipe.ingredientList; last as cLast"
+                class="badge text-bg-light"
+                [class.me-1]="!cLast"
+              >
+                {{ child.locale[currentLanguage] ? child.locale[currentLanguage] : child.name }}
+              </span>
             </p>
             <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>
           </div>
