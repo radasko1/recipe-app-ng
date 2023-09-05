@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, Subject, takeUntil } from 'rxjs';
 
 import { AppService } from './app.service';
-import { map, Subject, takeUntil } from 'rxjs';
 import { Recipe } from './models/recipe.interface';
 import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
@@ -11,6 +11,28 @@ import { LanguageService } from './app-language.service';
   selector: 'app-root',
   template: `
     <div class="container">
+      <div class="row mt-3">
+        <div class="col-3">
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              [class.active]="currentLanguage === 'en'"
+              (click)="changeLanguage('en')"
+            >
+              English
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              [class.active]="currentLanguage === 'cs'"
+              (click)="changeLanguage('cs')"
+            >
+              Czech
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="list my-4">
         <span
           *ngFor="let ingredient of ingredientList; last as isLast"
@@ -71,6 +93,13 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((list) => {
         this.ingredientList = list;
       });
+
+    // Listen to language change
+    this.langService.languageChange$.pipe(takeUntil(this.subscription)).subscribe({
+      next: (lang) => {
+        this.currentLanguage = lang;
+      },
+    });
   }
 
   ngOnDestroy() {
@@ -99,5 +128,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this.recipeList = response;
       },
     });
+  }
+
+  /**
+   * Change current language
+   * @param lang
+   */
+  protected changeLanguage(lang: Language) {
+    this.langService.language = lang;
   }
 }
