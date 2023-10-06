@@ -6,6 +6,7 @@ import { Recipe } from './models/recipe.interface';
 import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
 import { LanguageService } from './app-language.service';
+import locale from './app.locale.json';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ import { LanguageService } from './app-language.service';
               [class.active]="currentLanguage === 'en'"
               (click)="changeLanguage('en')"
             >
-              English
+              {{ locale[currentLanguage].English }}
             </button>
             <button
               type="button"
@@ -28,7 +29,7 @@ import { LanguageService } from './app-language.service';
               [class.active]="currentLanguage === 'cs'"
               (click)="changeLanguage('cs')"
             >
-              Czech
+              {{ locale[currentLanguage].Czech }}
             </button>
           </div>
         </div>
@@ -50,7 +51,9 @@ import { LanguageService } from './app-language.service';
           }}
         </span>
       </div>
-      <button class="btn btn-primary" (click)="submit()">Odeslat</button>
+      <button class="btn btn-primary" (click)="submit()">
+        {{ locale[currentLanguage].FindRecipes }}
+      </button>
       <div class="row mt-4" *ngIf="recipeList.length">
         <div *ngFor="let recipe of recipeList; last as rLast" class="card" [class.mb-3]="!rLast">
           <div class="card-body">
@@ -158,4 +161,6 @@ export class AppComponent implements OnInit, OnDestroy {
   protected changeLanguage(lang: Language) {
     this.langService.language = lang;
   }
+
+  protected readonly locale = locale;
 }
