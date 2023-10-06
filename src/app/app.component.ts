@@ -57,11 +57,26 @@ import { LanguageService } from './app-language.service';
             <h5 class="card-title">{{ recipe.name }}</h5>
             <p class="card-text">
               <span
-                *ngFor="let child of recipe.ingredientList; last as cLast"
-                class="badge text-bg-light"
-                [class.me-1]="!cLast"
+                *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"
+                class="badge text-bg-success"
+                [class.me-1]="!siLast"
               >
-                {{ child.locale[currentLanguage] ? child.locale[currentLanguage] : child.name }}
+                {{
+                  selectIngredient.locale[currentLanguage]
+                    ? selectIngredient.locale[currentLanguage]
+                    : selectIngredient.name
+                }}
+              </span>
+              <span
+                *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"
+                class="badge text-bg-light"
+                [class.me-1]="!riLast"
+              >
+                {{
+                  requestIngredient.locale[currentLanguage]
+                    ? requestIngredient.locale[currentLanguage]
+                    : requestIngredient.name
+                }}
               </span>
             </p>
             <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>

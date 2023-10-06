@@ -6,5 +6,6 @@ export interface Recipe {
   link: string;
   calories: number;
   locale: Locale;
-  ingredientList: Ingredient[];
+  requiredIngredients: Ingredient[];
+  selectedIngredients: Ingredient[];
 }
