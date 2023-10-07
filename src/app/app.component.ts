@@ -7,6 +7,7 @@ import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
 import { LanguageService } from './app-language.service';
 import locale from './app.locale.json';
+import { IngredientCategory } from './models/ingredient-category.interface';
 
 @Component({
   selector: 'app-root',
@@ -35,21 +36,24 @@ import locale from './app.locale.json';
         </div>
       </div>
       <div class="list my-4">
-        <span
-          *ngFor="let ingredient of ingredientList; last as iLast"
-          role="button"
-          class="badge cursor-pointer"
-          [class.text-bg-warning]="ingredient.selected"
-          [class.text-bg-light]="!ingredient.selected"
-          [class.me-1]="!iLast"
-          (click)="selectIngredient(ingredient)"
-        >
-          {{
-            ingredient.locale[currentLanguage]
-              ? ingredient.locale[currentLanguage]
-              : ingredient.name
-          }}
-        </span>
+        <div *ngFor="let cat of ingredientCategoryList; last as icLast" [class.mb-3]="!icLast">
+          <h2>{{ cat.locale[currentLanguage] }}</h2>
+          <span
+            *ngFor="let ingredient of cat.ingredients; last as iLast"
+            role="button"
+            class="badge cursor-pointer"
+            [class.text-bg-warning]="ingredient.selected"
+            [class.text-bg-light]="!ingredient.selected"
+            [class.me-1]="!iLast"
+            (click)="selectIngredient(ingredient)"
+          >
+            {{
+              ingredient.locale[currentLanguage]
+                ? ingredient.locale[currentLanguage]
+                : ingredient.name
+            }}
+          </span>
+        </div>
       </div>
       <button class="btn btn-primary" (click)="submit()">
         {{ locale[currentLanguage].FindRecipes }}
@@ -91,7 +95,7 @@ import locale from './app.locale.json';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
-  protected ingredientList: FormIngredient[] = [];
+  protected ingredientCategoryList: IngredientCategory[] = [];
   protected recipeList: Recipe[] = [];
   protected currentLanguage: Language = this.langService.language;
 
@@ -102,20 +106,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.appService
-      .getIngredients()
+      .getCategories()
       .pipe(
-        map((ingredientList) => {
-          return ingredientList.map((ingr) => {
+        map((categoryList) => {
+          return categoryList.map((cat) => {
             // change type of Ingredient item
-            const item = ingr as FormIngredient;
-            item.selected = false;
-            return item;
+            cat.ingredients = cat.ingredientCategoryRels.map((ing) => {
+              const ingredient = ing as FormIngredient;
+              ingredient.selected = false;
+              return ingredient;
+            });
+            return cat;
           });
         }),
         takeUntil(this.subscription)
       )
       .subscribe((list) => {
-        this.ingredientList = list;
+        this.ingredientCategoryList = list;
       });
 
     // Listen to language change
@@ -143,9 +150,16 @@ export class AppComponent implements OnInit, OnDestroy {
    * Submit selected ingredients
    */
   protected submit() {
-    const ingredientNames = this.ingredientList
-      .filter((ingredient) => ingredient.selected)
-      .map((ing) => ing.name);
+    const categoryList = this.ingredientCategoryList;
+    const ingredientNames: string[] = [];
+
+    for (const category of categoryList) {
+      for (const ingredient of category.ingredients) {
+        if (ingredient.selected) {
+          ingredientNames.push(ingredient.name);
+        }
+      }
+    }
 
     this.appService.findRecipes(ingredientNames).subscribe({
       next: (response) => {

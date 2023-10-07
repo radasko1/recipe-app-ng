@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Ingredient } from './models/ingredient.interface';
 import { Recipe } from './models/recipe.interface';
+import { IngredientCategory } from './models/ingredient-category.interface';
 
 @Injectable()
 export class AppService {
@@ -17,6 +18,13 @@ export class AppService {
    */
   getIngredients(): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(`${this.url}/ingredient`);
+  }
+
+  /**
+   * Get list of all categories with ingredients
+   */
+  getCategories(): Observable<IngredientCategory[]> {
+    return this.http.get<IngredientCategory[]>(`${this.url}/ingredient/categories`);
   }
 
   /**
