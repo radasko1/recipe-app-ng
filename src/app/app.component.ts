@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Subject, takeUntil } from 'rxjs';
 
-import { AppService } from './app.service';
+import { AppService } from './services/app.service';
 import { Recipe } from './models/recipe.interface';
 import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
-import { LanguageService } from './app-language.service';
+import { LanguageService } from './services/app-language.service';
 import locale from './app.locale.json';
 import { IngredientCategory } from './models/ingredient-category.interface';
 
@@ -35,8 +35,12 @@ import { IngredientCategory } from './models/ingredient-category.interface';
           </div>
         </div>
       </div>
-      <div class="list my-4">
-        <div *ngFor="let cat of ingredientCategoryList; last as icLast" [class.mb-3]="!icLast">
+      <div class="row list my-4">
+        <div
+          *ngFor="let cat of ingredientCategoryList; last as icLast"
+          [class.mb-3]="!icLast"
+          class="col-4"
+        >
           <h2>{{ cat.locale[currentLanguage] }}</h2>
           <span
             *ngFor="let ingredient of cat.ingredients; last as iLast"
@@ -59,34 +63,43 @@ import { IngredientCategory } from './models/ingredient-category.interface';
         {{ locale[currentLanguage].FindRecipes }}
       </button>
       <div class="row mt-4" *ngIf="recipeList.length">
-        <div *ngFor="let recipe of recipeList; last as rLast" class="card" [class.mb-3]="!rLast">
-          <div class="card-body">
-            <h5 class="card-title">{{ recipe.name }}</h5>
-            <p class="card-text">
-              <span
-                *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"
-                class="badge text-bg-success"
-                [class.me-1]="!siLast"
-              >
-                {{
-                  selectIngredient.locale[currentLanguage]
-                    ? selectIngredient.locale[currentLanguage]
-                    : selectIngredient.name
-                }}
-              </span>
-              <span
-                *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"
-                class="badge text-bg-light"
-                [class.me-1]="!riLast"
-              >
-                {{
-                  requestIngredient.locale[currentLanguage]
-                    ? requestIngredient.locale[currentLanguage]
-                    : requestIngredient.name
-                }}
-              </span>
-            </p>
-            <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>
+        <div *ngFor="let recipe of recipeList; last as rLast" class="col-md-6" [class.mb-3]="!rLast">
+          <div class="card">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">{{ recipe.name }}</h5>
+                  <p class="card-text">
+                    <span
+                      *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"
+                      class="badge text-bg-success"
+                      [class.me-1]="!siLast"
+                    >
+                      {{
+                        selectIngredient.locale[currentLanguage]
+                          ? selectIngredient.locale[currentLanguage]
+                          : selectIngredient.name
+                      }}
+                    </span>
+                    <span
+                      *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"
+                      class="badge text-bg-light"
+                      [class.me-1]="!riLast"
+                    >
+                      {{
+                        requestIngredient.locale[currentLanguage]
+                          ? requestIngredient.locale[currentLanguage]
+                          : requestIngredient.name
+                      }}
+                    </span>
+                  </p>
+                  <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AppService } from './app.service';
-import { LanguageService } from './app-language.service';
+import { AppService } from './services/app.service';
+import { LanguageService } from './services/app-language.service';
 
 @NgModule({
   declarations: [AppComponent],

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
-import { environment } from '../environments/environment';
-import { Ingredient } from './models/ingredient.interface';
-import { Recipe } from './models/recipe.interface';
-import { IngredientCategory } from './models/ingredient-category.interface';
+import { environment } from '../../environments/environment';
+import { Ingredient } from '../models/ingredient.interface';
+import { Recipe } from '../models/recipe.interface';
+import { IngredientCategory } from '../models/ingredient-category.interface';
 
 @Injectable()
 export class AppService {
