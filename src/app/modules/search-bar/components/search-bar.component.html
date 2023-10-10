@@ -1,0 +1,18 @@
+<div>
+  <p *ngFor="let ing of selectedList" (click)="onSuggestionClick(ing, false)">
+    {{ ing.locale[langService.language] }}
+  </p>
+  <button>{{ locale[langService.language].ListButton }}</button>
+  <div class="chip-list"></div>
+  <div class="autocomplete">
+    <input
+      [formControl]="searchTerm"
+      [placeholder]="locale[langService.language].SearchIngredient"
+    />
+  </div>
+  <div class="dropdown">
+    <p *ngFor="let ing of suggestions" (click)="onSuggestionClick(ing, true)">
+      {{ ing.locale[langService.language] }}
+    </p>
+  </div>
+</div>

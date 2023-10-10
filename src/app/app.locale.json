@@ -2,11 +2,15 @@
   "cs": {
     "Czech": "Čeština",
     "English": "Angličtina",
-    "FindRecipes": "Vyhledat recepty"
+    "FindRecipes": "Vyhledat recepty",
+    "SearchRecipeTitle": "Vyhledat recepty",
+    "SearchRecipeText": "Zadejte ingredience do vyhledávácího pole, nebo je naklikejte ručně ze seznamu"
   },
   "en": {
     "Czech": "Czech",
     "English": "English",
-    "FindRecipes": "Find recipes"
+    "FindRecipes": "Find recipes",
+    "SearchRecipeTitle": "Search recipes",
+    "SearchRecipeText": "Type ingredient to the search field, or click them manually from the list"
   }
 }

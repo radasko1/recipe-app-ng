@@ -1,0 +1,10 @@
+{
+  "cs": {
+    "ListButton": "Seznam",
+    "SearchIngredient": "Vyhledat suroviny"
+  },
+  "en": {
+    "ListButton": "List",
+    "SearchIngredient": "Type ingredient"
+  }
+}

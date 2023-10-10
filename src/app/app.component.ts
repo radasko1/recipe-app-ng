@@ -12,25 +12,34 @@ import { IngredientCategory } from './models/ingredient-category.interface';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="container">
+    <div class="">
+      <!--navigation-->
+      <nav></nav>
+      <!--promo text-->
+      <div class="promo-text"></div>
+      <!--search bar-->
+      <div class="search-bar">
+        <app-search-bar></app-search-bar>
+      </div>
+
       <div class="row mt-3">
         <div class="col-3">
           <div class="btn-group">
             <button
               type="button"
               class="btn btn-outline-primary"
-              [class.active]="currentLanguage === 'en'"
+              [class.active]="langService.language === 'en'"
               (click)="changeLanguage('en')"
             >
-              {{ locale[currentLanguage].English }}
+              {{ locale[langService.language].English }}
             </button>
             <button
               type="button"
               class="btn btn-outline-primary"
-              [class.active]="currentLanguage === 'cs'"
+              [class.active]="langService.language === 'cs'"
               (click)="changeLanguage('cs')"
             >
-              {{ locale[currentLanguage].Czech }}
+              {{ locale[langService.language].Czech }}
             </button>
           </div>
         </div>
@@ -41,7 +50,7 @@ import { IngredientCategory } from './models/ingredient-category.interface';
           [class.mb-3]="!icLast"
           class="col-4"
         >
-          <h2>{{ cat.locale[currentLanguage] }}</h2>
+          <h2>{{ cat.locale[langService.language] }}</h2>
           <span
             *ngFor="let ingredient of cat.ingredients; last as iLast"
             role="button"
@@ -51,19 +60,19 @@ import { IngredientCategory } from './models/ingredient-category.interface';
             [class.me-1]="!iLast"
             (click)="selectIngredient(ingredient)"
           >
-            {{
-              ingredient.locale[currentLanguage]
-                ? ingredient.locale[currentLanguage]
-                : ingredient.name
-            }}
+            {{ ingredient.locale[langService.language] }}
           </span>
         </div>
       </div>
       <button class="btn btn-primary" (click)="submit()">
-        {{ locale[currentLanguage].FindRecipes }}
+        {{ locale[langService.language].FindRecipes }}
       </button>
       <div class="row mt-4" *ngIf="recipeList.length">
-        <div *ngFor="let recipe of recipeList; last as rLast" class="col-md-6" [class.mb-3]="!rLast">
+        <div
+          *ngFor="let recipe of recipeList; last as rLast"
+          class="col-md-6"
+          [class.mb-3]="!rLast"
+        >
           <div class="card">
             <div class="row g-0">
               <div class="col-md-4">
@@ -78,22 +87,14 @@ import { IngredientCategory } from './models/ingredient-category.interface';
                       class="badge text-bg-success"
                       [class.me-1]="!siLast"
                     >
-                      {{
-                        selectIngredient.locale[currentLanguage]
-                          ? selectIngredient.locale[currentLanguage]
-                          : selectIngredient.name
-                      }}
+                      {{ selectIngredient.locale[langService.language] }}
                     </span>
                     <span
                       *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"
                       class="badge text-bg-light"
                       [class.me-1]="!riLast"
                     >
-                      {{
-                        requestIngredient.locale[currentLanguage]
-                          ? requestIngredient.locale[currentLanguage]
-                          : requestIngredient.name
-                      }}
+                      {{ requestIngredient.locale[langService.language] }}
                     </span>
                   </p>
                   <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>
@@ -108,13 +109,13 @@ import { IngredientCategory } from './models/ingredient-category.interface';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
+  protected readonly locale = locale;
   protected ingredientCategoryList: IngredientCategory[] = [];
   protected recipeList: Recipe[] = [];
-  protected currentLanguage: Language = this.langService.language;
 
   constructor(
     private appService: AppService,
-    private langService: LanguageService
+    protected langService: LanguageService
   ) {}
 
   ngOnInit() {
@@ -137,13 +138,6 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((list) => {
         this.ingredientCategoryList = list;
       });
-
-    // Listen to language change
-    this.langService.languageChange$.pipe(takeUntil(this.subscription)).subscribe({
-      next: (lang) => {
-        this.currentLanguage = lang;
-      },
-    });
   }
 
   ngOnDestroy() {
@@ -188,6 +182,4 @@ export class AppComponent implements OnInit, OnDestroy {
   protected changeLanguage(lang: Language) {
     this.langService.language = lang;
   }
-
-  protected readonly locale = locale;
 }
