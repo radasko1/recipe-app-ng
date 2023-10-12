@@ -1,18 +1,121 @@
-<div>
-  <p *ngFor="let ing of selectedList" (click)="onSuggestionClick(ing, false)">
-    {{ ing.locale[langService.language] }}
-  </p>
-  <button>{{ locale[langService.language].ListButton }}</button>
-  <div class="chip-list"></div>
-  <div class="autocomplete">
-    <input
-      [formControl]="searchTerm"
+<div class="block">
+  <!-- List of selected ingredients -->
+  <!--  <div class="block">-->
+  <!--    <span-->
+  <!--      *ngFor="let ing of selectedList"-->
+  <!--      class="inline-flex items-center rounded-md gap-1 bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10"-->
+  <!--    >-->
+  <!--      {{ ing.locale[langService.language] }}-->
+  <!--      <i-->
+  <!--        class="fa-solid fa-circle-xmark cursor-pointer block"-->
+  <!--        (click)="remove(ing)"-->
+  <!--      ></i>-->
+  <!--    </span>-->
+  <!--  </div>-->
+
+  <!-- Search bar -->
+  <div class="flex relative gap-2">
+    <button
+      [class]="[
+        'rounded',
+        'bg-pink-800',
+        'text-white',
+        'outline-0',
+        'p-1.5',
+        'px-2',
+        'inline-flex',
+        'gap-1',
+        'items-center'
+      ]"
+      (click)="isModalActive = true"
+    >
+      <span><i class="fa-solid fa-list"></i></span>
+      <span>{{ locale[langService.language].ListButton }}</span>
+    </button>
+    <ng-autocomplete
+      [list]="ingredientList"
       [placeholder]="locale[langService.language].SearchIngredient"
-    />
-  </div>
-  <div class="dropdown">
-    <p *ngFor="let ing of suggestions" (click)="onSuggestionClick(ing, true)">
-      {{ ing.locale[langService.language] }}
-    </p>
+      searchProp="name"
+      (onSelect)="onSelect($event)"
+    ></ng-autocomplete>
   </div>
 </div>
+
+<!--Modal(Categories)-->
+<div
+  class="bg-opacity-80 bg-gray-600 inset-0 fixed w-screen z-10 overflow-hidden"
+  [ngClass]="{ fixed: isModalActive, hidden: !isModalActive }"
+>
+  <div
+    [class]="[
+      'flex',
+      'items-center',
+      'justify-center',
+      'text-center',
+      'w-[75%]',
+      'justify-center',
+      'm-auto'
+    ]"
+  >
+    <!-- Content -->
+    <div
+      class="bg-white rounded-lg relative transition-all p-8 relative overflow-y-auto max-h-[50rem] text-left"
+    >
+      <div *ngFor="let cat of categoryList; last as icLast" [class.mb-3]="!icLast">
+        <h2 class="font-bold text-lg mb-1">{{ cat.locale[langService.language] }}</h2>
+        <div class="gap-2 flex-wrap flex">
+          <span
+            *ngFor="let ingredient of cat.ingredientCategoryRels"
+            role="button"
+            class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium mb-1 border-transparent border-0 outline-0 mb-0 select-none"
+            [ngClass]="{
+              'text-amber-50 bg-amber-500': ingredient.selected,
+              'text-gray-900 bg-gray-100': !ingredient.selected
+            }"
+            (click)="select(ingredient)"
+          >
+            {{ ingredient.locale[langService.language] }}
+          </span>
+        </div>
+      </div>
+      <!-- Close -->
+      <div class="absolute right-3 top-3 cursor-pointer" (click)="isModalActive = false">
+        <i class="fa-solid fa-xmark fa-lg"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  <div class="row mt-4" *ngIf="recipeList.length">-->
+<!--    <div *ngFor="let recipe of recipeList; last as rLast" class="col-md-6" [class.mb-3]="!rLast">-->
+<!--      <div class="card">-->
+<!--        <div class="row g-0">-->
+<!--          <div class="col-md-4">-->
+<!--            <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />-->
+<!--          </div>-->
+<!--          <div class="col-md-8">-->
+<!--            <div class="card-body">-->
+<!--              <h5 class="card-title mb-3">{{ recipe.name }}</h5>-->
+<!--              <p class="card-text">-->
+<!--                <span-->
+<!--                  *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"-->
+<!--                  class="badge text-bg-success"-->
+<!--                  [class.me-1]="!siLast"-->
+<!--                >-->
+<!--                  {{ selectIngredient.locale[langService.language] }}-->
+<!--                </span>-->
+<!--                <span-->
+<!--                  *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"-->
+<!--                  class="badge text-bg-light"-->
+<!--                  [class.me-1]="!riLast"-->
+<!--                >-->
+<!--                  {{ requestIngredient.locale[langService.language] }}-->
+<!--                </span>-->
+<!--              </p>-->
+<!--              <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->

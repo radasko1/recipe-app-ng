@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AppService } from './services/app.service';
 import { LanguageService } from './services/app-language.service';
 import { SearchBarModule } from './modules/search-bar/search-bar.module';
 import { CookieService } from './services/cookie.service';
@@ -13,7 +12,7 @@ import { CookieService } from './services/cookie.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule, SearchBarModule],
-  providers: [LanguageService, CookieService, AppService],
+  providers: [LanguageService, CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

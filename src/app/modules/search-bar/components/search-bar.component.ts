@@ -1,39 +1,34 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AppService } from '../../../services/app.service';
+import { DataService } from '../../../services/data.service';
 import { Ingredient } from '../../../models/ingredient.interface';
 import { LanguageService } from '../../../services/app-language.service';
 import locale from './search-bar.locale.json';
+import { IngredientCategory } from '../../../models/ingredient-category.interface';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss'],
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
   /** Localization texts */
   protected readonly locale = locale;
+  protected categoryList: IngredientCategory[] = [];
 
   /** List of ingredients */
   protected ingredientList: Ingredient[] = [];
-  /** Autocomplete search value */
-  protected searchTerm = this.fb.control<string>('');
-  /** Autocomplete suggestions */
-  protected suggestions: Ingredient[] = [];
   /** */
-  protected selectedList: Ingredient[] = [];
+  protected isModalActive = false;
 
   constructor(
-    private appService: AppService,
     protected langService: LanguageService,
-    private fb: NonNullableFormBuilder
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
-    this.appService
+    this.dataService
       .getIngredients()
       .pipe(takeUntil(this.subscription))
       .subscribe({
@@ -42,10 +37,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         },
       });
 
-    // Listen changes in form control input
-    this.searchTerm.valueChanges.pipe(takeUntil(this.subscription)).subscribe({
-      next: (value) => this.onSearch(value),
-    });
+    // Get ingredient categories
+    this.dataService
+      .getCategories()
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          this.categoryList = data;
+        },
+      });
   }
 
   ngOnDestroy() {
@@ -53,35 +53,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  /**
-   * Add ingredient among selected ingredients from autocomplete dropdown
-   * @param item
-   * @param nextState
-   */
-  protected onSuggestionClick(item: Ingredient, nextState: boolean) {
-    // when I click on ingredient chip or select it from autocomplete
-    // the specific ingredient will toggle 'selected' property
-    // so I know, what is chosen
-
-    // categoryList and ingredientList are different things
-    item.selected = nextState;
-    this.selectedList = this.ingredientList.filter((obj) => obj.selected);
-
-    this.searchTerm.reset();
-    this.suggestions = [];
+  /** Select item */
+  protected onSelect(item: any) {
+    console.log('item:', item);
   }
 
-  /**
-   * Handler for autocomplete search
-   * @param searchTerm
-   */
-  protected onSearch(searchTerm: string) {
-    if (!searchTerm) {
-      return;
-    }
-
-    this.suggestions = this.ingredientList.filter((ing) =>
-      ing.locale[this.langService.language].includes(searchTerm)
-    );
+  protected select(item: Ingredient) {
+    item.selected = !item.selected;
   }
 }

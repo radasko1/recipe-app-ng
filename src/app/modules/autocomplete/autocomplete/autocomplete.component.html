@@ -1,0 +1,49 @@
+<div [class]="['block', 'relative', 'w-96']">
+  <div
+    [class]="[
+      'flex',
+      'rounded-md',
+      'shadow-sm',
+      'ring-1',
+      'ring-inset',
+      'ring-gray-300',
+      'sm:max-w-md'
+    ]"
+  >
+    <input
+      [formControl]="inputValue"
+      [placeholder]="placeholder"
+      [class]="[
+        'block',
+        'flex-1',
+        'border-1',
+        'border-gray-400',
+        'rounded-md',
+        'w-full',
+        'py-4',
+        'px-4',
+        'bg-gray-100',
+        'text-gray-900',
+        'ring-1',
+        'ring-inset',
+        'focus:ring-2',
+        'focus:ring-inset',
+        'focus:ring-indigo-600',
+        'h-12'
+      ]"
+    />
+  </div>
+  <div
+    class="absolute border-2 bg-white left-0 top-27-px overflow-y-auto h-auto max-h-48 w-full shadow-lg"
+    [class.hidden]="!suggestions.length"
+    [class.block]="suggestions.length"
+  >
+    <p
+      *ngFor="let suggestion of suggestions"
+      (click)="select(suggestion)"
+      [class]="['py-4', 'px-4', 'cursor-pointer', 'hover:bg-gray-200']"
+    >
+      {{ searchProp ? suggestion[searchProp] : suggestion }}
+    </p>
+  </div>
+</div>

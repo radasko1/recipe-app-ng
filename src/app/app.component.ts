@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Subject, takeUntil } from 'rxjs';
 
-import { AppService } from './services/app.service';
+import { DataService } from './services/data.service';
 import { Recipe } from './models/recipe.interface';
 import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
@@ -12,13 +12,13 @@ import { IngredientCategory } from './models/ingredient-category.interface';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="">
+    <div class="relative block">
       <!--navigation-->
       <nav></nav>
       <!--promo text-->
       <div class="promo-text"></div>
       <!--search bar-->
-      <div class="search-bar">
+      <div class="py-5 px-9">
         <app-search-bar></app-search-bar>
       </div>
 

@@ -8,7 +8,7 @@ import { Recipe } from '../models/recipe.interface';
 import { IngredientCategory } from '../models/ingredient-category.interface';
 
 @Injectable()
-export class AppService {
+export class DataService {
   private readonly url = `${environment.recipeAppExpressUrl}/api/v1`;
 
   constructor(private http: HttpClient) {}
