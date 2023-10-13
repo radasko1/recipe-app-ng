@@ -2,6 +2,8 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { NonNullableFormBuilder } from '@angular/forms';
 
+import { LanguageService } from '../../../services/language.service';
+
 @Component({
   selector: 'ng-autocomplete',
   templateUrl: './autocomplete.component.html',
@@ -22,12 +24,13 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   @Input() searchProp: string | undefined;
   /** Placeholder text */
   @Input() placeholder = '';
-  /** Show list of selected items */
-  @Input() showChips = false;
   /** On autocomplete suggestion item select */
   @Output() onSelect = this.selected.asObservable();
 
-  constructor(private fb: NonNullableFormBuilder) {}
+  constructor(
+    private fb: NonNullableFormBuilder,
+    protected lang: LanguageService
+  ) {}
 
   ngOnInit() {
     // Listen changes in form control input
@@ -52,7 +55,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
       }
 
       const prop = this.searchProp;
-      return item[prop].includes(value);
+      // Beware: this is done for specific use-case
+      return item[prop][this.lang.language].includes(value);
     });
   }
 

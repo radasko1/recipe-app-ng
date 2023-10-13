@@ -1,66 +1,91 @@
 <div class="block">
   <!-- List of selected ingredients -->
-  <!--  <div class="block">-->
-  <!--    <span-->
-  <!--      *ngFor="let ing of selectedList"-->
-  <!--      class="inline-flex items-center rounded-md gap-1 bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10"-->
-  <!--    >-->
-  <!--      {{ ing.locale[langService.language] }}-->
-  <!--      <i-->
-  <!--        class="fa-solid fa-circle-xmark cursor-pointer block"-->
-  <!--        (click)="remove(ing)"-->
-  <!--      ></i>-->
-  <!--    </span>-->
-  <!--  </div>-->
+  <div class="flex flex-wrap mb-2 gap-1">
+    <span
+      *ngFor="let ingredient of selectedList"
+      class="inline-flex items-center rounded-md gap-1 bg-amber-500 px-2 py-1 text-xs font-medium text-amber-50"
+    >
+      {{ ingredient.locale[langService.language] }}
+      <i
+        class="fa-solid fa-xmark cursor-pointer block"
+        (click)="changeState(ingredient, false)"
+      ></i>
+    </span>
+  </div>
 
   <!-- Search bar -->
-  <div class="flex relative gap-2">
+  <div class="flex relative gap-2 bg-gray-200 rounded p-1 px-2 shadow-sm">
+    <ng-autocomplete
+      class="w-full"
+      [list]="ingredientList"
+      [placeholder]="locale[langService.language].SearchIngredient"
+      searchProp="locale"
+      (onSelect)="onSelect($event)"
+    ></ng-autocomplete>
+    <!-- List button -->
     <button
       [class]="[
         'rounded',
-        'bg-pink-800',
-        'text-white',
+        'bg-transparent',
+        'text-gray-950',
         'outline-0',
-        'p-1.5',
+        'py-1.5',
         'px-2',
         'inline-flex',
         'gap-1',
-        'items-center'
+        'items-center',
+        'text-sm',
+        'font-medium',
+        'hover:bg-gray-950',
+        'hover:text-white'
       ]"
       (click)="isModalActive = true"
     >
       <span><i class="fa-solid fa-list"></i></span>
       <span>{{ locale[langService.language].ListButton }}</span>
     </button>
-    <ng-autocomplete
-      [list]="ingredientList"
-      [placeholder]="locale[langService.language].SearchIngredient"
-      searchProp="name"
-      (onSelect)="onSelect($event)"
-    ></ng-autocomplete>
+    <!-- Search button -->
+    <button
+      [class]="[
+        'rounded',
+        'outline-0',
+        'py-1',
+        'px-5',
+        'inline-flex',
+        'items-center',
+        'justify-center',
+        'text-sm',
+        'font-medium',
+        'bg-gray-950',
+        'text-white'
+      ]"
+      (click)="searchRecipe()"
+    >
+      <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+    </button>
   </div>
 </div>
 
 <!--Modal(Categories)-->
 <div
-  class="bg-opacity-80 bg-gray-600 inset-0 fixed w-screen z-10 overflow-hidden"
-  [ngClass]="{ fixed: isModalActive, hidden: !isModalActive }"
+  class="bg-opacity-70 bg-gray-600 fixed w-full h-full z-10 overflow-hidden top-0 left-0 right-0 bottom-0 justify-center items-center"
+  [ngClass]="{ flex: isModalActive, hidden: !isModalActive }"
 >
   <div
-    [class]="[
-      'flex',
-      'items-center',
-      'justify-center',
-      'text-center',
-      'w-[75%]',
-      'justify-center',
-      'm-auto'
-    ]"
+    class="flex flex-col w-[70%] max-h-[90%] bg-white relative text-left rounded-lg shadow-lg border-0"
   >
+    <!-- Header -->
+    <div class="relative min-h-[50px] px-8 pe-12 py-5">
+      <!-- Close -->
+      <div
+        class="absolute right-5 top-3 w-8 h-8 flex items-center justify-center cursor-pointer"
+        (click)="isModalActive = false"
+      >
+        <i class="fa-regular fa-circle-xmark fa-2xl"></i>
+      </div>
+    </div>
     <!-- Content -->
-    <div
-      class="bg-white rounded-lg relative transition-all p-8 relative overflow-y-auto max-h-[50rem] text-left"
-    >
+    <div class="relative overflow-y-auto px-8 py-8">
       <div *ngFor="let cat of categoryList; last as icLast" [class.mb-3]="!icLast">
         <h2 class="font-bold text-lg mb-1">{{ cat.locale[langService.language] }}</h2>
         <div class="gap-2 flex-wrap flex">
@@ -72,50 +97,12 @@
               'text-amber-50 bg-amber-500': ingredient.selected,
               'text-gray-900 bg-gray-100': !ingredient.selected
             }"
-            (click)="select(ingredient)"
+            (click)="changeState(ingredient, true)"
           >
             {{ ingredient.locale[langService.language] }}
           </span>
         </div>
       </div>
-      <!-- Close -->
-      <div class="absolute right-3 top-3 cursor-pointer" (click)="isModalActive = false">
-        <i class="fa-solid fa-xmark fa-lg"></i>
-      </div>
     </div>
   </div>
 </div>
-
-<!--  <div class="row mt-4" *ngIf="recipeList.length">-->
-<!--    <div *ngFor="let recipe of recipeList; last as rLast" class="col-md-6" [class.mb-3]="!rLast">-->
-<!--      <div class="card">-->
-<!--        <div class="row g-0">-->
-<!--          <div class="col-md-4">-->
-<!--            <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />-->
-<!--          </div>-->
-<!--          <div class="col-md-8">-->
-<!--            <div class="card-body">-->
-<!--              <h5 class="card-title mb-3">{{ recipe.name }}</h5>-->
-<!--              <p class="card-text">-->
-<!--                <span-->
-<!--                  *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"-->
-<!--                  class="badge text-bg-success"-->
-<!--                  [class.me-1]="!siLast"-->
-<!--                >-->
-<!--                  {{ selectIngredient.locale[langService.language] }}-->
-<!--                </span>-->
-<!--                <span-->
-<!--                  *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"-->
-<!--                  class="badge text-bg-light"-->
-<!--                  [class.me-1]="!riLast"-->
-<!--                >-->
-<!--                  {{ requestIngredient.locale[langService.language] }}-->
-<!--                </span>-->
-<!--              </p>-->
-<!--              <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->

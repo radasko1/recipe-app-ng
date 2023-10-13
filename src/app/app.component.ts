@@ -3,106 +3,52 @@ import { map, Subject, takeUntil } from 'rxjs';
 
 import { DataService } from './services/data.service';
 import { Recipe } from './models/recipe.interface';
-import { FormIngredient } from './models/form-ingredient.interface';
 import { Language } from './types/language.type';
-import { LanguageService } from './services/app-language.service';
+import { LanguageService } from './services/language.service';
 import locale from './app.locale.json';
 import { IngredientCategory } from './models/ingredient-category.interface';
+import { Ingredient } from './models/ingredient.interface';
 
 @Component({
   selector: 'app-root',
   template: `
     <div class="relative block">
       <!--navigation-->
-      <nav></nav>
-      <!--promo text-->
-      <div class="promo-text"></div>
-      <!--search bar-->
-      <div class="py-5 px-9">
-        <app-search-bar></app-search-bar>
-      </div>
-
-      <div class="row mt-3">
-        <div class="col-3">
-          <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              [class.active]="langService.language === 'en'"
-              (click)="changeLanguage('en')"
-            >
-              {{ locale[langService.language].English }}
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              [class.active]="langService.language === 'cs'"
-              (click)="changeLanguage('cs')"
-            >
-              {{ locale[langService.language].Czech }}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="row list my-4">
-        <div
-          *ngFor="let cat of ingredientCategoryList; last as icLast"
-          [class.mb-3]="!icLast"
-          class="col-4"
-        >
-          <h2>{{ cat.locale[langService.language] }}</h2>
-          <span
-            *ngFor="let ingredient of cat.ingredients; last as iLast"
-            role="button"
-            class="badge cursor-pointer"
-            [class.text-bg-warning]="ingredient.selected"
-            [class.text-bg-light]="!ingredient.selected"
-            [class.me-1]="!iLast"
-            (click)="selectIngredient(ingredient)"
+      <nav class="">
+        <!-- LOGO -->
+        <div class="mx-14 py-4 flex items-center justify-end">
+          <button
+            type="button"
+            class="text-sm font-medium rounded px-2 py-1"
+            [ngClass]="{ 'bg-gray-950 text-gray-100': langService.language === 'en' }"
+            (click)="changeLanguage('en')"
           >
-            {{ ingredient.locale[langService.language] }}
-          </span>
+            {{ locale[langService.language].English }}
+          </button>
+          <button
+            type="button"
+            class="text-sm font-medium rounded px-2 py-1"
+            [ngClass]="{ 'bg-gray-950 text-gray-100': langService.language === 'cs' }"
+            (click)="changeLanguage('cs')"
+          >
+            {{ locale[langService.language].Czech }}
+          </button>
+        </div>
+      </nav>
+      <!--promo text-->
+      <div class="">
+        <div class="py-9 mx-14">
+          <h2 class="text-4xl font-semibold mb-1">{{ locale[langService.language].PromoText1 }}</h2>
+          <h2 class="text-4xl font-semibold">{{ locale[langService.language].PromoText2 }}</h2>
         </div>
       </div>
-      <button class="btn btn-primary" (click)="submit()">
-        {{ locale[langService.language].FindRecipes }}
-      </button>
-      <div class="row mt-4" *ngIf="recipeList.length">
-        <div
-          *ngFor="let recipe of recipeList; last as rLast"
-          class="col-md-6"
-          [class.mb-3]="!rLast"
-        >
-          <div class="card">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">{{ recipe.name }}</h5>
-                  <p class="card-text">
-                    <span
-                      *ngFor="let selectIngredient of recipe.selectedIngredients; last as siLast"
-                      class="badge text-bg-success"
-                      [class.me-1]="!siLast"
-                    >
-                      {{ selectIngredient.locale[langService.language] }}
-                    </span>
-                    <span
-                      *ngFor="let requestIngredient of recipe.requiredIngredients; last as riLast"
-                      class="badge text-bg-light"
-                      [class.me-1]="!riLast"
-                    >
-                      {{ requestIngredient.locale[langService.language] }}
-                    </span>
-                  </p>
-                  <a [href]="recipe.link" target="_blank" class="card-link">Link to the recipe</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!--Search bar-->
+      <div class="py-8 mx-14">
+        <app-search-bar (onSubmit)="submit($event)"></app-search-bar>
+      </div>
+      <!-- Recipes -->
+      <div class="py-8 mx-14">
+        <app-recipe [list]="recipeList"></app-recipe>
       </div>
     </div>
   `,
@@ -114,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   protected recipeList: Recipe[] = [];
 
   constructor(
-    private appService: AppService,
+    private appService: DataService,
     protected langService: LanguageService
   ) {}
 
@@ -126,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
           return categoryList.map((cat) => {
             // change type of Ingredient item
             cat.ingredients = cat.ingredientCategoryRels.map((ing) => {
-              const ingredient = ing as FormIngredient;
+              const ingredient = ing;
               ingredient.selected = false;
               return ingredient;
             });
@@ -146,27 +92,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Toggle item selection status
-   * @param item
-   */
-  protected selectIngredient(item: FormIngredient) {
-    item.selected = !item.selected;
-  }
-
-  /**
    * Submit selected ingredients
    */
-  protected submit() {
-    const categoryList = this.ingredientCategoryList;
-    const ingredientNames: string[] = [];
-
-    for (const category of categoryList) {
-      for (const ingredient of category.ingredients) {
-        if (ingredient.selected) {
-          ingredientNames.push(ingredient.name);
-        }
-      }
-    }
+  protected submit(ingredients: Ingredient[]) {
+    const ingredientNames = ingredients.map((ing) => ing.name);
 
     this.appService.findRecipes(ingredientNames).subscribe({
       next: (response) => {

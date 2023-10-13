@@ -12,8 +12,6 @@ const COOKIE_NAME = 'LANG';
 export class LanguageService {
   private currentLanguage: Language = 'en';
   private languageChange = new BehaviorSubject<Language>(this.currentLanguage);
-  // TODO: injection token?
-  // TODO: do refresh of language, when is changed
 
   public languageChange$ = this.languageChange.asObservable();
 
