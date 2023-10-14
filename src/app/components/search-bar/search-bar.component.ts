@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { DataService } from '../../../services/data.service';
-import { Ingredient } from '../../../models/ingredient.interface';
-import { LanguageService } from '../../../services/language.service';
+import { DataService } from '../../services/data.service';
+import { Ingredient } from '../../models/ingredient.interface';
+import { LanguageService } from '../../services/language.service';
 import locale from './search-bar.locale.json';
-import { IngredientCategory } from '../../../models/ingredient-category.interface';
+import { IngredientCategory } from '../../models/ingredient-category.interface';
 
 @Component({
   selector: 'app-search-bar',
