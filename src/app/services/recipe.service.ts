@@ -4,18 +4,10 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Recipe } from '../models/recipe.interface';
-import { IngredientCategory } from '../models/ingredient-category.interface';
 
 @Injectable()
-export class DataService {
+export class RecipeService {
   constructor(private readonly http: HttpClient) {}
-
-  /**
-   * Get list of all categories with ingredients
-   */
-  getCategories(): Observable<IngredientCategory[]> {
-    return this.http.get<IngredientCategory[]>(`${environment.SERVER_API}/ingredient/categories`);
-  }
 
   /**
    * Find recipes based on ingredients

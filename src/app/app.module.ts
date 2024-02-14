@@ -11,7 +11,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { LanguageService } from './services/language.service';
 import { CookieService } from './services/cookie.service';
-import { DataService } from './services/data.service';
+import { RecipeService } from './services/recipe.service';
+import { CategoryService } from "./services/category.service";
 
 @NgModule({
   declarations: [AppComponent, RecipeComponent, SearchBarComponent, AutocompleteComponent],
@@ -23,7 +24,7 @@ import { DataService } from './services/data.service';
     CommonModule,
     ReactiveFormsModule,
   ],
-  providers: [LanguageService, CookieService, DataService],
+  providers: [LanguageService, CookieService, RecipeService, CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

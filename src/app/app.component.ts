@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Subject, takeUntil } from 'rxjs';
 
-import { DataService } from './services/data.service';
+import { RecipeService } from './services/recipe.service';
 import { Recipe } from './models/recipe.interface';
 import { Language } from './types/language.type';
 import { LanguageService } from './services/language.service';
 import locale from './app.locale.json';
 import { IngredientCategory } from './models/ingredient-category.interface';
 import { Ingredient } from './models/ingredient.interface';
+import { CategoryService } from './services/category.service';
 
 @Component({
   selector: 'app-root',
@@ -60,12 +61,13 @@ export class AppComponent implements OnInit, OnDestroy {
   protected recipeList: Recipe[] = [];
 
   constructor(
-    private readonly appService: DataService,
+    private readonly recipeService: RecipeService,
+    private readonly categoryService: CategoryService,
     protected readonly langService: LanguageService
   ) {}
 
   ngOnInit() {
-    this.appService
+    this.categoryService
       .getCategories()
       .pipe(
         map((categoryList) => {
@@ -97,7 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
   protected submit(ingredients: Ingredient[]) {
     const ingredientNames = ingredients.map((ing) => ing.name);
 
-    this.appService.findRecipes(ingredientNames).subscribe({
+    this.recipeService.findRecipes(ingredientNames).subscribe({
       next: (response) => {
         this.recipeList = response;
       },

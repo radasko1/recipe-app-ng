@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { DataService } from '../../services/data.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import { LanguageService } from '../../services/language.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -26,12 +26,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly langService: LanguageService,
-    private readonly dataService: DataService
+    private readonly categoryService: CategoryService
   ) {}
 
   ngOnInit() {
     // Get ingredient categories
-    this.dataService
+    this.categoryService
       .getCategories()
       .pipe(takeUntil(this.subscription))
       .subscribe({
