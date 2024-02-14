@@ -12,7 +12,6 @@ const COOKIE_NAME = 'LANG';
 export class LanguageService {
   private currentLanguage: Language = 'en';
   private languageChange = new BehaviorSubject<Language>(this.currentLanguage);
-
   public languageChange$ = this.languageChange.asObservable();
 
   constructor(private cookieService: CookieService) {

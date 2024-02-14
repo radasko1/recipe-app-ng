@@ -12,8 +12,6 @@ interface CookieOptions {
   providedIn: 'root',
 })
 export class CookieService {
-  constructor() {}
-
   /**
    * Sets a cookie.
    * @param name The name of the cookie.

@@ -28,8 +28,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   @Output() onSelect = this.selected.asObservable();
 
   constructor(
-    private fb: NonNullableFormBuilder,
-    protected lang: LanguageService
+    private readonly fb: NonNullableFormBuilder,
+    protected readonly lang: LanguageService
   ) {}
 
   ngOnInit() {
