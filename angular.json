@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-recipe-app:build:production"
+              "buildTarget": "ng-recipe-app:build:production"
             },
             "development": {
-              "browserTarget": "ng-recipe-app:build:development"
+              "buildTarget": "ng-recipe-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -70,7 +70,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-recipe-app:build"
+            "buildTarget": "ng-recipe-app:build"
           }
         },
         "test": {
