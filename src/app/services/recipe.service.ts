@@ -11,11 +11,11 @@ export class RecipeService {
 
   /**
    * Find recipes based on ingredients
-   * @param ingredientNames
+   * @param ingredients List of ingredient codenames
    */
-  findRecipes(ingredientNames: string[]): Observable<Recipe[]> {
+  findRecipes(ingredients: string[]): Observable<Recipe[]> {
     return this.http.post<Recipe[]>(`${environment.SERVER_API}/recipe/ingredients`, {
-      ingredients: ingredientNames,
+      ingredients,
     });
   }
 }

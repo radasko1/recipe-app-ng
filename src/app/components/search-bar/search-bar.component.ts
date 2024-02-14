@@ -37,11 +37,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.categoryList = data;
-          // Get ingredient list from each category
-          data.forEach((cat) => {
-            const ingredients = cat.ingredientCategoryRels;
-            this.ingredientList = [...this.ingredientList, ...ingredients];
-          });
+        },
+      });
+
+    this.categoryService
+      .getAllIngredients()
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (list) => {
+          this.ingredientList = list;
         },
       });
   }
@@ -52,19 +56,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Mark ingredient in category mark selected, when user select ingredient from autocomplete
-   * @param item
+   * Search through Categories, then through Ingredients to find selected items.
+   * @param item Item to select
    */
   protected onSelect(item: any) {
-    for (let i = 0; i < this.categoryList.length; i++) {
-      const category = this.categoryList[i];
-
-      for (let j = 0; j < category.ingredientCategoryRels.length; j++) {
-        const ingredient = category.ingredientCategoryRels[j];
-
-        if (ingredient.name === item['name']) {
+    for (const category of this.categoryList) {
+      for (const ingredient of category.ingredientCategoryRels) {
+        if (ingredient.name === item.name) {
           this.changeState(item, true);
-          break;
+          return; // Exit the function after changing state
         }
       }
     }

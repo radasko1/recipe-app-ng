@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Subject, takeUntil } from 'rxjs';
+import { Component } from '@angular/core';
 
 import { RecipeService } from './services/recipe.service';
 import { Recipe } from './models/recipe.interface';
 import { Language } from './types/language.type';
 import { LanguageService } from './services/language.service';
 import locale from './app.locale.json';
-import { IngredientCategory } from './models/ingredient-category.interface';
 import { Ingredient } from './models/ingredient.interface';
-import { CategoryService } from './services/category.service';
 
 @Component({
   selector: 'app-root',
@@ -37,64 +34,34 @@ import { CategoryService } from './services/category.service';
         </div>
       </nav>
       <!--promo text-->
-      <div class="">
-        <div class="py-9 mx-14">
-          <h2 class="text-4xl font-semibold mb-1">{{ locale[langService.language].PromoText1 }}</h2>
-          <h2 class="text-4xl font-semibold">{{ locale[langService.language].PromoText2 }}</h2>
-        </div>
+      <!-- TODO: standalone component -->
+      <div class="py-9 mx-14">
+        <h2 class="text-4xl font-semibold mb-1">{{ locale[langService.language].PromoText1 }}</h2>
+        <h2 class="text-4xl font-semibold">{{ locale[langService.language].PromoText2 }}</h2>
       </div>
       <!--Search bar-->
       <div class="py-8 mx-14">
-        <app-search-bar (onSubmit)="submit($event)"></app-search-bar>
+        <app-search-bar (onSubmit)="submit($event)" />
       </div>
       <!-- Recipes -->
       <div class="py-8 mx-14">
-        <app-recipe [list]="recipeList"></app-recipe>
+        <app-recipe [list]="recipeList" />
       </div>
     </div>
   `,
 })
-export class AppComponent implements OnInit, OnDestroy {
-  private subscription = new Subject<boolean>();
+export class AppComponent {
   protected readonly locale = locale;
-  protected ingredientCategoryList: IngredientCategory[] = [];
   protected recipeList: Recipe[] = [];
 
   constructor(
     private readonly recipeService: RecipeService,
-    private readonly categoryService: CategoryService,
     protected readonly langService: LanguageService
   ) {}
 
-  ngOnInit() {
-    this.categoryService
-      .getCategories()
-      .pipe(
-        map((categoryList) => {
-          return categoryList.map((cat) => {
-            // change type of Ingredient item
-            cat.ingredients = cat.ingredientCategoryRels.map((ing) => {
-              const ingredient = ing;
-              ingredient.selected = false;
-              return ingredient;
-            });
-            return cat;
-          });
-        }),
-        takeUntil(this.subscription)
-      )
-      .subscribe((list) => {
-        this.ingredientCategoryList = list;
-      });
-  }
-
-  ngOnDestroy() {
-    this.subscription.next(true);
-    this.subscription.unsubscribe();
-  }
-
   /**
    * Submit selected ingredients
+   * @param ingredients
    */
   protected submit(ingredients: Ingredient[]) {
     const ingredientNames = ingredients.map((ing) => ing.name);
