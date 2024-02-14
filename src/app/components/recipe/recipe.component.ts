@@ -8,10 +8,10 @@ import locale from './recipe.locale.json';
   templateUrl: './recipe.component.html',
 })
 export class RecipeComponent {
-  protected locale = locale;
+  protected readonly locale = locale;
 
   /** List of recipes */
   @Input() list: Recipe[] = [];
 
-  constructor(protected lang: LanguageService) {}
+  constructor(protected readonly lang: LanguageService) {}
 }

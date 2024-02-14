@@ -25,8 +25,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() onSubmit = new EventEmitter<Ingredient[]>();
 
   constructor(
-    protected langService: LanguageService,
-    private dataService: DataService
+    protected readonly langService: LanguageService,
+    private readonly dataService: DataService
   ) {}
 
   ngOnInit() {

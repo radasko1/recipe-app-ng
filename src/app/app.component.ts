@@ -60,8 +60,8 @@ export class AppComponent implements OnInit, OnDestroy {
   protected recipeList: Recipe[] = [];
 
   constructor(
-    private appService: DataService,
-    protected langService: LanguageService
+    private readonly appService: DataService,
+    protected readonly langService: LanguageService
   ) {}
 
   ngOnInit() {
