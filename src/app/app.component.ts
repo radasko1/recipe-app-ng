@@ -64,9 +64,9 @@ export class AppComponent {
    * @param ingredients
    */
   protected submit(ingredients: Ingredient[]) {
-    const ingredientNames = ingredients.map((ing) => ing.name);
+    const ingredientIDs = ingredients.map((ing) => ing.id);
 
-    this.recipeService.findRecipes(ingredientNames).subscribe({
+    this.recipeService.findRecipes(ingredientIDs).subscribe({
       next: (response) => {
         this.recipeList = response;
       },
