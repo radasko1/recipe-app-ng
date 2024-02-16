@@ -4,8 +4,13 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <!--navigation-->
-    <nav class="container mx-auto">
-      <app-language-switch />
+    <nav class="bg-gray-800">
+      <div class="mx-auto p-4">
+        <div class="flex items-center justify-between">
+          <!--lang-->
+          <app-language-switch />
+        </div>
+      </div>
     </nav>
     <!-- content -->
     <div class="relative block container mx-auto">
