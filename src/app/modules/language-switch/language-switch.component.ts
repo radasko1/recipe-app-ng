@@ -5,7 +5,7 @@ import { LanguageService } from '../../services/language.service';
 @Component({
   selector: 'app-language-switch',
   template: `
-    <div class="mx-14 py-4 flex items-center justify-end">
+    <div class="my-4 flex items-center justify-end">
       <button
         type="button"
         class="text-sm font-medium rounded px-2 py-1"

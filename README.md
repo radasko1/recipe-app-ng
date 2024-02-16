@@ -21,9 +21,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## App Structure
 
 - Each module has own dependencies that are needed
+- shared `providedIn: 'root'` services are not provided anywhere - they can just be used in constructor as dependency-injection
 
 ## Next application development
-
+- Udelat na strance 'container'
 - Pridat stranku pro Registraci uzivatele `/signup`
 - Pridat stranku pro prihlaseni `/login`
 - Pridat Captcha

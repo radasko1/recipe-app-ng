@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="relative block">
-      <!--navigation-->
-      <nav>
-        <app-language-switch />
-      </nav>
-      <!-- content -->
+    <!--navigation-->
+    <nav class="container mx-auto">
+      <app-language-switch />
+    </nav>
+    <!-- content -->
+    <div class="relative block container mx-auto">
       <router-outlet></router-outlet>
     </div>
   `,
