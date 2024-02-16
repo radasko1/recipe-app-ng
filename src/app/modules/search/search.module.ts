@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './components/search/search.component';
-import { RecipeService } from '../../services/recipe.service';
-import { CategoryService } from '../../services/category.service';
+import { RecipeService } from './services/recipe.service';
+import { CategoryService } from './services/category.service';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';

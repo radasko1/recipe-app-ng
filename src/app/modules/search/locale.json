@@ -1,7 +1,5 @@
 {
   "cs": {
-    "Czech": "Čeština",
-    "English": "Angličtina",
     "FindRecipes": "Vyhledat recepty",
     "PromoText1": "Najdi recept podle dostupných ingrediencí.",
     "PromoText2": "Snadno a rychle!",
@@ -9,8 +7,6 @@
     "SearchRecipeText": "Zadejte ingredience do vyhledávácího pole, nebo je naklikejte ručně ze seznamu"
   },
   "en": {
-    "Czech": "Czech",
-    "English": "English",
     "FindRecipes": "Find recipes",
     "PromoText1": "Find recipe by available ingredients.",
     "PromoText2": "Simple and fast!",

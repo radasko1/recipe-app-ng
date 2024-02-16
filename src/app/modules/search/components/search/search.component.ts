@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import locale from '../../../../app.locale.json';
+import { Component } from '@angular/core';
+import locale from '../../locale.json';
 import { LanguageService } from '../../../../services/language.service';
 import { Recipe } from '../../models/recipe.interface';
-import { RecipeService } from '../../../../services/recipe.service';
-import { Ingredient } from "../../models/ingredient.interface";
+import { RecipeService } from '../../services/recipe.service';
+import { Ingredient } from '../../models/ingredient.interface';
 
 @Component({
   selector: 'app-search',

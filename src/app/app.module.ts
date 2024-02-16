@@ -5,13 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LanguageService } from './services/language.service';
-import { CookieService } from './services/cookie.service';
+import { LanguageSwitchModule } from './modules/language-switch/language-switch.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule],
-  providers: [LanguageService, CookieService],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    LanguageSwitchModule,
+  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Language } from '../types/language.type';
+import { Language } from '../modules/language-switch/models/language.type';
 import { CookieService } from './cookie.service';
 
 const COOKIE_NAME = 'LANG';
@@ -30,10 +30,10 @@ export class LanguageService {
   }
 
   /**
-   * Set current language
+   * Change current language
    * @param lang
    */
-  set language(lang: Language) {
+  change(lang: Language) {
     this.currentLanguage = lang;
     this.cookieService.set(COOKIE_NAME, lang, { path: '/' });
     this.languageChange.next(lang);
