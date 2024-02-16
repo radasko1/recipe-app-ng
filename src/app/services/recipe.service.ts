@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Recipe } from '../models/recipe.interface';
+import { Recipe } from '../modules/search/models/recipe.interface';
 
 @Injectable()
 export class RecipeService {

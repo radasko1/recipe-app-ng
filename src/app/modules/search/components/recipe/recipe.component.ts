@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Recipe } from '../../models/recipe.interface';
-import { LanguageService } from '../../services/language.service';
+import { LanguageService } from '../../../../services/language.service';
 import locale from './recipe.locale.json';
 
 @Component({

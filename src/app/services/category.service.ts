@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, mergeMap, Observable, tap } from 'rxjs';
 
-import { IngredientCategory } from '../models/ingredient-category.interface';
+import { IngredientCategory } from '../modules/search/models/ingredient-category.interface';
 import { environment } from '../../environments/environment';
-import { Ingredient } from '../models/ingredient.interface';
+import { Ingredient } from '../modules/search/models/ingredient.interface';
 
 @Injectable()
 export class CategoryService {

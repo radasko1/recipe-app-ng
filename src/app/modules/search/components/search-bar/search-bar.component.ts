@@ -2,10 +2,10 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { Subject, takeUntil } from 'rxjs';
 
 import { Ingredient } from '../../models/ingredient.interface';
-import { LanguageService } from '../../services/language.service';
+import { LanguageService } from '../../../../services/language.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
-import { CategoryService } from '../../services/category.service';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -60,6 +60,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
    * @param item Item to select
    */
   protected onSelect(item: any) {
+    // TODO i dont like the way of nested documents, there must be a way for better solution
     for (const category of this.categoryList) {
       for (const ingredient of category.ingredientCategoryRels) {
         if (ingredient.name === item.name) {

@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { NonNullableFormBuilder } from '@angular/forms';
 
-import { LanguageService } from '../../services/language.service';
+import { LanguageService } from '../../../../services/language.service';
 
 @Component({
   selector: 'ng-autocomplete',
