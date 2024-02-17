@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Language } from '../modules/language-switch/models/language.type';
 import { CookieService } from './cookie.service';
 
-const COOKIE_NAME = 'LANG';
+const COOKIE_NAME = '_lang';
 
 @Injectable({
   providedIn: 'root',

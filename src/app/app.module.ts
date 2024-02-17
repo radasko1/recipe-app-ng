@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LanguageSwitchModule } from './modules/language-switch/language-switch.module';
+import { HttpRequestInterceptor } from './shared/http-request.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,13 @@ import { LanguageSwitchModule } from './modules/language-switch/language-switch.
     AppRoutingModule,
     LanguageSwitchModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
