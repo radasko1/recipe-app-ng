@@ -4,7 +4,6 @@ interface CookieOptions {
   expires?: Date;
   path?: string;
   domain?: string;
-  secure?: boolean;
   sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
@@ -22,11 +21,11 @@ export class CookieService {
     let cookie = `${name}=${value};`;
 
     if (options && options.expires) {
-      cookie += `expires=${options.expires}`;
+      cookie += `;expires=${options.expires}`;
     }
 
     if (options && options.path) {
-      cookie += `path=${options.path}`;
+      cookie += `;path=${options.path}`;
     }
 
     document.cookie = cookie;
