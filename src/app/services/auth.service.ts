@@ -30,4 +30,12 @@ export class AuthService {
       { withCredentials: true }
     );
   }
+
+  /**
+   * Whether user has admin permission
+   */
+  hasAdminPermission(): Observable<boolean> {
+    const url = `${environment.SERVER_ORIGIN}/user/authorization/has-admin-access`;
+    return this.http.get<boolean>(url);
+  }
 }
