@@ -42,7 +42,7 @@ interface LanguageButton {
             id="menu-item-0"
             (click)="langService.change(item.code)"
           >
-            {{ localeService.getLocaleValue(locale, langService.language, item.translation) }}
+            {{ localeService.getLocaleValue(locale, item.translation) }}
           </a>
         </li>
       </ul>
