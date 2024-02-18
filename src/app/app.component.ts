@@ -5,11 +5,17 @@ import { Component } from '@angular/core';
   template: `
     <!--navigation-->
     <nav class="bg-gray-800">
-      <div class="mx-auto p-4">
-        <div class="flex items-center justify-between">
-          <!--lang-->
-          <app-language-switch />
+      <div class="mx-auto p-4 flex flex-wrap items-center justify-between max-w-screen-xl">
+        <!--links-->
+        <div class="flex items-center justify-between w-full md:flex md:w-auto">
+          <ul class="flex flex-col font-medium p-4">
+            <li>
+              <a routerLink="/" class="block py-2 px-3 md:p-0 rounded text-white">Home</a>
+            </li>
+          </ul>
         </div>
+        <!--lang-->
+        <app-language-switch />
       </div>
     </nav>
     <!-- content -->
@@ -19,3 +25,4 @@ import { Component } from '@angular/core';
   `,
 })
 export class AppComponent {}
+// TODO locale

@@ -58,8 +58,6 @@ import { LanguageService } from '../../../services/language.service';
   `,
 })
 export class RegisterComponent {
-  // TODO page does not have styles
-  // TODO add locales
   protected readonly locale = locale;
   protected form = this.fb.group({
     email: this.fb.control('', {
