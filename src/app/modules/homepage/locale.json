@@ -1,10 +1,12 @@
 {
   "cs": {
     "PromoText1": "Najdi recept podle dostupných ingrediencí.",
-    "PromoText2": "Snadno a rychle!"
+    "PromoText2": "Snadno a rychle!",
+    "Button": "Vyhledat recept"
   },
   "en": {
     "PromoText1": "Find recipe by available ingredients.",
-    "PromoText2": "Simple and fast!"
+    "PromoText2": "Simple and fast!",
+    "Button": "Search recipe"
   }
 }
