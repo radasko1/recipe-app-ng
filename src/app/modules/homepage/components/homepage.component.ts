@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import locale from './locale.json';
-import { LanguageService } from '../../services/language.service';
+import locale from '../locale.json';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-homepage',

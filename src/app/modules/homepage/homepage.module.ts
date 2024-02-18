@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HomepageComponent } from './homepage.component';
+import { HomepageComponent } from './components/homepage.component';
 import { HomepageRoutingModule } from './homepage-routing.module';
 
 @NgModule({
