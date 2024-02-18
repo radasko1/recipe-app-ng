@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
-import { UserRegistrationService } from './user-registration.service';
+
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-login',
   template: `
     <div>
-      <h2>User registration</h2>
+      <h2>Login</h2>
       <form [formGroup]="form">
         <label for="_email">Email</label>
         <input
@@ -29,40 +30,42 @@ import { UserRegistrationService } from './user-registration.service';
         />
       </form>
     </div>
-    <button type="button" (click)="register()">Register</button>
+    <button type="button" (click)="login()">Login</button>
   `,
 })
-export class RegisterComponent {
-  // TODO page does not have styles
+export class LoginComponent {
   protected form = this.fb.group({
-    email: this.fb.control('', {
+    email: this.fb.control<string>('', {
       validators: [Validators.required, Validators.email],
     }),
-    password: this.fb.control('', { validators: Validators.required }),
+    password: this.fb.control<string>('', { validators: Validators.required }),
   });
 
   constructor(
     private readonly fb: NonNullableFormBuilder,
-    private readonly signupService: UserRegistrationService
+    private readonly authService: AuthService
   ) {}
 
   // TODO improve security; with SSL the posted data will be encoded
   // TODO loading indicator during process of account creation
-  // TODO use Captcha
-  // TODO password validator (regex)
-  protected register() {
+  // TODO show error message when some field is not validate
+  protected login() {
     if (this.form.status === 'INVALID') {
       return;
     }
 
-    const body = this.form.value;
-    this.signupService
-      .registerUser(body)
+    const { email, password } = this.form.controls;
+    this.authService
+      .loginUser({ email: email.value, password: password.value })
       .pipe(
         finalize(() => {
           this.form.reset();
         })
       )
-      .subscribe();
+      .subscribe({
+        error: (err) => {
+          console.log('Login failed');
+        },
+      });
   }
 }

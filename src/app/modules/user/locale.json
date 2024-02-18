@@ -1,0 +1,10 @@
+{
+  "cs": {
+    "RegistrationHeader": "Registrace",
+    "Password": "Heslo"
+  },
+  "en": {
+    "RegistrationHeader": "Registration",
+    "Password": "Password"
+  }
+}
