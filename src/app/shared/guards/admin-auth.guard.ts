@@ -7,5 +7,4 @@ export const AdminAuthGuard: CanActivateFn = (
   state: RouterStateSnapshot
 ) => {
   return inject(AuthService).hasAdminPermission();
-  // return true;
 };

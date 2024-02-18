@@ -84,9 +84,9 @@ export class RegisterComponent {
       return;
     }
 
-    const body = this.form.value;
+    const formControls = this.form.controls;
     this.signupService
-      .registerUser(body)
+      .registerUser({ email: formControls.email.value, password: formControls.password.value })
       .pipe(
         finalize(() => {
           this.form.reset();
