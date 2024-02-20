@@ -13,7 +13,8 @@ import { DataCollectionService } from '../services/data-collection.service';
           <tr>
             <th scope="col" class="px-6 py-3">Recept</th>
             <th scope="col" class="px-6 py-3">Ingredience</th>
-            <th scope="col" class="px-6 py-3">Category</th>
+            <th scope="col" class="px-6 py-3">Status</th>
+            <th scope="col" class="px-6 py-3">Akce</th>
           </tr>
         </thead>
         <!---->
@@ -23,10 +24,7 @@ import { DataCollectionService } from '../services/data-collection.service';
               class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               *ngFor="let item of collection"
             >
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 dark:text-white"
-              >
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                 <a [href]="item.page_url" rel="noreferrer noopener" target="_blank">
                   {{ item.page_data.title }}
                 </a>
@@ -36,7 +34,10 @@ import { DataCollectionService } from '../services/data-collection.service';
                   {{ ingredient + (is_last ? '' : ',') }}
                 </span>
               </td>
+              <!--status-->
               <td class="px-6 py-4">Laptop</td>
+              <!--detail-->
+              <td class="px-6 py-4"><a [routerLink]="['/admin/detail', item.id]">Detail</a></td>
             </tr>
           </ng-container>
         </tbody>
@@ -45,7 +46,7 @@ import { DataCollectionService } from '../services/data-collection.service';
   `,
 })
 export class DashboardComponent {
-  protected readonly dataCollection$ = this.dataCollectionService.getListForControl();
+  protected readonly dataCollection$ = this.dataCollectionService.getDataCollectionList();
 
   constructor(private readonly dataCollectionService: DataCollectionService) {}
 }
