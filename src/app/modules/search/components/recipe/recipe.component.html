@@ -1,4 +1,4 @@
-<div class="flex" *ngIf="list.length">
+<div class="flex" *ngIf="list && list.length">
   <div
     *ngFor="let recipe of list; last as rLast"
     class="w-1/2 bg-white rounded-sm shadow-sm"
@@ -30,4 +30,8 @@
       </div>
     </div>
   </div>
+</div>
+<!--Empty search result-->
+<div *ngIf="list && !list.length">
+  <p class="text-medium text-red-600">{{ locale[lang.language].EmptySearchResult }}</p>
 </div>

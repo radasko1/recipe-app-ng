@@ -1,8 +1,10 @@
 {
   "cs": {
-    "Link": "Odkaz na recept"
+    "Link": "Odkaz na recept",
+    "EmptySearchResult": "Omlouváme se. Nepodařilo se nám najít žádný recept obsahující tyto ingredience"
   },
   "en": {
-    "Link": "Link to the recipe"
+    "Link": "Link to the recipe",
+    "EmptySearchResult": "Sorry. We were unable to find any recipe containing these ingredients"
   }
 }

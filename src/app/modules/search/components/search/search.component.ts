@@ -20,7 +20,7 @@ import { Ingredient } from '../../models/ingredient.interface';
 })
 export class SearchComponent {
   protected readonly locale = locale;
-  protected recipeList: Recipe[] = [];
+  protected recipeList: Recipe[] | undefined;
 
   constructor(private readonly recipeService: RecipeService) {}
 

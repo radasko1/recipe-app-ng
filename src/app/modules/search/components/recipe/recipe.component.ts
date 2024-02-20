@@ -11,7 +11,7 @@ export class RecipeComponent {
   protected readonly locale = locale;
 
   /** List of recipes */
-  @Input() list: Recipe[] = [];
+  @Input() list: Recipe[] | undefined;
 
   constructor(protected readonly lang: LanguageService) {}
 }
