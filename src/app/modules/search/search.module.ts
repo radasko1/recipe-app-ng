@@ -9,11 +9,12 @@ import { CategoryService } from './services/category.service';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { IngredientService } from './services/ingredient.service';
 
 @NgModule({
   declarations: [SearchComponent, SearchBarComponent, RecipeComponent, AutocompleteComponent],
   imports: [SearchRoutingModule, CommonModule, ReactiveFormsModule],
-  providers: [RecipeService, CategoryService],
+  providers: [RecipeService, CategoryService, IngredientService],
   exports: [],
 })
 export class SearchModule {}

@@ -3,6 +3,8 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { NonNullableFormBuilder } from '@angular/forms';
 
 import { LanguageService } from '../../../../services/language.service';
+import { Ingredient } from '../../models/ingredient.interface';
+import { IngredientService } from '../../services/ingredient.service';
 
 @Component({
   selector: 'ng-autocomplete',
@@ -11,6 +13,8 @@ import { LanguageService } from '../../../../services/language.service';
 export class AutocompleteComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
 
+  /** List of objects/items for suggestion */
+  private list: Ingredient[] = [];
   /** Autocomplete search value */
   protected inputValue = this.fb.control<string>('');
   /** Autocomplete suggestion */
@@ -18,8 +22,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   /** On autocomplete item select */
   protected selected = new BehaviorSubject<any | null>(null);
 
-  /** List of objects/items for suggestion */
-  @Input() list: any[] = [];
   /** Property for searching through objects in suggestions */
   @Input() searchProp: string | undefined;
   /** Placeholder text */
@@ -29,7 +31,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: NonNullableFormBuilder,
-    protected readonly lang: LanguageService
+    protected readonly lang: LanguageService,
+    private readonly ingredientService: IngredientService
   ) {}
 
   ngOnInit() {
@@ -37,6 +40,14 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
     this.inputValue.valueChanges.pipe(takeUntil(this.subscription)).subscribe({
       next: (value) => this.onSearch(value),
     });
+    this.ingredientService
+      .getList()
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (ing) => {
+          this.list = ing;
+        },
+      });
   }
 
   ngOnDestroy() {
@@ -46,17 +57,13 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
   /**
    * Search through list and create autocomplete suggestions
-   * @param value Input value for search
+   * @param searchedText Input value for search
    */
-  protected onSearch(value: string) {
-    this.suggestions = this.list.filter((item: any) => {
-      if (!this.searchProp) {
-        return item.includes(value);
-      }
+  protected onSearch(searchedText: string) {
+    const lang = this.lang.language;
 
-      const prop = this.searchProp;
-      // Beware: this is done for specific use-case
-      return item[prop][this.lang.language].includes(value);
+    this.suggestions = this.list.filter((item) => {
+      return item.locale[lang].includes(searchedText);
     });
   }
 
@@ -64,7 +71,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
    * Select item from suggestion
    * @param item Selected item
    */
-  protected select(item: any) {
+  protected select(item: Ingredient) {
     this.selected.next(item);
     this.inputValue.reset();
     this.suggestions = [];

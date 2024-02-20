@@ -63,8 +63,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     // TODO i dont like the way of nested documents, there must be a way for better solution
     for (const category of this.categoryList) {
       for (const ingredient of category.ingredientCategoryRels) {
-        if (ingredient.name === item.name) {
-          this.changeState(item, true);
+        if (ingredient.id === item.id) {
+          this.changeState(ingredient, true);
           return; // Exit the function after changing state
         }
       }
