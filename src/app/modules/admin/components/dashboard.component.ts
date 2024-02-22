@@ -12,7 +12,6 @@ import { DataCollectionService } from '../services/data-collection.service';
         >
           <tr>
             <th scope="col" class="px-6 py-3">Recept</th>
-            <th scope="col" class="px-6 py-3">Ingredience</th>
             <th scope="col" class="px-6 py-3">Status</th>
             <th scope="col" class="px-6 py-3">Akce</th>
           </tr>
@@ -29,15 +28,32 @@ import { DataCollectionService } from '../services/data-collection.service';
                   {{ item.page_data.title }}
                 </a>
               </th>
-              <td class="px-6 py-4">
-                <span *ngFor="let ingredient of item.page_data.ingredients; last as is_last">
-                  {{ ingredient + (is_last ? '' : ',') }}
-                </span>
-              </td>
               <!--status-->
-              <td class="px-6 py-4">Laptop</td>
+              <td class="px-6 py-4">
+                <span
+                  *ngIf="!item.checked && !item.approved"
+                  class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-blue-500 text-white"
+                  >created</span
+                >
+                <span
+                  *ngIf="item.checked && !item.approved"
+                  class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-amber-500 text-white"
+                  >checked</span
+                >
+                <span
+                  *ngIf="item.checked && item.approved"
+                  class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-green-500 text-white"
+                  >approved</span
+                >
+              </td>
               <!--detail-->
-              <td class="px-6 py-4"><a [routerLink]="['/admin/detail', item.id]">Detail</a></td>
+              <td class="px-6 py-4">
+                <a
+                  [routerLink]="['/admin/detail', item.id]"
+                  class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  >Detail</a
+                >
+              </td>
             </tr>
           </ng-container>
         </tbody>
