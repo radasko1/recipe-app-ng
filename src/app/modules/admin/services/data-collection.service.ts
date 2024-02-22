@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, filter, mergeMap, single, tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { DataCollection } from '../models/data-collection.interface';
+import { DataCollectionDetail } from '../models/data-collection-detail.interface';
 
 @Injectable()
 export class DataCollectionService {
@@ -25,10 +26,22 @@ export class DataCollectionService {
   }
 
   /** */
-  public getDataCollectionItem(id: number) {
-    return this.subject.pipe(
-      mergeMap((item) => item),
-      filter((value) => value.id === id)
-    );
+  // public getDataCollectionItem(id: number) {
+  //   return this.subject.pipe(
+  //     mergeMap((item) => item),
+  //     filter((value) => value.id === id)
+  //   );
+  // }
+
+  /** */
+  public getDataCollectionDetail(id: number) {
+    const url = environment.SERVER_API + '/data-collection/detail/' + id;
+    return this.httpClient.get<DataCollectionDetail>(url);
+  }
+
+  /** */
+  public saveDataCollectionIngredients(id: number, idCollection: number[]) {
+    const url = environment.SERVER_API + '/data-collection/update/recipe-ingredients';
+    return this.httpClient.patch(url, { id: id, idList: idCollection });
   }
 }

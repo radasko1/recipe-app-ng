@@ -1,37 +1,148 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { DataCollectionService } from '../services/data-collection.service';
-import { DataCollection } from '../models/data-collection.interface';
+import { IngredientService } from '../../search/services/ingredient.service';
+import { Ingredient } from '../../search/models/ingredient.interface';
+import { LanguageService } from '../../../services/language.service';
+import { DataCollectionDetail } from '../models/data-collection-detail.interface';
 
 @Component({
   selector: 'app-detail',
   template: `
-    <ng-container *ngIf="dataCollection$ | async as dataCollection">
+    <ng-container *ngIf="dataCollectionDetail as dataCollection">
       <div class="container my-3">
-        <h2 class="text-4xl font-medium">{{ dataCollection.page_data.title }}</h2>
-        <p>Odkaz: {{ dataCollection.page_url }}</p>
+        <h2 class="text-4xl font-medium">{{ dataCollection.title }}</h2>
+        <p>Odkaz: {{ dataCollection.url }}</p>
 
-        <h3 class="text-2xl font-medium">Ingredience</h3>
-        <ul>
-          <li *ngFor="let ingredient of dataCollection.page_data.ingredients">{{ ingredient }}</li>
-        </ul>
+        <div class="mt-8">
+          <h3 class="text-2xl font-medium mt-0 mb-2">Ingredience uvedene v receptu</h3>
+          <p>Seznam ingredienci ziskanych z clanku</p>
+          <!--todo: use pipe?-->
+          <div class="gap-2 flex flex-wrap">
+            <span
+              *ngFor="let articleIngredient of dataCollection.ingredients"
+              class="rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-gray-900 bg-gray-100"
+            >
+              {{ articleIngredient }}
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-2xl font-medium mt-0 mb-2">Nalezene ingredience pro recept</h3>
+          <p>Seznam ingredienci nalezenych v databazi podle seznamu ingredienci z clanku</p>
+          <!--todo add remove icon-->
+          <div class="gap-2 flex flex-wrap">
+            <span
+              *ngFor="let ingredient of suggestedIngredients"
+              class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-blue-400"
+              (click)="remove(ingredient)"
+            >
+              {{ ingredient.locale[lang] }}
+            </span>
+            <span
+              *ngFor="let ing of ingredientStack"
+              class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-orange-400"
+              (click)="remove(ing)"
+            >
+              {{ ing.locale[lang] }}
+            </span>
+          </div>
+        </div>
+
+        <ng-container *ngIf="ingredientList$ | async as list">
+          <ng-autocomplete
+            [list]="list"
+            searchProp="locale"
+            placeholder="Search ingredient"
+            (onSelect)="select($event)"
+          />
+        </ng-container>
+
+        <div class="mt-5">
+          <button type="button" class="rounded-lg bg-red-700 text-white cursor-pointer font-medium py-2 px-3" (click)="deleteData()">Vymazat data</button>
+          <button type="button" class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3" (click)="save()">Ulozit</button>
+        </div>
       </div>
     </ng-container>
   `,
+  providers: [IngredientService],
 })
-export class DetailComponent implements OnInit {
-  protected dataCollection$: Observable<DataCollection> | undefined;
+export class DetailComponent implements OnInit, OnDestroy {
+  private subs = new Subject<boolean>();
+  private paramId: number | undefined;
+  protected dataCollectionDetail: DataCollectionDetail | undefined;
+  /** Separated suggested ingredient from detail due edition (add/remove) */
+  protected suggestedIngredients: Ingredient[] = [];
+  protected ingredientList$ = this.ingredientService.getList();
+  protected ingredientStack: Ingredient[] = [];
+  protected readonly lang = this.languageService.language;
 
   constructor(
     private readonly router: ActivatedRoute,
-    private readonly dataCollectionService: DataCollectionService
+    private readonly dataCollectionService: DataCollectionService,
+    private readonly ingredientService: IngredientService,
+    private readonly languageService: LanguageService
   ) {}
 
   ngOnInit() {
     const routeParam = this.router.snapshot.params;
-    const detailId = parseInt(routeParam['id'], 10);
-    this.dataCollection$ = this.dataCollectionService.getDataCollectionItem(detailId);
+    const detailId = routeParam['id']; // parseInt(routeParam['id'], 10);
+    this.paramId = detailId;
+
+    this.dataCollectionService
+      .getDataCollectionDetail(detailId)
+      .pipe(takeUntil(this.subs))
+      .subscribe({
+        next: (value) => {
+          this.dataCollectionDetail = value;
+          this.suggestedIngredients = value.suggestedIngredients;
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.subs.next(true);
+    this.subs.unsubscribe();
+  }
+
+  /** Handler for event whether item from autocomplete is selected
+   * @param item Select Ingredient item
+   */
+  protected select(item: Ingredient | null) {
+    if (!item) {
+      return;
+    }
+
+    this.ingredientStack.push(item);
+  }
+
+  /** */
+  protected remove(item: Ingredient) {
+    console.log(item);
+  }
+
+  /** */
+  protected save() {
+    if (!this.paramId) {
+      return;
+    }
+
+    const addedIngredientsIds = this.ingredientStack.map((ing) => ing.id);
+    const suggestedIngredients = this.suggestedIngredients.map((ing) => ing.id);
+    const listOfIds = addedIngredientsIds.concat(suggestedIngredients);
+
+    this.dataCollectionService.saveDataCollectionIngredients(this.paramId, listOfIds).subscribe();
+  }
+
+  /** Delete PageData from DataCollection */
+  protected deleteData() {
+    if (!this.paramId) {
+      return;
+    }
+
+    // todo
   }
 }
