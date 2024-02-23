@@ -62,8 +62,20 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
         </ng-container>
 
         <div class="mt-5">
-          <button type="button" class="rounded-lg bg-red-700 text-white cursor-pointer font-medium py-2 px-3" (click)="deleteData()">Vymazat data</button>
-          <button type="button" class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3" (click)="save()">Ulozit</button>
+          <button
+            type="button"
+            class="rounded-lg bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="deleteData()"
+          >
+            Vymazat data
+          </button>
+          <button
+            type="button"
+            class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="save()"
+          >
+            Ulozit
+          </button>
         </div>
       </div>
     </ng-container>
@@ -143,6 +155,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // todo
+    this.dataCollectionService.deletePageData(this.paramId).subscribe();
   }
 }

@@ -44,4 +44,10 @@ export class DataCollectionService {
     const url = environment.SERVER_API + '/data-collection/update/recipe-ingredients';
     return this.httpClient.patch(url, { id: id, idList: idCollection });
   }
+
+  /** */
+  public deletePageData(id: number) {
+    const url = environment.SERVER_API + '/data-collection/delete-data/';
+    return this.httpClient.post(url, { id });
+  }
 }
