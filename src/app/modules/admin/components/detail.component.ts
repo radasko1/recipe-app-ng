@@ -19,7 +19,6 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
         <div class="mt-8">
           <h3 class="text-2xl font-medium mt-0 mb-2">Ingredience uvedene v receptu</h3>
           <p>Seznam ingredienci ziskanych z clanku</p>
-          <!--todo: use pipe?-->
           <div class="gap-2 flex flex-wrap">
             <span
               *ngFor="let articleIngredient of dataCollection.ingredients"
@@ -36,16 +35,16 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
           <!--todo add remove icon-->
           <div class="gap-2 flex flex-wrap">
             <span
-              *ngFor="let ingredient of suggestedIngredients"
+              *ngFor="let ingredient of suggestedIngredients; index as ingredientI"
               class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-blue-400"
-              (click)="remove(ingredient)"
+              (click)="remove(suggestedIngredients, ingredientI)"
             >
               {{ ingredient.locale[lang] }}
             </span>
             <span
-              *ngFor="let ing of ingredientStack"
+              *ngFor="let ing of ingredientStack; index as ingI"
               class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-orange-400"
-              (click)="remove(ing)"
+              (click)="remove(ingredientStack, ingI)"
             >
               {{ ing.locale[lang] }}
             </span>
@@ -131,9 +130,13 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.ingredientStack.push(item);
   }
 
-  /** */
-  protected remove(item: Ingredient) {
-    console.log(item);
+  /**
+   * Remove item from array based on index
+   * @param sourceArray
+   * @param index
+   */
+  protected remove(sourceArray: Ingredient[], index: number) {
+    sourceArray.splice(index, 1);
   }
 
   /** */
