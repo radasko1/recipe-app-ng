@@ -16,7 +16,7 @@ export class DataCollectionService {
 
   /** Fetch data from server and save them for other requests */
   private getData() {
-    const url = environment.SERVER_API + '/data-collection/for-control';
+    const url = environment.SERVER_API + '/data-collection/list/analyzed-pages';
     return this.httpClient.get<DataCollection[]>(url).pipe(tap((data) => this.subject.next(data)));
   }
 
