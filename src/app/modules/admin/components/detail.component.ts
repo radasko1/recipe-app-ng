@@ -63,6 +63,13 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
         <div class="mt-5">
           <button
             type="button"
+            class="rounded-lg bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="approveData()"
+          >
+            Schvalit
+          </button>
+          <button
+            type="button"
             class="rounded-lg bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
             (click)="deleteData()"
           >
@@ -159,5 +166,14 @@ export class DetailComponent implements OnInit, OnDestroy {
     }
 
     this.dataCollectionService.deletePageData(this.paramId).subscribe();
+  }
+
+  /** Approve PageData from DataCollection */
+  protected approveData() {
+    if (!this.paramId) {
+      return;
+    }
+
+    this.dataCollectionService.approvePageData(this.paramId).subscribe();
   }
 }

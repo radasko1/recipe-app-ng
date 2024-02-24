@@ -37,7 +37,13 @@ export class DataCollectionService {
 
   /** */
   public deletePageData(id: number) {
-    const url = environment.SERVER_API + '/data-collection/delete-data/';
+    const url = environment.SERVER_API + '/data-collection/delete-data';
+    return this.httpClient.post(url, { id });
+  }
+
+  /** */
+  public approvePageData(id: number) {
+    const url = environment.SERVER_API + '/data-collection/approve-data';
     return this.httpClient.post(url, { id });
   }
 }
