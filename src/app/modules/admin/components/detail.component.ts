@@ -16,49 +16,67 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
         <h2 class="text-4xl font-medium">{{ dataCollection.title }}</h2>
         <p>Odkaz: {{ dataCollection.url }}</p>
 
-        <div class="mt-8">
-          <h3 class="text-2xl font-medium mt-0 mb-2">Ingredience uvedene v receptu</h3>
-          <p>Seznam ingredienci ziskanych z clanku</p>
-          <div class="gap-2 flex flex-wrap">
-            <span
-              *ngFor="let articleIngredient of dataCollection.ingredients"
-              class="rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-gray-900 bg-gray-100"
-            >
-              {{ articleIngredient }}
-            </span>
+        <!---->
+        <div class="flex flex-row">
+          <div class="basis-1/3">
+            <h3 class="text-2xl font-medium">Recept</h3>
+            <ul>
+              @for (ingredient of dataCollection.ingredients; track ingredient) {
+              <li>
+                <mat-checkbox>{{ ingredient }}</mat-checkbox>
+              </li>
+              }
+            </ul>
+          </div>
+          <!---->
+          <div class="basis-1/3">
+            <h3 class="text-2xl font-medium">Pozadovane ingredience</h3>
+            <ul>
+              @for (ingredient of requiredIngredients; track ingredient; let i = $index) {
+              <li class="flex flex-row items-center justify-between">
+                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Delete"
+                  fontIcon="delete"
+                  class="cursor-pointer text-red-600"
+                  (click)="remove(requiredIngredients, i)"
+                ></mat-icon>
+              </li>
+              }
+            </ul>
+            <ng-autocomplete
+              [list]="ingredientList"
+              searchProp="locale"
+              placeholder="Search ingredient"
+              (onSelect)="select(requiredIngredients, $event)"
+            />
+          </div>
+          <!---->
+          <div class="basis-1/3">
+            <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
+            <ul>
+              @for (ingredient of optionalIngredients; track ingredient; let i = $index) {
+              <li class="flex flex-row items-center justify-between">
+                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Delete"
+                  fontIcon="delete"
+                  class="cursor-pointer text-red-600"
+                  (click)="remove(optionalIngredients, i)"
+                ></mat-icon>
+              </li>
+              }
+            </ul>
+            <ng-autocomplete
+              [list]="ingredientList"
+              searchProp="locale"
+              placeholder="Search ingredient"
+              (onSelect)="select(optionalIngredients, $event)"
+            />
           </div>
         </div>
-
-        <div class="mt-8">
-          <h3 class="text-2xl font-medium mt-0 mb-2">Nalezene ingredience pro recept</h3>
-          <p>Seznam ingredienci nalezenych v databazi podle seznamu ingredienci z clanku</p>
-          <!--todo add remove icon-->
-          <div class="gap-2 flex flex-wrap">
-            <span
-              *ngFor="let ingredient of suggestedIngredients; index as ingredientI"
-              class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-blue-400"
-              (click)="remove(suggestedIngredients, ingredientI)"
-            >
-              {{ ingredient.locale[lang] }}
-            </span>
-            <span
-              *ngFor="let ing of ingredientStack; index as ingI"
-              class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none text-white bg-orange-400"
-              (click)="remove(ingredientStack, ingI)"
-            >
-              {{ ing.locale[lang] }}
-            </span>
-          </div>
-        </div>
-
-        <ng-container *ngIf="ingredientList$ | async as list">
-          <ng-autocomplete
-            [list]="list"
-            searchProp="locale"
-            placeholder="Search ingredient"
-            (onSelect)="select($event)"
-          />
-        </ng-container>
 
         <div class="mt-5">
           <button
@@ -92,10 +110,9 @@ export class DetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();
   private paramId: number | undefined;
   protected dataCollectionDetail: DataCollectionDetail | undefined;
-  /** Separated suggested ingredient from detail due edition (add/remove) */
-  protected suggestedIngredients: Ingredient[] = [];
-  protected ingredientList$ = this.ingredientService.getList();
-  protected ingredientStack: Ingredient[] = [];
+  protected requiredIngredients: Ingredient[] = [];
+  protected optionalIngredients: Ingredient[] = [];
+  protected ingredientList: Ingredient[] = [];
   protected readonly lang = this.languageService.language;
 
   constructor(
@@ -116,7 +133,16 @@ export class DetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (value) => {
           this.dataCollectionDetail = value;
-          this.suggestedIngredients = value.suggestedIngredients;
+          this.requiredIngredients = value.suggestedIngredients;
+        },
+      });
+
+    this.ingredientService
+      .getList()
+      .pipe(takeUntil(this.subs))
+      .subscribe({
+        next: (value) => {
+          this.ingredientList = value;
         },
       });
   }
@@ -126,15 +152,21 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  /** Handler for event whether item from autocomplete is selected
-   * @param item Select Ingredient item
+  /**
+   * Autocomplete option select handler.
+   * Push selected item inside specified array
+   * @param array
+   * @param item
    */
-  protected select(item: Ingredient | null) {
+  protected select(array: any[], item: any) {
+    if (!Array.isArray(array)) {
+      return;
+    }
     if (!item) {
       return;
     }
 
-    this.ingredientStack.push(item);
+    array.push(item);
   }
 
   /**
@@ -143,18 +175,22 @@ export class DetailComponent implements OnInit, OnDestroy {
    * @param index
    */
   protected remove(sourceArray: Ingredient[], index: number) {
+    if (index < 0) {
+      return;
+    }
+
     sourceArray.splice(index, 1);
   }
 
-  /** */
+  /** Save Recipe Ingredients for specific Data Collection */
   protected save() {
     if (!this.paramId) {
       return;
     }
 
-    const addedIngredientsIds = this.ingredientStack.map((ing) => ing.id);
-    const suggestedIngredients = this.suggestedIngredients.map((ing) => ing.id);
-    const listOfIds = addedIngredientsIds.concat(suggestedIngredients);
+    const requiredIngredientList = this.requiredIngredients.map((ing) => ing.id);
+    const optionalIngredientList = this.optionalIngredients.map((ing) => ing.id);
+    const listOfIds = requiredIngredientList.concat(optionalIngredientList);
 
     this.dataCollectionService.saveDataCollectionIngredients(this.paramId, listOfIds).subscribe();
   }
