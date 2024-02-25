@@ -17,8 +17,8 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
         <p>Odkaz: {{ dataCollection.url }}</p>
 
         <!---->
-        <div class="flex flex-row">
-          <div class="basis-1/3">
+        <div class="flex flex-row -mx-5 mt-10">
+          <div class="basis-1/3 px-5">
             <h3 class="text-2xl font-medium">Recept</h3>
             <ul>
               @for (ingredient of dataCollection.ingredients; track ingredient) {
@@ -29,7 +29,7 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
             </ul>
           </div>
           <!---->
-          <div class="basis-1/3">
+          <div class="basis-1/3 px-5">
             <h3 class="text-2xl font-medium">Pozadovane ingredience</h3>
             <ul>
               @for (ingredient of requiredIngredients; track ingredient; let i = $index) {
@@ -48,12 +48,12 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
             <ng-autocomplete
               [list]="ingredientList"
               searchProp="locale"
-              placeholder="Search ingredient"
+              placeholder="Přidat ingredienci"
               (onSelect)="select(requiredIngredients, $event)"
             />
           </div>
           <!---->
-          <div class="basis-1/3">
+          <div class="basis-1/3 px-5">
             <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
             <ul>
               @for (ingredient of optionalIngredients; track ingredient; let i = $index) {
@@ -72,7 +72,7 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
             <ng-autocomplete
               [list]="ingredientList"
               searchProp="locale"
-              placeholder="Search ingredient"
+              placeholder="Přidat ingredienci"
               (onSelect)="select(optionalIngredients, $event)"
             />
           </div>
