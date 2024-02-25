@@ -1,14 +1,40 @@
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { NonNullableFormBuilder } from '@angular/forms';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'ng-autocomplete',
-  templateUrl: './autocomplete.component.html',
+  template: `
+    <div class="block relative w-full">
+      <div class="flex rounded-md">
+        <input
+          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-0"
+          [formControl]="inputValue"
+          [placeholder]="placeholder"
+        />
+      </div>
+      <ul
+        class="absolute border-2 bg-white left-0 top-27-px overflow-y-auto h-auto max-h-[15rem] w-full shadow-lg"
+        [class.hidden]="!suggestions.length"
+        [class.block]="suggestions.length"
+      >
+        <!-- Beware: locale is used fo specific use-case -->
+        <li
+          *ngFor="let suggestion of suggestions"
+          (click)="select(suggestion)"
+          class="p-4 cursor-pointer hover:bg-gray-200"
+        >
+          {{ searchProp ? suggestion[searchProp][lang.language] : suggestion }}
+        </li>
+      </ul>
+    </div>
+  `,
 })
 export class AutocompleteComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
+
+  protected isVisible = false;
 
   /** Autocomplete search value */
   protected inputValue = this.fb.control<string>('');
@@ -57,9 +83,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
     // todo lang? not dynamic
     const prop = this.searchProp;
-    this.suggestions = this.list.filter((item) =>
-      item[prop][lang].includes(searchedText)
-    );
+    this.suggestions = this.list.filter((item) => item[prop][lang].includes(searchedText));
   }
 
   /**
@@ -69,6 +93,5 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   protected select(item: any) {
     this.selected.next(item);
     this.inputValue.reset();
-    this.suggestions = [];
   }
 }
