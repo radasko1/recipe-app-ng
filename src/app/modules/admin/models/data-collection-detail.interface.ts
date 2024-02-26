@@ -4,5 +4,6 @@ export interface DataCollectionDetail {
   title: string;
   url: string;
   ingredients: string[];
-  suggestedIngredients: Ingredient[];
+  requiredIngredients: Ingredient[];
+  optionalIngredients: Ingredient[];
 }

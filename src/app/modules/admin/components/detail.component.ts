@@ -133,7 +133,8 @@ export class DetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (value) => {
           this.dataCollectionDetail = value;
-          this.requiredIngredients = value.suggestedIngredients;
+          this.requiredIngredients = value.requiredIngredients;
+          this.optionalIngredients = value.optionalIngredients;
         },
       });
 
@@ -190,9 +191,10 @@ export class DetailComponent implements OnInit, OnDestroy {
 
     const requiredIngredientList = this.requiredIngredients.map((ing) => ing.id);
     const optionalIngredientList = this.optionalIngredients.map((ing) => ing.id);
-    const listOfIds = requiredIngredientList.concat(optionalIngredientList);
 
-    this.dataCollectionService.saveDataCollectionIngredients(this.paramId, listOfIds).subscribe();
+    this.dataCollectionService
+      .saveDataCollectionIngredients(this.paramId, requiredIngredientList, optionalIngredientList)
+      .subscribe();
   }
 
   /** Delete PageData from DataCollection */

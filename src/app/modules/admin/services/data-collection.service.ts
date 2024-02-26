@@ -16,23 +16,28 @@ export class DataCollectionService {
   }
 
   /** */
-  // public getDataCollectionItem(id: number) {
-  //   return this.subject.pipe(
-  //     mergeMap((item) => item),
-  //     filter((value) => value.id === id)
-  //   );
-  // }
-
-  /** */
   public getDataCollectionDetail(id: number) {
     const url = environment.SERVER_API + '/data-collection/detail/' + id;
     return this.httpClient.get<DataCollectionDetail>(url);
   }
 
-  /** */
-  public saveDataCollectionIngredients(id: number, idCollection: number[]) {
+  /**
+   * Update list of Ingredients in Recipe
+   * @param id
+   * @param requiredIngredients
+   * @param optionalIngredients
+   */
+  public saveDataCollectionIngredients(
+    id: number,
+    requiredIngredients: number[],
+    optionalIngredients: number[]
+  ) {
     const url = environment.SERVER_API + '/data-collection/update/recipe-ingredients';
-    return this.httpClient.patch(url, { id: id, idList: idCollection });
+    return this.httpClient.patch(url, {
+      id,
+      requiredIngredients,
+      optionalIngredients,
+    });
   }
 
   /** */
