@@ -8,5 +8,6 @@ export interface Recipe {
   locale: Locale;
   image_url: string | null;
   requiredIngredients: Ingredient[];
+  optionalIngredients: Ingredient[];
   selectedIngredients: Ingredient[];
 }

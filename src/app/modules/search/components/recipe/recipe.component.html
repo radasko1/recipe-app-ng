@@ -1,37 +1,40 @@
-<div class="flex" *ngIf="list && list.length">
-  <div
-    *ngFor="let recipe of list; last as rLast"
-    class="w-1/2 bg-white rounded-sm shadow-sm"
-    [class.mb-3]="!rLast"
-  >
+<ng-container *ngIf="list && list.length">
+  <div *ngFor="let recipe of list; last as rLast" class="block" [class.mb-6]="!rLast">
     <div class="flex gap-4">
-      <div class="w-1/3">
+      <div class="w-1/4">
         <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />
       </div>
-      <div class="w-2/3">
-        <div class="">
-          <h5 class="text-2xl font-semibold mb-3">{{ recipe.name }}</h5>
-          <div class="flex flex-wrap gap-1">
-            <span
-              *ngFor="let selectIngredient of recipe.selectedIngredients"
-              class="inline-flex items-center gap-1 bg-green-600 text-gray-50 rounded-md px-2 py-1 text-xs font-medium"
-            >
-              {{ selectIngredient.locale[lang.language] }}
-            </span>
-            <span
-              *ngFor="let requestIngredient of recipe.requiredIngredients"
-              class="inline-flex items-center gap-1 bg-gray-100 text-gray-900 rounded-md px-2 py-1 text-xs font-medium"
-            >
-              {{ requestIngredient.locale[lang.language] }}
-            </span>
-          </div>
-          <a [href]="recipe.link" target="_blank" class="">{{ locale[lang.language].Link }}</a>
+      <div class="w-3/4">
+        <h5 class="text-2xl font-semibold mb-3">{{ recipe.name }}</h5>
+        <div class="flex flex-wrap gap-1">
+          <!--selected = available (green)-->
+          <span
+            *ngFor="let selectIngredient of recipe.selectedIngredients"
+            class="inline-flex items-center gap-1 bg-green-600 text-gray-50 rounded-md px-2 py-1 text-xs font-medium"
+          >
+            {{ selectIngredient.locale[lang.language] }}
+          </span>
+          <!--required = unavailable (red)-->
+          <span
+            *ngFor="let requestIngredient of recipe.requiredIngredients"
+            class="inline-flex items-center gap-1 bg-red-500 text-white rounded-md px-2 py-1 text-xs font-medium"
+          >
+            {{ requestIngredient.locale[lang.language] }}
+          </span>
+          <!--optional = don't need (orange)-->
+          <span
+            *ngFor="let requestIngredient of recipe.optionalIngredients"
+            class="inline-flex items-center gap-1 bg-amber-300 text-white rounded-md px-2 py-1 text-xs font-medium"
+          >
+            {{ requestIngredient.locale[lang.language] }}
+          </span>
         </div>
+        <a [href]="recipe.link" target="_blank">{{ locale[lang.language].Link }}</a>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 <!--Empty search result-->
-<div *ngIf="list && !list.length">
+<ng-container *ngIf="list && !list.length">
   <p class="text-medium text-red-600">{{ locale[lang.language].EmptySearchResult }}</p>
-</div>
+</ng-container>
