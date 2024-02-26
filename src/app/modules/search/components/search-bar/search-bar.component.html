@@ -85,18 +85,18 @@
     </div>
     <!-- Content -->
     <div class="relative overflow-y-auto px-8 py-8">
-      <div *ngFor="let cat of categoryList; last as icLast" [class.mb-3]="!icLast">
-        <h2 class="font-bold text-lg mb-1">{{ cat.locale[langService.language] }}</h2>
+      <div *ngFor="let category of categoryList; last as icLast" [class.mb-3]="!icLast">
+        <h2 class="font-bold text-lg mb-1">{{ category.locale[langService.language] }}</h2>
         <div class="gap-2 flex-wrap flex">
           <span
-            *ngFor="let ingredient of cat.ingredientCategoryRels"
+            *ngFor="let ingredient of category.ingredientCategoryRels"
             role="button"
             class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none"
             [ngClass]="{
               'text-amber-50 bg-amber-500': ingredient.selected,
               'text-gray-900 bg-gray-100': !ingredient.selected
             }"
-            (click)="changeState(ingredient, true)"
+            (click)="changeState(ingredient, !ingredient.selected)"
           >
             {{ ingredient.locale[langService.language] }}
           </span>
