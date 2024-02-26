@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import locale from '../../locale.json';
-import { LanguageService } from '../../../../services/language.service';
 import { Recipe } from '../../models/recipe.interface';
 import { RecipeService } from '../../services/recipe.service';
 import { Ingredient } from '../../models/ingredient.interface';
@@ -9,13 +8,12 @@ import { Ingredient } from '../../models/ingredient.interface';
   selector: 'app-search',
   template: `
     <!--Search bar-->
-    <div class="py-8 mx-14">
+    <!--TODO shrink page container-->
+    <div class="py-8">
       <app-search-bar (onSubmit)="submit($event)" />
     </div>
     <!-- Recipes -->
-    <div class="py-8 mx-14">
-      <app-recipe [list]="recipeList" />
-    </div>
+    <app-recipe [list]="recipeList" />
   `,
 })
 export class SearchComponent {

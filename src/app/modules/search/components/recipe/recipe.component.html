@@ -1,5 +1,5 @@
 <ng-container *ngIf="list && list.length">
-  <div *ngFor="let recipe of list; last as rLast" class="block" [class.mb-6]="!rLast">
+  <div *ngFor="let recipe of list; last as rLast" class="block py-8" [class.mb-6]="!rLast">
     <div class="flex gap-4">
       <div class="w-1/4">
         <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />

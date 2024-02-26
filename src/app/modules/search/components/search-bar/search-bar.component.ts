@@ -65,7 +65,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       for (const ingredient of category.ingredientCategoryRels) {
         if (ingredient.id === item.id) {
           this.changeState(ingredient, true);
-          return; // Exit the function after changing state
+          break; // Exit the function after changing state
         }
       }
     }
@@ -73,24 +73,20 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   /**
    * Set 'selected' property state
-   * @param ing Ingredient
+   * @param ingredient Ingredient
    * @param state New 'selected' state
    */
-  protected changeState(ing: Ingredient, state: boolean) {
-    ing.selected = state;
+  protected changeState(ingredient: Ingredient, state: boolean) {
+    ingredient.selected = state;
 
-    // re-create new selection list
-    let selectedList: Ingredient[] = [];
-    this.categoryList.forEach((category) => {
+    // re-create new selection list above search-bar
+    this.selectedList = this.categoryList.reduce((result: Ingredient[], category) => {
       const selected = category.ingredientCategoryRels.filter((ingredient) => ingredient.selected);
-      selectedList = [...selectedList, ...selected];
-    });
-    this.selectedList = selectedList;
+      return result.concat(selected); // or [...selectedList, ...selected] for an alternative approach
+    }, []);
   }
 
-  /**
-   * On search button click
-   */
+  /** On search button click */
   protected searchRecipe() {
     this.onSubmit.next(this.selectedList);
   }

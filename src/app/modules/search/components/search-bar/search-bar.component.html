@@ -23,21 +23,7 @@
     ></ng-autocomplete>
     <!-- List button -->
     <button
-      [class]="[
-        'rounded',
-        'bg-transparent',
-        'text-gray-950',
-        'outline-0',
-        'py-1.5',
-        'px-2',
-        'inline-flex',
-        'gap-1',
-        'items-center',
-        'text-sm',
-        'font-medium',
-        'hover:bg-gray-950',
-        'hover:text-white'
-      ]"
+      class="rounded bg-transparent text-gray-950 outline-0 py-1.5 px-2 inline-flex gap-1 items-center text-sm font-medium hover:bg-gray-950 hover:text-white"
       (click)="isModalActive = true"
     >
       <span><i class="fa-solid fa-list"></i></span>
@@ -45,19 +31,7 @@
     </button>
     <!-- Search button -->
     <button
-      [class]="[
-        'rounded',
-        'outline-0',
-        'py-1',
-        'px-5',
-        'inline-flex',
-        'items-center',
-        'justify-center',
-        'text-sm',
-        'font-medium',
-        'bg-gray-950',
-        'text-white'
-      ]"
+      class="rounded outline-0 py-1 px-5 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white"
       (click)="searchRecipe()"
     >
       <i class="fa-solid fa-magnifying-glass fa-lg"></i>
