@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
-import { Ingredient } from '../../models/ingredient.interface';
 import { LanguageService } from '../../../../services/language.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
@@ -44,11 +43,8 @@ import { RecipeService } from '../../services/recipe.service';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
-  /** Localization texts */
   protected readonly locale = locale;
-
   protected categoryList: IngredientCategory[] = [];
-  protected ingredientList: Ingredient[] = [];
 
   constructor(
     protected readonly langService: LanguageService,
@@ -68,15 +64,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
           this.categoryList = data;
         },
       });
-
-    this.categoryService
-      .getAllIngredients()
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (list) => {
-          this.ingredientList = list;
-        },
-      });
   }
 
   ngOnDestroy() {
@@ -86,7 +73,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   protected openIngredientDialog() {
     const dialogRef = this.dialog.open(IngredientModalComponent);
-    // ?
   }
 
   /**

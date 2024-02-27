@@ -8,7 +8,11 @@ import { IngredientCategory } from '../../models/ingredient-category.interface';
 @Component({
   selector: 'app-ingredient-modal',
   template: `
-    <div class="relative block max-h-[70vh] overflow-y-auto">
+    <div
+      class="relative block max-h-[70vh] overflow-y-auto"
+      aria-modal="true"
+      aria-labelledby="Ingredient Category Select"
+    >
       <!--Header-->
       <div class="relative px-8 py-5">
         <!--Close-->
