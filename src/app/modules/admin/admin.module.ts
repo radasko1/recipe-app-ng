@@ -7,7 +7,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './components/dashboard.component';
 import { DataCollectionService } from './services/data-collection.service';
 import { DetailComponent } from './components/detail.component';
-import { AutocompleteModule } from '../autocomplete/autocomplete.module';
+import { AutocompleteModule } from '../../component-modules/autocomplete/autocomplete.module';
 
 @NgModule({
   declarations: [DashboardComponent, DetailComponent],

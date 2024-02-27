@@ -1,15 +1,18 @@
 const APPLICATION_NAME = 'RECIPO-MAT';
 
-const homePageTitle = {
+const HOME_PAGE_TITLE = {
   cs: 'Domů' + ' | ' + APPLICATION_NAME,
   en: 'Home' + ' | ' + APPLICATION_NAME,
 };
-const searchPageTitle = {
+const SEARCH_PAGE_TITLE = {
   cs: 'Vyhledat recept' + ' | ' + APPLICATION_NAME,
   en: 'Recipe search' + ' | ' + APPLICATION_NAME,
 };
 
 export const APP_PAGE_TITLE = {
-  HOMEPAGE: homePageTitle,
-  SEARCH: searchPageTitle,
+  HOMEPAGE: HOME_PAGE_TITLE,
+  SEARCH: SEARCH_PAGE_TITLE,
 };
+
+
+// TODO add meta tags
