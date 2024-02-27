@@ -7,24 +7,46 @@ export class IngredientDialogService {
   /** List of selected Ingredient */
   private selectedIngredientList: Ingredient[] = [];
 
-  constructor() {}
-
   /** List of selected Ingredients */
   get selectedList() {
     return this.selectedIngredientList;
   }
 
+  /**
+   * Switch state of selected Ingredient
+   * @param selectedIngredient
+   * @param nextState
+   * @param categoryList
+   */
   toggleIngredientSelection(
-    ingredient: Ingredient,
+    selectedIngredient: Ingredient,
     nextState: boolean,
     categoryList: IngredientCategory[]
   ) {
-    ingredient.selected = nextState;
+    selectedIngredient.selected = nextState;
 
     // re-create new selection list above search-bar
     this.selectedIngredientList = categoryList.reduce((result: Ingredient[], category) => {
       const selected = category.ingredientCategoryRels.filter((ingredient) => ingredient.selected);
       return result.concat(selected); // or [...selectedList, ...selected] for an alternative approach
     }, []);
+  }
+
+  /**
+   * Search through Ingredient Categories to find selected Ingredient item.
+   * @param selectedIngredient
+   * @param categoryList
+   */
+  ingredientSelect(selectedIngredient: Ingredient, categoryList: IngredientCategory[]) {
+    // TODO i dont like the way of nested documents, there must be a way for better solution
+    for (const category of categoryList) {
+      for (const ingredient of category.ingredientCategoryRels) {
+        if (ingredient.id === selectedIngredient.id) {
+          // change state to single item
+          this.toggleIngredientSelection(ingredient, true, categoryList);
+          break; // Exit the function after changing state
+        }
+      }
+    }
   }
 }

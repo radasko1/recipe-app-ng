@@ -22,12 +22,6 @@ export class RecipeService {
       .get<Recipe[]>(`${environment.SERVER_API}/recipe/by-ingredients`, {
         params: queryParams,
       })
-      .pipe(
-        tap({
-          next: (recipes) => {
-            this.onSearch.next(recipes);
-          },
-        })
-      );
+      .pipe(tap((recipes) => this.onSearch.next(recipes)));
   }
 }

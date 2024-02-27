@@ -75,30 +75,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(IngredientModalComponent);
   }
 
-  /**
-   * Search through Categories, then through Ingredients to find selected items.
-   * @param item Item to select
-   */
-  // TODO move to Service
   protected onSelect(item: any) {
-    // TODO i dont like the way of nested documents, there must be a way for better solution
-    for (const category of this.categoryList) {
-      for (const ingredient of category.ingredientCategoryRels) {
-        if (ingredient.id === item.id) {
-          // change state to single item
-          this.ingredientDialogService.toggleIngredientSelection(
-            ingredient,
-            true,
-            this.categoryList
-          );
-          break; // Exit the function after changing state
-        }
-      }
-    }
+    this.ingredientDialogService.ingredientSelect(item, this.categoryList);
   }
 
   protected searchRecipe() {
     const selectedIngredients = this.ingredientDialogService.selectedList;
+    if (!selectedIngredients.length) {
+      return;
+    }
     const ids = selectedIngredients.map((ingredient) => ingredient.id);
 
     this.recipeService.findRecipes(ids).subscribe();
