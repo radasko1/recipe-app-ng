@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import locale from './app.locale.json';
 import { LanguageService } from './services/language.service';
+import { environment } from '../environments/environment';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +35,25 @@ import { LanguageService } from './services/language.service';
         </div>
         <!--lang-->
         <app-language-switch />
+        <!--login-->
+        <div>
+          <a
+            *ngIf="!(authenticated | async)"
+            class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
+            rel="noopener noreferrer"
+            [href]="loginPageUrl"
+          >
+            {{ locale[languageService.language].Login }}
+          </a>
+          <a
+            *ngIf="authenticated | async"
+            class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
+            rel="noopener noreferrer"
+            [href]="logoutUrl"
+          >
+            Logout
+          </a>
+        </div>
       </div>
     </nav>
     <!-- content -->
@@ -43,6 +64,12 @@ import { LanguageService } from './services/language.service';
 })
 export class AppComponent {
   protected readonly locale = locale;
+  protected readonly loginPageUrl = environment.LOGIN_PAGE_URL;
+  protected readonly logoutUrl = environment.LOGOUT_PAGE_URL;
+  protected readonly authenticated = this.authService.isAuthenticated();
 
-  constructor(protected readonly languageService: LanguageService) {}
+  constructor(
+    protected readonly languageService: LanguageService,
+    protected readonly authService: AuthService
+  ) {}
 }

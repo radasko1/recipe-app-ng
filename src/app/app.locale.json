@@ -1,10 +1,12 @@
 {
   "cs": {
     "Home": "Domů",
-    "Search": "Vyhledat recept"
+    "Search": "Vyhledat recept",
+    "Login": "Přihlášení"
   },
   "en": {
     "Home": "Home",
-    "Search": "Search recipe"
+    "Search": "Search recipe",
+    "Login": "Login"
   }
 }
