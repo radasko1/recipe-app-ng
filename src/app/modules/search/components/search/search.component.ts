@@ -12,14 +12,11 @@ import { LanguageService } from '../../../../services/language.service';
   template: `
     <!--page container-->
     <div class="py-10 mx-auto max-w-[920px]">
-      <h2 class="font-bold text-4xl text-center">Vyhledávání receptů</h2>
+      <h2 class="font-bold text-4xl text-center">{{ locale[langService.language].FindRecipes }}</h2>
       <div class="my-8">
-        <p class="text-center mb-2">Vyhledejte recepty na základě dostupných ingrediencí.</p>
+        <p class="text-center mb-2">{{ locale[langService.language].SearchText1 }}</p>
         <!--TODO after click of underline text, focus on element?-->
-        <p class="text-center">
-          Zadejte jednotlivé ingredience do <u>vyhledávače</u>, nebo je zaškrtejte v
-          <u>seznamu ingrediencí</u>.
-        </p>
+        <p class="text-center" [innerHTML]="locale[langService.language].SearchText2"></p>
       </div>
       <!--Search bar-->
       <div class="py-8">
@@ -35,9 +32,9 @@ export class SearchComponent {
   protected recipeList: Recipe[] | undefined;
 
   constructor(
-    private readonly recipeService: RecipeService,
     readonly title: Title,
-    readonly langService: LanguageService
+    private readonly recipeService: RecipeService,
+    protected readonly langService: LanguageService
   ) {
     title.setTitle(APP_PAGE_TITLE.SEARCH[langService.language]);
   }
@@ -48,6 +45,10 @@ export class SearchComponent {
    */
   protected submit(ingredients: Ingredient[]) {
     const ingredientIDs = ingredients.map((ing) => ing.id);
+    if (!ingredientIDs) {
+      return;
+    }
+    // error?
 
     this.recipeService.findRecipes(ingredientIDs).subscribe({
       next: (response) => {

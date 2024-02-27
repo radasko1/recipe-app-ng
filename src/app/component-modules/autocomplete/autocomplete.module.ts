@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { AutocompleteComponent } from './components/autocomplete.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AutocompleteComponent } from './components/autocomplete.component';
 
 @NgModule({
   declarations: [AutocompleteComponent],

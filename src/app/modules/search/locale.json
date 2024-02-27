@@ -1,12 +1,12 @@
 {
   "cs": {
-    "FindRecipes": "Vyhledat recepty",
-    "SearchRecipeTitle": "Vyhledat recepty",
-    "SearchRecipeText": "Zadejte ingredience do vyhledávácího pole, nebo je naklikejte ručně ze seznamu"
+    "FindRecipes": "Vyhledávání receptů",
+    "SearchText1": "Vyhledejte recepty na základě dostupných ingrediencí.",
+    "SearchText2": "Zadejte jednotlivé ingredience do <u>vyhledávače</u>, nebo je zaškrtejte v <u>seznamu ingrediencí</u>."
   },
   "en": {
-    "FindRecipes": "Find recipes",
-    "SearchRecipeTitle": "Search recipes",
-    "SearchRecipeText": "Type ingredient to the search field, or click them manually from the list"
+    "FindRecipes": "Searching for recipes",
+    "SearchText1": "Search for recipes based on available ingredients.",
+    "SearchText2": "Enter the individual ingredients in the <u>search engine</u>, or check them in the <u>ingredient list</u>."
   }
 }
