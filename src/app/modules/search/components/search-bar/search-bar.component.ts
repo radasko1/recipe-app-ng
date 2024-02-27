@@ -88,6 +88,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   /** On search button click */
   protected searchRecipe() {
+    // error when list is empty?
+    if (!this.selectedList.length) {
+      return;
+    }
+
     this.onSubmit.next(this.selectedList);
   }
 }

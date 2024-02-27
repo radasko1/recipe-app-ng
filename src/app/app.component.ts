@@ -13,26 +13,21 @@ import { AuthService } from './services/auth.service';
         <!--logo-->
         <img src="../assets/logo.png" class="select-none pointer-events-none max-w-[8rem]" />
         <!--links-->
-        <div class="flex items-center justify-between w-full md:flex md:w-auto">
-          <ul class="flex font-medium p-4">
-            <li>
-              <a
-                routerLink="/"
-                class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"
-              >
-                {{ locale[languageService.language].Home }}
-              </a>
-            </li>
-            <li class="ml-8">
-              <a
-                routerLink="/search"
-                class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"
-              >
-                {{ locale[languageService.language].Search }}
-              </a>
-            </li>
-          </ul>
-        </div>
+        <ul class="flex items-center justify-between w-full md:flex md:w-auto font-medium p-4">
+          <li>
+            <a routerLink="/" class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black">
+              {{ locale[languageService.language].Home }}
+            </a>
+          </li>
+          <li class="ml-8">
+            <a
+              routerLink="/search"
+              class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"
+            >
+              {{ locale[languageService.language].Search }}
+            </a>
+          </li>
+        </ul>
         <!--lang-->
         <app-language-switch />
         <!--login-->
