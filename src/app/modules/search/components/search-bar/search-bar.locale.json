@@ -1,10 +1,10 @@
 {
   "cs": {
-    "ListButton": "Seznam",
-    "SearchIngredient": "Vyhledat suroviny"
+    "ListButton": "Seznam ingrediencí",
+    "SearchIngredient": "Vyhledat suroviny podle názvu"
   },
   "en": {
-    "ListButton": "List",
-    "SearchIngredient": "Search for ingredients"
+    "ListButton": "Ingredient list",
+    "SearchIngredient": "Search ingredients by name"
   }
 }
