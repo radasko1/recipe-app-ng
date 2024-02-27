@@ -8,7 +8,7 @@ export class IngredientService {
   constructor(private readonly http: HttpClient) {}
 
   /** Get list of Ingredient */
-  public getList() {
+  getList() {
     const url = environment.SERVER_API + '/ingredient';
     return this.http.get<Ingredient[]>(url);
   }

@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+
 import locale from '../../locale.json';
-import { Recipe } from '../../models/recipe.interface';
-import { RecipeService } from '../../services/recipe.service';
-import { Ingredient } from '../../models/ingredient.interface';
 import { APP_PAGE_TITLE } from '../../../../app.settings';
 import { LanguageService } from '../../../../services/language.service';
 
@@ -19,41 +17,19 @@ import { LanguageService } from '../../../../services/language.service';
         <p class="text-center" [innerHTML]="locale[langService.language].SearchText2"></p>
       </div>
       <!--Search bar-->
-      <div class="py-8">
-        <app-search-bar (onSubmit)="submit($event)" />
-      </div>
+      <app-search-bar />
       <!-- Recipes -->
-      <app-recipe [list]="recipeList" />
+      <app-recipe />
     </div>
   `,
 })
 export class SearchComponent {
   protected readonly locale = locale;
-  protected recipeList: Recipe[] | undefined;
 
   constructor(
     readonly title: Title,
-    private readonly recipeService: RecipeService,
     protected readonly langService: LanguageService
   ) {
     title.setTitle(APP_PAGE_TITLE.SEARCH[langService.language]);
-  }
-
-  /**
-   * Submit selected ingredients
-   * @param ingredients
-   */
-  protected submit(ingredients: Ingredient[]) {
-    const ingredientIDs = ingredients.map((ing) => ing.id);
-    if (!ingredientIDs) {
-      return;
-    }
-    // error?
-
-    this.recipeService.findRecipes(ingredientIDs).subscribe({
-      next: (response) => {
-        this.recipeList = response;
-      },
-    });
   }
 }
