@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import locale from '../../locale.json';
+import locale from './search.locale.json';
 import { APP_PAGE_TITLE } from '../../../../app.settings';
 import { LanguageService } from '../../../../services/language.service';
 
