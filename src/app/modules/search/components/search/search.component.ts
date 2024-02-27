@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import locale from '../../locale.json';
 import { Recipe } from '../../models/recipe.interface';
 import { RecipeService } from '../../services/recipe.service';
 import { Ingredient } from '../../models/ingredient.interface';
+import { APP_PAGE_TITLE } from '../../../../app.settings';
+import { LanguageService } from '../../../../services/language.service';
 
 @Component({
   selector: 'app-search-page',
@@ -31,7 +34,13 @@ export class SearchComponent {
   protected readonly locale = locale;
   protected recipeList: Recipe[] | undefined;
 
-  constructor(private readonly recipeService: RecipeService) {}
+  constructor(
+    private readonly recipeService: RecipeService,
+    readonly title: Title,
+    readonly langService: LanguageService
+  ) {
+    title.setTitle(APP_PAGE_TITLE.SEARCH[langService.language]);
+  }
 
   /**
    * Submit selected ingredients

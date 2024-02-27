@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import locale from '../locale.json';
 import { LanguageService } from '../../../services/language.service';
+import { APP_PAGE_TITLE } from '../../../app.settings';
 
 @Component({
   selector: 'app-homepage',
@@ -24,5 +26,10 @@ import { LanguageService } from '../../../services/language.service';
 export class HomepageComponent {
   protected readonly locale = locale;
 
-  constructor(protected readonly langService: LanguageService) {}
+  constructor(
+    protected readonly langService: LanguageService,
+    readonly title: Title
+  ) {
+    title.setTitle(APP_PAGE_TITLE.HOMEPAGE[this.langService.language]);
+  }
 }
