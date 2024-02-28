@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 
 import locale from './search.locale.json';
 import { APP_PAGE_TITLE } from '../../../../app.settings';
-import { LanguageService } from '../../../../services/language.service';
+import { LanguageService } from '../../../../shared/services/language-service/language.service';
 
 @Component({
   selector: 'app-search-page',

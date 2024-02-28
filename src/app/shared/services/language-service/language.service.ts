@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Language } from '../modules/language-switch/models/language.type';
-import { CookieService } from './cookie.service';
+import { Language } from '../../../modules/language-switch/models/language.type';
+import { CookieService } from '../cookie-service/cookie.service';
 
 const COOKIE_NAME = '_lang';
 

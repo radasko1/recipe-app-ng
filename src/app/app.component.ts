@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import locale from './app.locale.json';
-import { LanguageService } from './services/language.service';
+import { LanguageService } from './shared/services/language-service/language.service';
 import { environment } from '../environments/environment';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-root',

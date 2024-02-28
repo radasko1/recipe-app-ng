@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LanguageService } from '../../../../services/language.service';
+import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { RecipeService } from '../../services/recipe.service';
 import locale from './recipe.locale.json';
 

@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { NonNullableFormBuilder } from '@angular/forms';
 
-import { LanguageService } from '../../../../services/language.service';
+import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import { IngredientService } from '../../services/ingredient.service';
 

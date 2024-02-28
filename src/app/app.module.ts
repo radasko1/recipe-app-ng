@@ -6,7 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LanguageSwitchModule } from './modules/language-switch/language-switch.module';
-import { HttpRequestInterceptor } from './shared/http-request.interceptor';
+import { HttpRequestInterceptor } from './shared/services/http-request-interceptor/http-request.interceptor';
 
 @NgModule({
   declarations: [AppComponent],

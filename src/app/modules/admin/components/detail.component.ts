@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { DataCollectionService } from '../services/data-collection.service';
 import { IngredientService } from '../../search/services/ingredient.service';
 import { Ingredient } from '../../search/models/ingredient.interface';
-import { LanguageService } from '../../../services/language.service';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
 
 @Component({

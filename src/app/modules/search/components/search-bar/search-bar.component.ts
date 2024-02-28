@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
-import { LanguageService } from '../../../../services/language.service';
+import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
 import { CategoryService } from '../../services/category.service';
