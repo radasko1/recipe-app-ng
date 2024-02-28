@@ -9,7 +9,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
     <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm">
       <div class="container py-4 flex flex-wrap items-center justify-between">
         <!--logo-->
-        <img src="../assets/logo.png" class="select-none pointer-events-none max-w-[8rem]" />
+        <img src="../assets/logo.png" class="select-none pointer-events-none max-w-[8rem]" alt="RECIPO-MAT LOGO" />
         <!--links-->
         <ul class="flex items-center justify-between w-full md:flex md:w-auto font-medium p-4">
           <li>

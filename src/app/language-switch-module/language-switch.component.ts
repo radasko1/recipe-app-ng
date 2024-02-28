@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 import locale from './locale.json';
 import { Language } from './models/language.type';
-import { LanguageService } from "../shared/services/language-service/language.service";
-import { LocaleService } from "../shared/services/locale-service/locale.service";
+import { LanguageService } from '../shared/services/language-service/language.service';
+import { LocaleService } from '../shared/services/locale-service/locale.service';
 
 interface LanguageButton {
   code: Language;
@@ -35,17 +35,18 @@ interface LanguageButton {
       tabindex="-1"
     >
       <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-        <li *ngFor="let item of languageConfig">
+        @for (item of languageConfig; track item) {
+        <li>
           <a
             class="cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             role="menuitem"
             tabindex="-1"
-            id="menu-item-0"
             (click)="langService.change(item.code)"
           >
             {{ localeService.getLocaleValue(locale, item.translation) }}
           </a>
         </li>
+        }
       </ul>
     </div>
   `,

@@ -9,7 +9,7 @@ import { CategoryService } from '../../services/category.service';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
 import { RecipeService } from '../../services/recipe.service';
-import { LanguageService } from "../../../shared/services/language-service/language.service";
+import { LanguageService } from '../../../shared/services/language-service/language.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -28,6 +28,8 @@ import { LanguageService } from "../../../shared/services/language-service/langu
         </ng-container>
         <!-- List button -->
         <button
+          aria-label="Ingredient List Button"
+          type="button"
           class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex gap-1 items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
           (click)="openIngredientDialog()"
         >
@@ -41,6 +43,8 @@ import { LanguageService } from "../../../shared/services/language-service/langu
         </button>
         <!-- Search button -->
         <button
+          aria-label="Search Recipe Button"
+          type="submit"
           class="outline-0 py-1 px-4 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white hover:bg-blue-600"
           (click)="onSearch()"
         >

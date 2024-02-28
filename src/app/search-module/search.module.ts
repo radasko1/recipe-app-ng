@@ -29,6 +29,5 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     MatDialogModule,
   ],
   providers: [RecipeService, CategoryService, IngredientService, IngredientDialogService],
-  exports: [],
 })
 export class SearchModule {}
