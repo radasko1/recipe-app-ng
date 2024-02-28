@@ -4,10 +4,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { AutocompleteModule } from "../component-modules/autocomplete/autocomplete.module";
 import { DashboardComponent } from './components/dashboard.component';
-import { DataCollectionService } from './services/data-collection.service';
 import { DetailComponent } from './components/detail.component';
-import { AutocompleteModule } from '../../component-modules/autocomplete/autocomplete.module';
+import { DataCollectionService } from './services/data-collection.service';
 
 @NgModule({
   declarations: [DashboardComponent, DetailComponent],

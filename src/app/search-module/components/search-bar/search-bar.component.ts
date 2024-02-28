@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
-import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { IngredientService } from '../../services/ingredient.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
@@ -10,6 +9,7 @@ import { CategoryService } from '../../services/category.service';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
 import { RecipeService } from '../../services/recipe.service';
+import { LanguageService } from "../../../shared/services/language-service/language.service";
 
 @Component({
   selector: 'app-search-bar',

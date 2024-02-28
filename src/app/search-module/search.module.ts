@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { AutocompleteModule } from '../../component-modules/autocomplete/autocomplete.module';
+import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -15,7 +15,12 @@ import { IngredientService } from './services/ingredient.service';
 import { IngredientDialogService } from './services/ingredient-dialog.service';
 
 @NgModule({
-  declarations: [SearchPageComponent, SearchBarComponent, RecipeComponent, IngredientModalComponent],
+  declarations: [
+    SearchPageComponent,
+    SearchBarComponent,
+    RecipeComponent,
+    IngredientModalComponent,
+  ],
   imports: [
     SearchRoutingModule,
     AutocompleteModule,

@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
+import { Ingredient } from "../../search-module/models/ingredient.interface";
+import { IngredientService } from "../../search-module/services/ingredient.service";
+import { LanguageService } from "../../shared/services/language-service/language.service";
 import { DataCollectionService } from '../services/data-collection.service';
-import { IngredientService } from '../../search/services/ingredient.service';
-import { Ingredient } from '../../search/models/ingredient.interface';
-import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
 
 @Component({
@@ -56,7 +56,8 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
           <div class="basis-1/3 px-5">
             <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
             <ul>
-              @for (ingredient of optionalIngredients; track ingredient; let i = $index) {
+              @for (ingredient of optionalIngredients; track ingredient; let ingredientIndex =
+              $index) {
               <li class="flex flex-row items-center justify-between">
                 <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
                 <mat-icon
@@ -64,7 +65,7 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
                   aria-label="Delete"
                   fontIcon="delete"
                   class="cursor-pointer text-red-600"
-                  (click)="remove(optionalIngredients, i)"
+                  (click)="remove(optionalIngredients, ingredientIndex)"
                 ></mat-icon>
               </li>
               }

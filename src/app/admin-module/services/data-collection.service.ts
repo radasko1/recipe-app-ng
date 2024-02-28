@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from "../../../environments/environment";
 
-import { environment } from '../../../../environments/environment';
 import { DataCollection } from '../models/data-collection.interface';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
 

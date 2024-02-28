@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+
 import locale from './locale.json';
-import { LanguageService } from '../../shared/services/language-service/language.service';
 import { Language } from './models/language.type';
-import { LocaleService } from '../../shared/services/locale-service/locale.service';
+import { LanguageService } from "../shared/services/language-service/language.service";
+import { LocaleService } from "../shared/services/locale-service/locale.service";
 
 interface LanguageButton {
   code: Language;

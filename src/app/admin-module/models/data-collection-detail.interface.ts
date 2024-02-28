@@ -1,4 +1,4 @@
-import { Ingredient } from '../../search/models/ingredient.interface';
+import { Ingredient } from "../../search-module/models/ingredient.interface";
 
 export interface DataCollectionDetail {
   title: string;

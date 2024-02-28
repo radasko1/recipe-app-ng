@@ -6,16 +6,16 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./modules/homepage/homepage.module').then((module) => module.HomepageModule),
+      import('./homepage-module/homepage.module').then((module) => module.HomepageModule),
   },
   {
     path: 'search',
     loadChildren: () =>
-      import('./modules/search/search.module').then((module) => module.SearchModule),
+      import('./search-module/search.module').then((module) => module.SearchModule),
   },
   {
     path: 'admin',
-    loadChildren: () => import('./modules/admin/admin.module').then((module) => module.AdminModule),
+    loadChildren: () => import('./admin-module/admin.module').then((module) => module.AdminModule),
     canActivate: [AuthGuard],
   },
 ];

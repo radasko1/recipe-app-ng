@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+
+import { APP_PAGE_TITLE } from "../../app.settings";
+import { LanguageService } from "../../shared/services/language-service/language.service";
 import locale from '../locale.json';
-import { LanguageService } from '../../../shared/services/language-service/language.service';
-import { APP_PAGE_TITLE } from '../../../app.settings';
 
 @Component({
   selector: 'app-homepage',

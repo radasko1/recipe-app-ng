@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, mergeMap, Observable, tap } from 'rxjs';
+import { environment } from "../../../environments/environment";
 
 import { IngredientCategory } from '../models/ingredient-category.interface';
-import { environment } from '../../../../environments/environment';
 import { Ingredient } from '../models/ingredient.interface';
 
 @Injectable()
