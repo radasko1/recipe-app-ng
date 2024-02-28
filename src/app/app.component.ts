@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import locale from './app.locale.json';
 import { LanguageService } from './shared/services/language-service/language.service';
-import { environment } from '../environments/environment';
-import { AuthService } from './shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-root',
   template: `
     <!--navigation-->
-    <nav class="bg-white border-gray-200 border-b-[1px]">
+    <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm">
       <div class="container py-4 flex flex-wrap items-center justify-between">
         <!--logo-->
         <img src="../assets/logo.png" class="select-none pointer-events-none max-w-[8rem]" />
@@ -30,25 +28,6 @@ import { AuthService } from './shared/services/auth-service/auth.service';
         </ul>
         <!--lang-->
         <app-language-switch />
-        <!--login-->
-        <div>
-          <a
-            *ngIf="!(authenticated | async)"
-            class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
-            rel="noopener noreferrer"
-            [href]="loginPageUrl"
-          >
-            {{ locale[languageService.language].Login }}
-          </a>
-          <a
-            *ngIf="authenticated | async"
-            class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
-            rel="noopener noreferrer"
-            [href]="logoutUrl"
-          >
-            Logout
-          </a>
-        </div>
       </div>
     </nav>
     <!-- content -->
@@ -59,12 +38,6 @@ import { AuthService } from './shared/services/auth-service/auth.service';
 })
 export class AppComponent {
   protected readonly locale = locale;
-  protected readonly loginPageUrl = environment.LOGIN_PAGE_URL;
-  protected readonly logoutUrl = environment.LOGOUT_PAGE_URL;
-  protected readonly authenticated = this.authService.isAuthenticated();
 
-  constructor(
-    protected readonly languageService: LanguageService,
-    protected readonly authService: AuthService
-  ) {}
+  constructor(protected readonly languageService: LanguageService) {}
 }
