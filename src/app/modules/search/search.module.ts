@@ -5,7 +5,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { AutocompleteModule } from '../../component-modules/autocomplete/autocomplete.module';
 import { SearchRoutingModule } from './search-routing.module';
-import { SearchComponent } from './components/search/search.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
@@ -15,7 +15,7 @@ import { IngredientService } from './services/ingredient.service';
 import { IngredientDialogService } from './services/ingredient-dialog.service';
 
 @NgModule({
-  declarations: [SearchComponent, SearchBarComponent, RecipeComponent, IngredientModalComponent],
+  declarations: [SearchPageComponent, SearchBarComponent, RecipeComponent, IngredientModalComponent],
   imports: [
     SearchRoutingModule,
     AutocompleteModule,

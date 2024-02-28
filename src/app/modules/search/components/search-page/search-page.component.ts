@@ -23,7 +23,7 @@ import { LanguageService } from '../../../../shared/services/language-service/la
     </div>
   `,
 })
-export class SearchComponent {
+export class SearchPageComponent {
   protected readonly locale = locale;
 
   constructor(
