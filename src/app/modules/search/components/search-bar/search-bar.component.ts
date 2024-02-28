@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
+import { IngredientService } from '../../services/ingredient.service';
 import locale from './search-bar.locale.json';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
 import { CategoryService } from '../../services/category.service';
@@ -13,15 +14,18 @@ import { RecipeService } from '../../services/recipe.service';
 @Component({
   selector: 'app-search-bar',
   template: `
-    <div class="block py-8">
-      <!-- Search bar -->
+    <div class="block my-8">
       <div class="flex relative rounded border-[1px] border-black shadow-sm">
-        <ng-autocomplete
-          class="flex-1"
-          [placeholder]="locale[langService.language].SearchIngredient"
-          searchProp="locale"
-          (onSelect)="onSelect($event)"
-        ></ng-autocomplete>
+        <!-- Search bar -->
+        <ng-container *ngIf="ingredientList$ | async as ingredients">
+          <ng-autocomplete
+            class="flex-1"
+            searchProp="locale"
+            [list]="ingredients"
+            [placeholder]="locale[langService.language].SearchIngredient"
+            (onSelect)="onSelect($event)"
+          ></ng-autocomplete>
+        </ng-container>
         <!-- List button -->
         <button
           class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex gap-1 items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
@@ -33,7 +37,7 @@ import { RecipeService } from '../../services/recipe.service';
         <!-- Search button -->
         <button
           class="outline-0 py-1 px-4 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white hover:bg-blue-600"
-          (click)="searchRecipe()"
+          (click)="onSearch()"
         >
           <i class="fa-solid fa-magnifying-glass fa-lg"></i>
         </button>
@@ -44,10 +48,12 @@ import { RecipeService } from '../../services/recipe.service';
 export class SearchBarComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
   protected readonly locale = locale;
+  protected readonly ingredientList$ = this.ingredientService.getList();
   protected categoryList: IngredientCategory[] = [];
 
   constructor(
     protected readonly langService: LanguageService,
+    private readonly ingredientService: IngredientService,
     private readonly categoryService: CategoryService,
     private readonly ingredientDialogService: IngredientDialogService,
     private readonly recipeService: RecipeService,
@@ -59,10 +65,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.categoryService
       .getCategories()
       .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.categoryList = data;
-        },
+      .subscribe((data) => {
+        this.categoryList = data;
       });
   }
 
@@ -76,10 +80,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   protected onSelect(item: any) {
+    if (!item) {
+      return;
+    }
     this.ingredientDialogService.ingredientSelect(item, this.categoryList);
   }
 
-  protected searchRecipe() {
+  protected onSearch() {
     const selectedIngredients = this.ingredientDialogService.selectedList;
     if (!selectedIngredients.length) {
       return;

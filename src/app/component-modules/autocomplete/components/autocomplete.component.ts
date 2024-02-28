@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 
 @Component({
@@ -12,29 +13,21 @@ import { LanguageService } from '../../../shared/services/language-service/langu
           class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-0"
           [formControl]="inputValue"
           [placeholder]="placeholder"
+          [matAutocomplete]="ingredientList"
         />
+        <mat-autocomplete #ingredientList="matAutocomplete">
+          @for (suggestion of suggestions; track suggestion) {
+          <mat-option [value]="suggestion" (click)="select(suggestion)">
+            {{ searchProp ? suggestion[searchProp][lang.language] : suggestion }}
+          </mat-option>
+          }
+        </mat-autocomplete>
       </div>
-      <ul
-        class="absolute border-2 bg-white left-0 top-27-px overflow-y-auto h-auto max-h-[15rem] w-full shadow-lg"
-        [class.hidden]="!suggestions.length"
-        [class.block]="suggestions.length"
-      >
-        <!-- Beware: locale is used fo specific use-case -->
-        <li
-          *ngFor="let suggestion of suggestions"
-          (click)="select(suggestion)"
-          class="p-4 cursor-pointer hover:bg-gray-200"
-        >
-          {{ searchProp ? suggestion[searchProp][lang.language] : suggestion }}
-        </li>
-      </ul>
     </div>
   `,
 })
 export class AutocompleteComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
-
-  protected isVisible = false;
 
   /** Autocomplete search value */
   protected inputValue = this.fb.control<string>('');
@@ -59,9 +52,9 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Listen changes in form control input
-    this.inputValue.valueChanges.pipe(takeUntil(this.subscription)).subscribe({
-      next: (value) => this.onSearch(value),
-    });
+    this.inputValue.valueChanges
+      .pipe(takeUntil(this.subscription))
+      .subscribe((value) => this.onSearch(value));
   }
 
   ngOnDestroy() {
@@ -81,7 +74,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // todo lang? not dynamic
+    // todo lang? not dynamic use-case
     const prop = this.searchProp;
     this.suggestions = this.list.filter((item) => item[prop][lang].includes(searchedText));
   }
@@ -91,6 +84,9 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
    * @param item Selected item
    */
   protected select(item: any) {
+    if (!item) {
+      return;
+    }
     this.selected.next(item);
     this.inputValue.reset();
   }
