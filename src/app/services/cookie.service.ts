@@ -46,14 +46,4 @@ export class CookieService {
     }
     return null;
   }
-
-  /**
-   * Deletes a cookie
-   * @param name The name of the cookie.
-   */
-  delete(name: string): void {
-    this.set(name, '', {
-      expires: new Date(0),
-    });
-  }
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LanguageService } from './language.service';
 
-interface Locale {
+type Locale = {
   [key1: string]: {
     [key2: string]: string;
   };
-}
+};
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class LocaleService {
    * @param localeObject
    * @param localeKey
    */
-  public getLocaleValue(localeObject: Locale, localeKey: string) {
+  getLocaleValue(localeObject: Locale, localeKey: string) {
     return localeObject[this.langService.language][localeKey];
   }
 }
