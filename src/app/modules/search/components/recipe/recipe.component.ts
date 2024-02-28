@@ -9,9 +9,10 @@ import locale from './recipe.locale.json';
     <ng-container *ngIf="recipeList$ | async as recipeList">
       <!--List of Recipes-->
       <ng-template [ngIf]="recipeList.length">
+        <!--Single Recipe-->
         <div
           *ngFor="let recipe of recipeList; last as rLast"
-          class="block py-8"
+          class="block py-8 border-b-[1px] border-gray-200"
           [class.mb-6]="!rLast"
         >
           <div class="flex gap-4">
@@ -48,6 +49,7 @@ import locale from './recipe.locale.json';
           </div>
         </div>
       </ng-template>
+
       <!--Empty Recipe list result-->
       <ng-template [ngIf]="!recipeList.length">
         <p class="text-medium text-red-600">{{ locale[lang.language].EmptySearchResult }}</p>
