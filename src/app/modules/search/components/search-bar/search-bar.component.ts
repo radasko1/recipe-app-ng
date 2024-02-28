@@ -31,7 +31,12 @@ import { RecipeService } from '../../services/recipe.service';
           class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex gap-1 items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
           (click)="openIngredientDialog()"
         >
-          <span><i class="fa-solid fa-list"></i></span>
+          <span *ngIf="!ingredientDialogService.selectedCount">
+            <i class="fa-solid fa-list"></i>
+          </span>
+          <span *ngIf="ingredientDialogService.selectedCount">
+            {{ ingredientDialogService.selectedCount }}
+          </span>
           <span class="ml-2">{{ locale[langService.language].ListButton }}</span>
         </button>
         <!-- Search button -->
@@ -53,9 +58,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly langService: LanguageService,
+    protected readonly ingredientDialogService: IngredientDialogService,
     private readonly ingredientService: IngredientService,
     private readonly categoryService: CategoryService,
-    private readonly ingredientDialogService: IngredientDialogService,
     private readonly recipeService: RecipeService,
     private readonly dialog: MatDialog
   ) {}

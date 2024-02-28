@@ -12,6 +12,11 @@ export class IngredientDialogService {
     return this.selectedIngredientList;
   }
 
+  /** Number of selected Ingredients */
+  get selectedCount() {
+    return this.selectedIngredientList.length;
+  }
+
   /**
    * Switch state of selected Ingredient
    * @param selectedIngredient
