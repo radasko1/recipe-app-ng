@@ -1,12 +1,8 @@
 {
   "cs": {
-    "Home": "Domů",
-    "Search": "Vyhledat recept",
-    "Login": "Přihlášení"
+    "Search": "Vyhledat recept"
   },
   "en": {
-    "Home": "Home",
-    "Search": "Search recipe",
-    "Login": "Login"
+    "Search": "Search recipe"
   }
 }

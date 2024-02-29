@@ -9,14 +9,15 @@ import { LanguageService } from './shared/services/language-service/language.ser
     <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm">
       <div class="container py-4 flex flex-wrap items-center justify-between">
         <!--logo-->
-        <img src="../assets/logo.png" class="select-none pointer-events-none max-w-[8rem]" alt="RECIPO-MAT LOGO" />
+        <a routerLink="/" class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black">
+          <img
+            src="../assets/logo.png"
+            class="select-none pointer-events-none max-w-[8rem]"
+            alt="RECIPO-MAT LOGO"
+          />
+        </a>
         <!--links-->
         <ul class="flex items-center justify-between w-full md:flex md:w-auto font-medium p-4">
-          <li>
-            <a routerLink="/" class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black">
-              {{ locale[languageService.language].Home }}
-            </a>
-          </li>
           <li class="ml-8">
             <a
               routerLink="/search"
