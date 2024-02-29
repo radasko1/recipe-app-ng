@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
-import { LanguageSwitchComponent } from './language-switch.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { LanguageSwitchComponent } from './component/language-switch.component';
 
 @NgModule({
   declarations: [LanguageSwitchComponent],
+  imports: [MatMenuModule],
   exports: [LanguageSwitchComponent],
 })
 export class LanguageSwitchModule {}

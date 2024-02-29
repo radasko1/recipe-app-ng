@@ -1,40 +1,38 @@
 import { Component } from '@angular/core';
 
-import locale from './locale.json';
-import { Language } from './models/language.type';
-import { LanguageService } from '../shared/services/language-service/language.service';
-import { LocaleService } from '../shared/services/locale-service/locale.service';
+import locale from '../locale.json';
+import { Language } from '../models/language.type';
+import { LanguageService } from '../../shared/services/language-service/language.service';
+import { LocaleService } from '../../shared/services/locale-service/locale.service';
 
-interface LanguageButton {
+type LanguageButton = {
   code: Language;
   translation: string;
-}
+};
 
 @Component({
   selector: 'app-language-switch',
   template: `
     <div>
       <button
-        id="lang-button"
-        aria-expanded="false"
-        aria-haspopup="true"
-        data-dropdown-toggle="dropdown-lang"
+        aria-label="Language menu button"
         type="button"
         class="text-sm font-medium rounded px-2 py-1 bg-gray-950 text-gray-100"
+        [matMenuTriggerFor]="dropdown"
       >
         {{ languageLabel }}
       </button>
     </div>
     <!--dropdown-->
-    <div
-      id="dropdown-lang"
-      class="hidden z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+    <mat-menu
+      #dropdown
+      class="z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
-      aria-orientation="vertical"
-      aria-labelledby="lang-button"
       tabindex="-1"
+      xPosition="before"
+      yPosition="below"
     >
-      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+      <ul class="text-sm text-gray-700 dark:text-gray-200">
         @for (item of languageConfig; track item) {
         <li>
           <a
@@ -48,7 +46,7 @@ interface LanguageButton {
         </li>
         }
       </ul>
-    </div>
+    </mat-menu>
   `,
 })
 export class LanguageSwitchComponent {
