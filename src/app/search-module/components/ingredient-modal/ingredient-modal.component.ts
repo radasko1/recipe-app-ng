@@ -1,37 +1,27 @@
 import { Component } from '@angular/core';
 
-import { LanguageService } from "../../../shared/services/language-service/language.service";
+import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { CategoryService } from '../../services/category.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
 import { IngredientCategory } from '../../models/ingredient-category.interface';
+import locale from '../../../shared/general.locale.json';
 
 @Component({
   selector: 'app-ingredient-modal',
   template: `
-    <div
-      class="relative block max-h-[70vh] overflow-y-auto"
-      aria-modal="true"
-      aria-labelledby="Ingredient Category Select"
-    >
-      <!--Header-->
-      <div class="relative px-8 py-5">
-        <!--Close-->
-        <div
-          [mat-dialog-close]="true"
-          class="absolute right-5 top-3 w-8 h-8 flex items-center justify-center cursor-pointer"
-        >
-          <i class="fa-regular fa-circle-xmark fa-2xl"></i>
-        </div>
-      </div>
+    <div class="relative block" aria-modal="true" aria-labelledby="Ingredient Category Select">
       <!-- Content -->
-      <ng-container *ngIf="categoryList$ | async as categoryList">
-        <div class="relative overflow-y-auto px-8 py-8">
+      <mat-dialog-content>
+        <ng-container *ngIf="categoryList$ | async as categoryList">
+          <!--          <div class="relative overflow-y-auto px-8 py-8">-->
           <div
             *ngFor="let category of categoryList; last as category_last"
             [class.mb-3]="!category_last"
           >
-            <h2 class="font-bold text-lg mb-1">{{ category.locale[langService.language] }}</h2>
+            <h2 class="font-bold text-lg text-black mb-1">
+              {{ category.locale[langService.language] }}
+            </h2>
             <div class="gap-2 flex-wrap flex">
               <span
                 *ngFor="let ingredient of category.ingredientCategoryRels"
@@ -47,12 +37,23 @@ import { IngredientCategory } from '../../models/ingredient-category.interface';
               </span>
             </div>
           </div>
-        </div>
-      </ng-container>
+          <!--          </div>-->
+        </ng-container>
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+        <button
+          type="button"
+          mat-dialog-close
+          class="rounded text-white bg-black outline-0 py-2 px-4 block text-sm font-medium"
+        >
+          {{ locale[langService.language].Close }}
+        </button>
+      </mat-dialog-actions>
     </div>
   `,
 })
 export class IngredientModalComponent {
+  protected readonly locale = locale;
   protected readonly categoryList$ = this.categoryService.getCategories();
 
   constructor(
