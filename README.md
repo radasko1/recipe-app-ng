@@ -31,7 +31,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Next application development
 - Udelat na strance 'container'
-- Pridat stranku pro Registraci uzivatele `/signup`
-- Pridat stranku pro prihlaseni `/login`
-- Pridat Captcha
 - Pridat Administracni stranku pro manipulaci s web scrapingem
