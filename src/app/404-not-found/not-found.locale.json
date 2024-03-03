@@ -1,0 +1,12 @@
+{
+  "cs": {
+    "Title": "Stránka nenalezena",
+    "Description": "Tato stránka neexistuje nebo byla přesunuta. Zkontrolujte URL a zkuste to znovu.",
+    "Button": "Přejít na Domovskou stránku"
+  },
+  "en": {
+    "Title": "Page Not Found",
+    "Description": "The page you are looking for does not exist or has been moved. Please check the URL and try again.",
+    "Button": "Go to Homepage"
+  }
+}
