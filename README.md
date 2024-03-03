@@ -24,6 +24,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Bundle size
+
+https://angular.io/guide/deployment#inspect-the-bundles
+
 ## App Structure
 
 - Each module has own dependencies that are needed
