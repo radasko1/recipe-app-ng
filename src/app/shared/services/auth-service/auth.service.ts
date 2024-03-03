@@ -11,7 +11,7 @@ export class AuthService {
    * Whether user has logged (authenticated)
    */
   isAuthenticated(): Observable<boolean> {
-    const url = `${environment.SERVER_ORIGIN}/user/authenticated`;
+    const url = `${environment.SERVER_API}/user/authenticated`;
     return this.http.get<boolean>(url);
   }
 }
