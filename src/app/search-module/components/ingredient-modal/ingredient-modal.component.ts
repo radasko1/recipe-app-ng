@@ -24,7 +24,7 @@ import locale from '../../../shared/general.locale.json';
             </h2>
             <div class="gap-2 flex-wrap flex">
               <span
-                *ngFor="let ingredient of category.ingredientCategoryRels"
+                *ngFor="let ingredient of category.ingredients"
                 role="button"
                 class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none"
                 [ngClass]="{

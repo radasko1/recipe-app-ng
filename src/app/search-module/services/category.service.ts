@@ -30,7 +30,7 @@ export class CategoryService {
   public getAllIngredients(): Observable<Ingredient[]> {
     return this.subject.pipe(
       // Transform each Category into an Observable of its Ingredients
-      mergeMap((categories) => categories.map((category) => category.ingredientCategoryRels))
+      mergeMap((categories) => categories.map((category) => category.ingredients))
     );
   }
 
