@@ -48,7 +48,7 @@ import { LanguageService } from '../../../shared/services/language-service/langu
           class="outline-0 py-1 px-4 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white hover:bg-blue-600"
           (click)="onSearch()"
         >
-          <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          <mat-icon fontIcon="search"></mat-icon>
         </button>
       </div>
     </div>
