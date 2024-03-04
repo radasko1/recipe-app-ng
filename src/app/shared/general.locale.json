@@ -1,8 +1,10 @@
 {
   "cs": {
-    "Close": "Zavřít"
+    "Close": "Zavřít",
+    "Unknown": "Neznámé"
   },
   "en": {
-    "Close": "Close"
+    "Close": "Close",
+    "Unknown": "Unknown"
   }
 }
