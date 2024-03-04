@@ -26,21 +26,21 @@ import generalLocale from '../../../shared/general.locale.json';
               <h5 class="text-2xl font-semibold mb-3">{{ recipe.name }}</h5>
               <div class="inline-flex items-center mb-4">
                 <!--cooking time-->
-                <div class="inline-flex items-center me-6">
-                  <mat-icon fontIcon="schedule" class="me-1"></mat-icon>
+                <div class="inline-flex items-center mr-6">
+                  <mat-icon fontIcon="schedule" class="mr-1"></mat-icon>
                   <span class="text-sm text-gray-600">
                     <em>{{ generalLocale[lang.language].Unknown | lowercase }}</em>
                   </span>
                 </div>
                 <!--calories-->
                 <div class="inline-flex items-center">
-                  <mat-icon fontIcon="info" class="me-1"></mat-icon>
+                  <mat-icon fontIcon="info" class="mr-1"></mat-icon>
                   <span class="text-sm text-gray-600">
-                    <em>{{ generalLocale[lang.language].Unknown |lowercase }}</em>
+                    <em>{{ generalLocale[lang.language].Unknown | lowercase }}</em>
                   </span>
                 </div>
               </div>
-              <div class="flex flex-wrap gap-1">
+              <div class="flex flex-wrap gap-1 mb-4">
                 <!--selected = available (green)-->
                 <span
                   *ngFor="let selectIngredient of recipe.selectedIngredients"
@@ -63,7 +63,13 @@ import generalLocale from '../../../shared/general.locale.json';
                   {{ requestIngredient.locale[lang.language] }}
                 </span>
               </div>
-              <a [href]="recipe.link" target="_blank">{{ locale[lang.language].Link }}</a>
+              <!--link-->
+              <div class="inline-flex items-center">
+                <mat-icon fontIcon="link"></mat-icon>
+                <a [href]="recipe.link" target="_blank" class="inline-block ml-2">
+                  {{ locale[lang.language].Link }}
+                </a>
+              </div>
             </div>
           </div>
         </div>
