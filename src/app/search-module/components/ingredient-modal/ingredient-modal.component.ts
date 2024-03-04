@@ -14,13 +14,12 @@ import locale from '../../../shared/general.locale.json';
       <!-- Content -->
       <mat-dialog-content>
         <ng-container *ngIf="categoryList$ | async as categoryList">
-          <!--          <div class="relative overflow-y-auto px-8 py-8">-->
           <div
             *ngFor="let category of categoryList; last as category_last"
-            [class.mb-3]="!category_last"
+            [class.mb-6]="!category_last"
           >
-            <h2 class="font-bold text-lg text-black mb-1">
-              {{ category.locale[langService.language] }}
+            <h2 class="font-bold text-xl text-black mb-2">
+              {{ category.locale[langService.language] | titlecase }}
             </h2>
             <div class="gap-2 flex-wrap flex">
               <span
@@ -37,7 +36,6 @@ import locale from '../../../shared/general.locale.json';
               </span>
             </div>
           </div>
-          <!--          </div>-->
         </ng-container>
       </mat-dialog-content>
       <mat-dialog-actions align="end">

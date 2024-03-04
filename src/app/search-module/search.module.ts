@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
@@ -27,6 +28,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatIconModule,
   ],
   providers: [RecipeService, CategoryService, IngredientService, IngredientDialogService],
 })

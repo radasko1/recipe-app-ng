@@ -33,13 +33,13 @@ import { LanguageService } from '../../../shared/services/language-service/langu
           class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex gap-1 items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
           (click)="openIngredientDialog()"
         >
-          <span *ngIf="!ingredientDialogService.selectedCount">
-            <i class="fa-solid fa-list"></i>
+          <span class="h-6" *ngIf="!ingredientDialogService.selectedCount">
+            <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
           </span>
-          <span *ngIf="ingredientDialogService.selectedCount">
+          <span class="hidden md:block" *ngIf="ingredientDialogService.selectedCount">
             {{ ingredientDialogService.selectedCount }}
           </span>
-          <span class="ml-2">{{ locale[langService.language].ListButton }}</span>
+          <span class="hidden md:block ml-2">{{ locale[langService.language].ListButton }}</span>
         </button>
         <!-- Search button -->
         <button
