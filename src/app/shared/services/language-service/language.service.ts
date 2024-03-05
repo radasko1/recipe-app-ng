@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Language } from '../../../language-switch-module/models/language.type';
 
+import { ENGLISH_LANG, Language } from '../../../language-switch-module/models/language.type';
 import { CookieService } from '../cookie-service/cookie.service';
 
 const COOKIE_NAME = '_lang';
@@ -10,7 +10,7 @@ const COOKIE_NAME = '_lang';
   providedIn: 'root',
 })
 export class LanguageService {
-  private currentLanguage: Language = 'en';
+  private currentLanguage: Language = ENGLISH_LANG;
   private languageChange = new BehaviorSubject<Language>(this.currentLanguage);
 
   constructor(private cookieService: CookieService) {

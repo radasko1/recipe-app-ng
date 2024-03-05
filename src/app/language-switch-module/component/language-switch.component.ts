@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import locale from '../locale.json';
-import { Language } from '../models/language.type';
+import { CZECH_LANG, ENGLISH_LANG, Language } from '../models/language.type';
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import { LocaleService } from '../../shared/services/locale-service/locale.service';
 
@@ -52,8 +52,8 @@ type LanguageButton = {
 export class LanguageSwitchComponent {
   protected readonly locale = locale;
   protected readonly languageConfig: LanguageButton[] = [
-    { code: 'cs', translation: 'Czech' },
-    { code: 'en', translation: 'English' },
+    { code: CZECH_LANG, translation: 'Czech' },
+    { code: ENGLISH_LANG, translation: 'English' },
   ];
 
   constructor(
@@ -64,10 +64,10 @@ export class LanguageSwitchComponent {
   /** Get translated language label */
   protected get languageLabel() {
     switch (this.langService.language) {
-      case 'cs':
-        return this.locale['cs'].Czech;
-      case 'en':
-        return this.locale['en'].English;
+      case CZECH_LANG:
+        return this.locale[CZECH_LANG].Czech;
+      case ENGLISH_LANG:
+        return this.locale[ENGLISH_LANG].English;
     }
   }
 }
