@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { SearchRoutingModule } from './search-routing.module';
@@ -29,6 +30,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     ReactiveFormsModule,
     MatDialogModule,
     MatIconModule,
+    MatPaginatorModule,
   ],
   providers: [RecipeService, CategoryService, IngredientService, IngredientDialogService],
 })
