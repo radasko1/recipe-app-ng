@@ -2,6 +2,9 @@
 
 List of application versions with description
 
+### 1.1.0
+- new `RecipeDetailBreadcrumbComponent` component
+
 ### 1.0.2
 - add language values for `Language` type
 

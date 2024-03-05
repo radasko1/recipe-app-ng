@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
+import { SharedMaterialModule } from '../shared/shared-material.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -29,8 +28,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatIconModule,
-    MatPaginatorModule,
+    SharedMaterialModule,
   ],
   providers: [RecipeService, CategoryService, IngredientService, IngredientDialogService],
 })
