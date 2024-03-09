@@ -1,0 +1,16 @@
+{
+  "cs": {
+    "SourceList": "Seznam zdrojů",
+    "AddSource": "Přidat zdroj",
+    "Action": "Akce",
+    "Link": "Odkaz",
+    "Source": "Zdroj"
+  },
+  "en": {
+    "SourceList": "Source list",
+    "AddSource": "Add source",
+    "Action": "Action",
+    "Link": "Link",
+    "Source": "Source"
+  }
+}

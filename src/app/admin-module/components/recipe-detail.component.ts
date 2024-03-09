@@ -144,7 +144,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.paramId = detailId;
 
     this.dataCollectionService
-      .getDataCollectionDetail(detailId)
+      .getDataCollectionPageDetail(detailId)
       .pipe(takeUntil(this.subs))
       .subscribe((value) => {
         this.dataCollectionDetail = value;

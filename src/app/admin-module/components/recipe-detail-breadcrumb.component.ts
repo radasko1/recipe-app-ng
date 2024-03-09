@@ -3,12 +3,14 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-recipe-detail-breadcrumb',
   template: `
-    <span [routerLink]="['/', 'admin']" class="font-medium underline cursor-pointer">Admin</span>
+    <span [routerLink]="['/', 'admin', 'dashboard']" class="font-medium underline cursor-pointer"
+      >Admin</span
+    >
     <span class="ml-3">/</span>
     <span
-      [routerLink]="['/', 'admin', 'dashboard']"
+      [routerLink]="['/', 'admin', 'page']"
       class="ml-3 font-medium underline cursor-pointer"
-      >Dashboard</span
+      >Recipe List</span
     >
     <span class="ml-3">/</span>
     <span class="ml-3">{{ title }}</span>
