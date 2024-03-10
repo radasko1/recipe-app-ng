@@ -1,5 +1,5 @@
 
-const APPLICATION_NAME = 'RECIPO-MAT';
+const APPLICATION_NAME = 'Reci-pier';
 
 const HOME_PAGE_TITLE = {
   cs: 'Domů' + ' | ' + APPLICATION_NAME,

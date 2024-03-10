@@ -13,7 +13,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
           <img
             src="../assets/logo.png"
             class="select-none pointer-events-none max-w-[8rem]"
-            alt="RECIPO-MAT LOGO"
+            alt="Reci-pier"
           />
         </a>
         <!--links-->
@@ -32,9 +32,13 @@ import { LanguageService } from './shared/services/language-service/language.ser
       </div>
     </nav>
     <!-- content -->
-    <main class="relative block container">
+    <main class="relative min-h-full block container">
       <router-outlet></router-outlet>
     </main>
+    <!-- footer-->
+    <footer class="bg-sky-900 text-white py-2 text-center font-medium">
+      2024
+    </footer>
   `,
 })
 export class AppComponent {

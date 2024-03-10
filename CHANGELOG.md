@@ -2,6 +2,9 @@
 
 List of application versions with description
 
+### 1.3.0
+- rename app to `Reci-pier`
+
 ### 1.2.0
 - refactor of `AdminModule`
   - page for Source list `SourceListComponent`
