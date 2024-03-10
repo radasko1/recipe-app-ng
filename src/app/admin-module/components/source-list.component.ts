@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LanguageService } from '../../shared/services/language-service/language.service';
+
 import { DataCollectionSource } from '../models/data-collection-source.interface';
 import { DataCollectionService } from '../services/data-collection.service';
-import locale from '../admin.locale.json';
 import { SourcePageDialogComponent } from './source-page-dialog.component';
+import { LanguageService } from '../../shared/services/language-service/language.service';
+import locale from '../admin.locale.json';
 
-// TODO action to add new page to control?
 @Component({
   selector: 'app-source-list',
   template: `
@@ -51,7 +51,7 @@ import { SourcePageDialogComponent } from './source-page-dialog.component';
               <td class="px-6 py-4 text-right">
                 <a
                   [routerLink]="['/', 'admin', 'source', item.id]"
-                  class="inline-block text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  class="inline-block text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                   >Detail</a
                 >
                 <div class="inline-block">
@@ -60,7 +60,7 @@ import { SourcePageDialogComponent } from './source-page-dialog.component';
                     class="rounded px-4 py-2 bg-blue-700 text-white"
                     (click)="openDialog(item)"
                   >
-                    Pridat odkaz
+                    {{ locale[langService.language].AddPage }}
                   </button>
                 </div>
               </td>
@@ -81,7 +81,13 @@ export class SourceListComponent {
     private readonly dialog: MatDialog
   ) {}
 
+  /**
+   * Open dialog to add new page to it
+   * @param source
+   */
   protected openDialog(source: DataCollectionSource) {
-    this.dialog.open(SourcePageDialogComponent, { data: { sourceId: source.id } });
+    this.dialog.open(SourcePageDialogComponent, {
+      data: { sourceId: source.id, origin: source.origin },
+    });
   }
 }

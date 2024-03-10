@@ -2,15 +2,19 @@
   "cs": {
     "SourceList": "Seznam zdrojů",
     "AddSource": "Přidat zdroj",
+    "AddPage": "Přidat stránku",
     "Action": "Akce",
     "Link": "Odkaz",
-    "Source": "Zdroj"
+    "Source": "Zdroj",
+    "LinkToSource": "Přiřadit stránku ke zdroji"
   },
   "en": {
     "SourceList": "Source list",
     "AddSource": "Add source",
+    "AddPage": "Add page",
     "Action": "Action",
     "Link": "Link",
-    "Source": "Source"
+    "Source": "Source",
+    "LinkToSource": "Link website page to the source"
   }
 }

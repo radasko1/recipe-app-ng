@@ -96,21 +96,21 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
           <div class="mt-5">
             <button
               type="button"
-              class="rounded-lg bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
+              class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
               (click)="approveData()"
             >
               Schvalit
             </button>
             <button
               type="button"
-              class="rounded-lg bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
+              class="rounded bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
               (click)="deleteData()"
             >
               Vymazat data
             </button>
             <button
               type="button"
-              class="rounded-lg bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
+              class="rounded bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
               (click)="save()"
             >
               Ulozit

@@ -25,7 +25,7 @@ import locale from '../../../shared/general.locale.json';
               <span
                 *ngFor="let ingredient of category.ingredients"
                 role="button"
-                class="cursor-pointer rounded-lg inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none"
+                class="cursor-pointer rounded inline-flex px-2 py-1 text-xs font-medium border-transparent border-0 outline-0 mb-0 select-none"
                 [ngClass]="{
                   'text-amber-50 bg-amber-500': ingredient.selected,
                   'text-gray-900 bg-gray-100': !ingredient.selected

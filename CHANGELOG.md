@@ -2,6 +2,13 @@
 
 List of application versions with description
 
+### 1.2.0
+- refactor of `AdminModule`
+  - page for Source list `SourceListComponent`
+  - page for Source detail `SourceDetailComponent`
+  - page for Recipe list `RecipeListComponent`
+  - page for Recipe detail `RecipeDetailComponent`
+
 ### 1.1.0
 - new `RecipeDetailBreadcrumbComponent` component
 

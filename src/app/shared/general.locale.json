@@ -1,10 +1,12 @@
 {
   "cs": {
     "Close": "Zavřít",
-    "Unknown": "Neznámé"
+    "Unknown": "Neznámé",
+    "Add": "Přidat"
   },
   "en": {
     "Close": "Close",
-    "Unknown": "Unknown"
+    "Unknown": "Unknown",
+    "Add": "Add"
   }
 }
