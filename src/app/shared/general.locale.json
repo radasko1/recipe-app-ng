@@ -2,11 +2,13 @@
   "cs": {
     "Close": "Zavřít",
     "Unknown": "Neznámé",
-    "Add": "Přidat"
+    "Add": "Přidat",
+    "Save": "Uložit"
   },
   "en": {
     "Close": "Close",
     "Unknown": "Unknown",
-    "Add": "Add"
+    "Add": "Add",
+    "Save": "Save"
   }
 }

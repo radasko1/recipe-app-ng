@@ -7,6 +7,7 @@ List of application versions with description
 - created `BreadcrumbComponent` which can be server globally
   - replace for `RecipeDetailBreadcrumbComponent`
 - removed `RecipeDetailBreadcrumbComponent`
+- option to edit configuration setting for `DataCollectionSource` in `SourceDetailComponent`
 
 ### 1.3.0
 - rename app to `Reci-pier`

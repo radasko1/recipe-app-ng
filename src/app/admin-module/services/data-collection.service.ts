@@ -65,9 +65,23 @@ export class DataCollectionService {
     return this.httpClient.post(url, { id });
   }
 
-  /** */
+  /**
+   * Add new page with recipe to the source
+   * @param id
+   * @param link
+   */
   public addSourceLink(id: number, link: string) {
     const url = environment.SERVER_API + '/data-collection/source/add-link';
     return this.httpClient.post(url, { id, link });
+  }
+
+  /**
+   * Save updated data of DataSource
+   * @param id
+   * @param source
+   */
+  public updateDataSource(id: number, source: DataCollectionSource) {
+    const url = environment.SERVER_API + '/data-collection/update/data-source';
+    return this.httpClient.patch<DataCollectionSource>(url, { id, config: source });
   }
 }

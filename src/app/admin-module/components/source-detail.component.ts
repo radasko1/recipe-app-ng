@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -6,6 +7,7 @@ import { DataCollectionSource } from '../models/data-collection-source.interface
 import { DataCollectionService } from '../services/data-collection.service';
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import locale from '../admin.locale.json';
+import sharedLocale from '../../shared/general.locale.json';
 
 @Component({
   selector: 'app-source-detail',
@@ -21,7 +23,7 @@ import locale from '../admin.locale.json';
       />
       <div class="py-9">
         <!--header-->
-        <div class="header">
+        <div class="header relative">
           <h2 class="text-4xl font-medium mb-4">{{ source.origin }}</h2>
           <!--link-->
           <div class="inline-flex items-center">
@@ -29,6 +31,15 @@ import locale from '../admin.locale.json';
             <a [href]="source.url" target="_blank" rel="noreferrer noopener" class="ml-3 underline">
               {{ locale[langService.language].GoToPage }}
             </a>
+          </div>
+          <div class="block md:flex md:justify-end">
+            <button
+              type="button"
+              class="rounded px-4 py-2 border-none outline-none cursor-pointer bg-sky-700 text-white"
+              (click)="save()"
+            >
+              {{ sharedLocale[langService.language].Save }}
+            </button>
           </div>
         </div>
         <!--content-->
@@ -55,7 +66,8 @@ import locale from '../admin.locale.json';
               rows="10"
               cols="70"
               class="block rounded border outline-none leading-tight appearance-none p-3"
-              >{{ source.config | json }}</textarea
+              [formControl]="config"
+              >{{ config.value }}</textarea
             >
           </div>
         </div>
@@ -68,10 +80,13 @@ export class SourceDetailComponent implements OnInit, OnDestroy {
   private paramId: number | undefined;
   protected sourceDetail: DataCollectionSource | undefined;
   protected readonly locale = locale;
+  protected readonly sharedLocale = sharedLocale;
+  protected config = this.fb.control<string>('', { validators: [Validators.required] });
 
   constructor(
     private readonly router: ActivatedRoute,
     private readonly dataCollectionService: DataCollectionService,
+    private readonly fb: NonNullableFormBuilder,
     protected readonly langService: LanguageService
   ) {}
 
@@ -85,11 +100,29 @@ export class SourceDetailComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.subs))
       .subscribe((response) => {
         this.sourceDetail = response;
+        this.config.setValue(JSON.stringify(response.config));
       });
   }
 
   ngOnDestroy() {
     this.subs.next(true);
     this.subs.unsubscribe();
+  }
+
+  /** Save DataSource config setting */
+  protected save() {
+    if (this.config.status === 'INVALID') {
+      return;
+    }
+
+    const id = this.paramId;
+    const config = this.config.value;
+    if (!id || !config.trim().length) {
+      return;
+    }
+
+    const parsedConfig = JSON.parse(config);
+
+    this.dataCollectionService.updateDataSource(id, parsedConfig).subscribe();
   }
 }
