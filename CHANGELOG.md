@@ -2,6 +2,12 @@
 
 List of application versions with description
 
+### 1.4.0
+
+- created `BreadcrumbComponent` which can be server globally
+  - replace for `RecipeDetailBreadcrumbComponent`
+- removed `RecipeDetailBreadcrumbComponent`
+
 ### 1.3.0
 - rename app to `Reci-pier`
 

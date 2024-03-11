@@ -1,20 +1,26 @@
 {
   "cs": {
     "SourceList": "Seznam zdrojů",
+    "RecipeList": "Seznam receptů",
     "AddSource": "Přidat zdroj",
     "AddPage": "Přidat stránku",
     "Action": "Akce",
     "Link": "Odkaz",
     "Source": "Zdroj",
-    "LinkToSource": "Přiřadit stránku ke zdroji"
+    "LinkToSource": "Přiřadit stránku ke zdroji",
+    "GoToPage": "Přejít na stránku webu",
+    "Config": "Nastavení"
   },
   "en": {
     "SourceList": "Source list",
+    "RecipeList": "Recipe list",
     "AddSource": "Add source",
     "AddPage": "Add page",
     "Action": "Action",
     "Link": "Link",
     "Source": "Source",
-    "LinkToSource": "Link website page to the source"
+    "LinkToSource": "Link website page to the source",
+    "GoToPage": "Go to the web page",
+    "Config": "Configuration"
   }
 }

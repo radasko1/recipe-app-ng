@@ -6,9 +6,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
+import { BreadcrumbComponent } from './components/breadcrumb.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { RecipeListComponent } from './components/recipe-list.component';
-import { RecipeDetailBreadcrumbComponent } from './components/recipe-detail-breadcrumb.component';
 import { RecipeDetailComponent } from './components/recipe-detail.component';
 import { SourceDetailComponent } from './components/source-detail.component';
 import { SourceListComponent } from './components/source-list.component';
@@ -22,10 +22,10 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     DashboardComponent,
     RecipeListComponent,
     RecipeDetailComponent,
-    RecipeDetailBreadcrumbComponent,
     SourceListComponent,
     SourceDetailComponent,
     SourcePageDialogComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     MatCheckboxModule,

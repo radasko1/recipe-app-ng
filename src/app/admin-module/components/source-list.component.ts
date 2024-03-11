@@ -11,6 +11,14 @@ import locale from '../admin.locale.json';
   selector: 'app-source-list',
   template: `
     <div class="relative overflow-x-auto">
+      <!--breadcrumb-->
+      <app-admin-breadcrumb
+        [list]="[
+          { label: 'Dashboard', link: '/admin/dashboard' },
+          { label: locale[langService.language].SourceList, link: null }
+        ]"
+      />
+      <!--content-->
       <h1 class="font-medium text-3xl my-6">{{ locale[langService.language].SourceList }}</h1>
       <div class="my-3 text-right">
         <button type="button" class="rounded px-4 py-2 bg-blue-700 text-white">

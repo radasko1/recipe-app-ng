@@ -1,10 +1,22 @@
 import { Component } from '@angular/core';
+
+import { LanguageService } from '../../shared/services/language-service/language.service';
+import locale from '../admin.locale.json';
 import { DataCollectionService } from '../services/data-collection.service';
 
 @Component({
   selector: 'app-recipe-list',
   template: `
     <div class="relative overflow-x-auto">
+      <!--breadcrumb-->
+      <app-admin-breadcrumb
+        [list]="[
+          { label: 'Dashboard', link: '/admin/dashboard' },
+          { label: locale[langService.language].RecipeList, link: null }
+        ]"
+      />
+      <!--content-->
+      <h1 class="font-medium text-3xl my-6">{{ locale[langService.language].RecipeList }}</h1>
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <!---->
         <thead
@@ -62,7 +74,11 @@ import { DataCollectionService } from '../services/data-collection.service';
   `,
 })
 export class RecipeListComponent {
+  protected readonly locale = locale;
   protected readonly dataCollection$ = this.dataCollectionService.getDataCollectionPageList();
 
-  constructor(private readonly dataCollectionService: DataCollectionService) {}
+  constructor(
+    private readonly dataCollectionService: DataCollectionService,
+    protected readonly langService: LanguageService
+  ) {}
 }

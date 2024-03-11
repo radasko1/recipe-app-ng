@@ -12,110 +12,114 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
   selector: 'app-recipe-detail',
   template: `
     <ng-container *ngIf="dataCollectionDetail as dataCollection">
-      <div class="container">
-        <!--breadcrumb-->
-        <app-recipe-detail-breadcrumb [title]="dataCollection.title" />
-        <!--content-->
-        <div class="py-9">
-          <h2 class="text-4xl font-medium mb-4">{{ dataCollection.title }}</h2>
-          <div class="inline-flex items-center">
-            <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
-            <a
-              [href]="dataCollection.url"
-              target="_blank"
-              rel="noreferrer noopener"
-              class="ml-3 underline"
-            >
-              Odkaz na recept
-            </a>
-          </div>
+      <!--breadcrumb-->
+      <app-admin-breadcrumb
+        [list]="[
+          { label: 'Dashboard', link: '/admin/dashboard' },
+          { label: 'Recipe List', link: '/admin/page' },
+          { label: dataCollection.title, link: null }
+        ]"
+      />
+      <!--content-->
+      <div class="py-9">
+        <h2 class="text-4xl font-medium mb-4">{{ dataCollection.title }}</h2>
+        <div class="inline-flex items-center">
+          <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
+          <a
+            [href]="dataCollection.url"
+            target="_blank"
+            rel="noreferrer noopener"
+            class="ml-3 underline"
+          >
+            Odkaz na recept
+          </a>
+        </div>
 
+        <!---->
+        <div class="flex flex-row -mx-5 mt-10">
+          <div class="basis-1/3 px-5">
+            <h3 class="text-2xl font-medium">Recept</h3>
+            <ul>
+              @for (ingredient of dataCollection.ingredients; track ingredient) {
+              <li>
+                <mat-checkbox>{{ ingredient }}</mat-checkbox>
+              </li>
+              }
+            </ul>
+          </div>
           <!---->
-          <div class="flex flex-row -mx-5 mt-10">
-            <div class="basis-1/3 px-5">
-              <h3 class="text-2xl font-medium">Recept</h3>
-              <ul>
-                @for (ingredient of dataCollection.ingredients; track ingredient) {
-                <li>
-                  <mat-checkbox>{{ ingredient }}</mat-checkbox>
-                </li>
-                }
-              </ul>
-            </div>
-            <!---->
-            <div class="basis-1/3 px-5">
-              <h3 class="text-2xl font-medium">Pozadovane ingredience</h3>
-              <ul>
-                @for (ingredient of requiredIngredients; track ingredient; let i = $index) {
-                <li class="flex flex-row items-center justify-between">
-                  <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
-                  <mat-icon
-                    aria-hidden="false"
-                    aria-label="Delete"
-                    fontIcon="delete"
-                    class="cursor-pointer text-red-600"
-                    (click)="remove(requiredIngredients, i)"
-                  ></mat-icon>
-                </li>
-                }
-              </ul>
-              <ng-autocomplete
-                [list]="ingredientList"
-                searchProp="locale"
-                placeholder="Přidat ingredienci"
-                (onSelect)="select(requiredIngredients, $event)"
-              />
-            </div>
-            <!---->
-            <div class="basis-1/3 px-5">
-              <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
-              <ul>
-                @for (ingredient of optionalIngredients; track ingredient; let ingredientIndex =
-                $index) {
-                <li class="flex flex-row items-center justify-between">
-                  <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
-                  <mat-icon
-                    aria-hidden="false"
-                    aria-label="Delete"
-                    fontIcon="delete"
-                    class="cursor-pointer text-red-600"
-                    (click)="remove(optionalIngredients, ingredientIndex)"
-                  ></mat-icon>
-                </li>
-                }
-              </ul>
-              <ng-autocomplete
-                [list]="ingredientList"
-                searchProp="locale"
-                placeholder="Přidat ingredienci"
-                (onSelect)="select(optionalIngredients, $event)"
-              />
-            </div>
+          <div class="basis-1/3 px-5">
+            <h3 class="text-2xl font-medium">Pozadovane ingredience</h3>
+            <ul>
+              @for (ingredient of requiredIngredients; track ingredient; let i = $index) {
+              <li class="flex flex-row items-center justify-between">
+                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Delete"
+                  fontIcon="delete"
+                  class="cursor-pointer text-red-600"
+                  (click)="remove(requiredIngredients, i)"
+                ></mat-icon>
+              </li>
+              }
+            </ul>
+            <ng-autocomplete
+              [list]="ingredientList"
+              searchProp="locale"
+              placeholder="Přidat ingredienci"
+              (onSelect)="select(requiredIngredients, $event)"
+            />
           </div>
+          <!---->
+          <div class="basis-1/3 px-5">
+            <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
+            <ul>
+              @for (ingredient of optionalIngredients; track ingredient; let ingredientIndex =
+              $index) {
+              <li class="flex flex-row items-center justify-between">
+                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Delete"
+                  fontIcon="delete"
+                  class="cursor-pointer text-red-600"
+                  (click)="remove(optionalIngredients, ingredientIndex)"
+                ></mat-icon>
+              </li>
+              }
+            </ul>
+            <ng-autocomplete
+              [list]="ingredientList"
+              searchProp="locale"
+              placeholder="Přidat ingredienci"
+              (onSelect)="select(optionalIngredients, $event)"
+            />
+          </div>
+        </div>
 
-          <div class="mt-5">
-            <button
-              type="button"
-              class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
-              (click)="approveData()"
-            >
-              Schvalit
-            </button>
-            <button
-              type="button"
-              class="rounded bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
-              (click)="deleteData()"
-            >
-              Vymazat data
-            </button>
-            <button
-              type="button"
-              class="rounded bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
-              (click)="save()"
-            >
-              Ulozit
-            </button>
-          </div>
+        <div class="mt-5">
+          <button
+            type="button"
+            class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="approveData()"
+          >
+            Schvalit
+          </button>
+          <button
+            type="button"
+            class="rounded bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="deleteData()"
+          >
+            Vymazat data
+          </button>
+          <button
+            type="button"
+            class="rounded bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
+            (click)="save()"
+          >
+            Ulozit
+          </button>
         </div>
       </div>
     </ng-container>
