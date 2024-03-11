@@ -13,7 +13,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
           <img
             src="../assets/logo.png"
             class="select-none pointer-events-none max-w-[8rem]"
-            alt="Reci-pier"
+            alt="Recipier"
           />
         </a>
         <!--links-->
