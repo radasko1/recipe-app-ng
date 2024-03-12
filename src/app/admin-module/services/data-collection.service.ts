@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { DataCollectionSource } from '../models/data-collection-source.interface';
 
+import { DataCollectionSource } from '../models/data-collection-source.interface';
 import { DataCollection } from '../models/data-collection.interface';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DataCollectionService {

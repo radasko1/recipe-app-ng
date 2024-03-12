@@ -13,65 +13,65 @@ import sharedLocale from '../../shared/general.locale.json';
   selector: 'app-source-detail',
   template: `
     <ng-container *ngIf="sourceDetail as source">
-      <!--TODO component?-->
-      <app-admin-breadcrumb
-        [list]="[
+    <!--TODO component?-->
+    <app-admin-breadcrumb
+      [list]="[
           { label: 'Dashboard', link: '/admin/dashboard' },
           { label: locale[langService.language].SourceList, link: '/admin/source' },
           { label: source.origin, link: null }
         ]"
-      />
-      <div class="py-9">
-        <!--header-->
-        <div class="header relative">
-          <h2 class="text-4xl font-medium mb-4">{{ source.origin }}</h2>
-          <!--link-->
-          <div class="inline-flex items-center">
-            <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
-            <a [href]="source.url" target="_blank" rel="noreferrer noopener" class="ml-3 underline">
-              {{ locale[langService.language].GoToPage }}
-            </a>
-          </div>
-          <div class="block md:flex md:justify-end">
-            <button
-              type="button"
-              class="rounded px-4 py-2 border-none outline-none cursor-pointer bg-sky-700 text-white"
-              (click)="save()"
-            >
-              {{ sharedLocale[langService.language].Save }}
-            </button>
-          </div>
-        </div>
-        <!--content-->
-        <div class="block mt-10">
-          <div class="block mb-6">
-            <label for="link" class="block font-medium mb-1 text-black">
-              {{ locale[langService.language].Link }}
-            </label>
-            <input
-              id="link"
-              type="text"
-              [value]="source.url"
-              class="block rounded outline-none leading-tight appearance-none p-3"
-              disabled
-            />
-          </div>
-          <!---->
-          <div class="block">
-            <label for="config" class="block font-medium mb-1 text-black">
-              {{ locale[langService.language].Config }}
-            </label>
-            <textarea
-              id="config"
-              rows="10"
-              cols="70"
-              class="block rounded border outline-none leading-tight appearance-none p-3"
-              [formControl]="config"
-              >{{ config.value }}</textarea
-            >
-          </div>
-        </div>
+    />
+    <div class="py-9">
+    <!--header-->
+    <div class="header relative">
+      <h2 class="text-4xl font-medium mb-4">{{ source.origin }}</h2>
+      <!--link-->
+      <div class="inline-flex items-center">
+        <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
+        <a [href]="source.url" target="_blank" rel="noreferrer noopener" class="ml-3 underline">
+          {{ locale[langService.language].GoToPage }}
+        </a>
       </div>
+      <div class="block md:flex md:justify-end">
+        <button
+          type="button"
+          class="rounded px-4 py-2 border-none outline-none cursor-pointer bg-sky-700 text-white"
+          (click)="saveChanges()"
+        >
+          {{ sharedLocale[langService.language].Save }}
+        </button>
+      </div>
+    </div>
+    <!--content-->
+    <div class="block mt-10">
+      <div class="block mb-6">
+        <label for="link" class="block font-medium mb-1 text-black">
+          {{ locale[langService.language].Link }}
+        </label>
+        <input
+          id="link"
+          type="text"
+          [value]="source.url"
+          class="block rounded outline-none leading-tight appearance-none p-3"
+          disabled
+        />
+      </div>
+      <!--config-->
+      <div class="block">
+        <label for="config" class="block font-medium mb-1 text-black">
+          {{ locale[langService.language].Config }}
+        </label>
+        <textarea
+          id="config"
+          rows="10"
+          cols="70"
+          class="block rounded border outline-none leading-tight appearance-none p-3"
+          [formControl]="config"
+        >{{ config.value }}</textarea
+        >
+      </div>
+    </div>
+    </div>
     </ng-container>
   `,
 })
@@ -92,7 +92,7 @@ export class SourceDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const routeParam = this.router.snapshot.params;
-    const detailId = routeParam['id']; // parseInt(routeParam['id'], 10);
+    const detailId = routeParam['id'];
     this.paramId = detailId;
 
     this.dataCollectionService
@@ -109,18 +109,16 @@ export class SourceDetailComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  /** Save DataSource config setting */
-  protected save() {
+  /** Save changes of DataSource config setting */
+  protected saveChanges() {
     if (this.config.status === 'INVALID') {
       return;
     }
-
     const id = this.paramId;
     const config = this.config.value;
     if (!id || !config.trim().length) {
       return;
     }
-
     const parsedConfig = JSON.parse(config);
 
     this.dataCollectionService.updateDataSource(id, parsedConfig).subscribe();
