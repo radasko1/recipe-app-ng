@@ -8,29 +8,31 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
 
 @Injectable()
 export class DataCollectionService {
+  private readonly url = environment.SERVER_API + '/data-collection';
+
   constructor(private readonly httpClient: HttpClient) {}
 
   /** */
   public getDataCollectionPageList() {
-    const url = environment.SERVER_API + '/data-collection/list/analyzed-pages';
+    const url = this.url + '/list/analyzed-pages';
     return this.httpClient.get<DataCollection[]>(url);
   }
 
   /** */
   public getDataCollectionPageDetail(id: number) {
-    const url = environment.SERVER_API + '/data-collection/page/detail/' + id;
+    const url = this.url + '/page/detail/' + id;
     return this.httpClient.get<DataCollectionDetail>(url);
   }
 
   /** */
   public getDataCollectionSource() {
-    const url = environment.SERVER_API + '/data-collection/list/sources';
+    const url = this.url + '/list/sources';
     return this.httpClient.get<DataCollectionSource[]>(url);
   }
 
   /** */
   public getDataCollectionSourceDetail(id: number) {
-    const url = environment.SERVER_API + '/data-collection/source/detail/' + id;
+    const url = this.url + '/source/detail/' + id;
     return this.httpClient.get<DataCollectionSource>(url);
   }
 
@@ -45,7 +47,7 @@ export class DataCollectionService {
     requiredIngredients: number[],
     optionalIngredients: number[]
   ) {
-    const url = environment.SERVER_API + '/data-collection/update/recipe-ingredients';
+    const url = this.url + '/update/recipe-ingredients';
     return this.httpClient.patch(url, {
       id,
       requiredIngredients,
@@ -55,13 +57,13 @@ export class DataCollectionService {
 
   /** */
   public deletePageData(id: number) {
-    const url = environment.SERVER_API + '/data-collection/delete-data';
+    const url = this.url + '/delete-data';
     return this.httpClient.post(url, { id });
   }
 
   /** */
   public approvePageData(id: number) {
-    const url = environment.SERVER_API + '/data-collection/approve-data';
+    const url = this.url + '/approve-data';
     return this.httpClient.post(url, { id });
   }
 
@@ -71,7 +73,7 @@ export class DataCollectionService {
    * @param link
    */
   public addSourceLink(id: number, link: string) {
-    const url = environment.SERVER_API + '/data-collection/source/add-link';
+    const url = this.url + '/source/add-link';
     return this.httpClient.post(url, { id, link });
   }
 
@@ -81,7 +83,7 @@ export class DataCollectionService {
    * @param source
    */
   public updateDataSource(id: number, source: DataCollectionSource) {
-    const url = environment.SERVER_API + '/data-collection/update/data-source';
+    const url = this.url + '/update/data-source';
     return this.httpClient.patch<DataCollectionSource>(url, { id, config: source });
   }
 }
