@@ -39,6 +39,7 @@ type LanguageButton = {
             class="cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             role="menuitem"
             tabindex="-1"
+            rel="noreferrer noopener"
             (click)="langService.change(item.code)"
           >
             {{ localeService.getLocaleValue(locale, item.translation) }}

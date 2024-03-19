@@ -60,6 +60,7 @@ import locale from '../admin.locale.json';
                 <a
                   [routerLink]="['/', 'admin', 'source', item.id]"
                   class="inline-block text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  rel="noreferrer noopener"
                   >Detail</a
                 >
                 <div class="inline-block">

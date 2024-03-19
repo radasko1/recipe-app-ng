@@ -19,6 +19,7 @@ import locale from './not-found.locale.json';
         <a
           routerLink="/"
           class="cursor-pointer rounded text-sm bg-blue-700 text-white py-2 px-4 outline-none"
+          rel="noreferrer noopener"
         >
           {{ locale[langService.language].Button }}
         </a>

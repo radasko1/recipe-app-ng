@@ -72,7 +72,7 @@ import generalLocale from '../../../shared/general.locale.json';
             <!--link-->
             <div class="inline-flex items-center">
               <mat-icon fontIcon="link"></mat-icon>
-              <a [href]="recipe.link" target="_blank" class="inline-block ml-2">
+              <a [href]="recipe.link" target="_blank" class="inline-block ml-2" rel="noreferrer noopener">
                 {{ locale[lang.language].Link }}
               </a>
             </div>

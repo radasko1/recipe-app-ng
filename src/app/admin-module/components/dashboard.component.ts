@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
   <div class="relative overflow-x-auto">
     <ul>
-      <li><a [routerLink]="['/','admin','page']">Recipe</a></li>
-      <li><a [routerLink]="['/','admin','source']">Source</a></li>
+      <li><a [routerLink]="['/','admin','page']" rel="noreferrer noopener">Recipe</a></li>
+      <li><a [routerLink]="['/','admin','source']" rel="noreferrer noopener">Source</a></li>
     </ul>
   </div>
   `,
