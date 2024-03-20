@@ -2,6 +2,11 @@
 
 List of application versions with description
 
+### 1.5.0
+
+- turn off hashing for PROD bundle (don't need that when has 'nonce')
+- remove nonce config (handled on server side)
+
 ### 1.4.0
 
 - created `BreadcrumbComponent` which can be server globally
