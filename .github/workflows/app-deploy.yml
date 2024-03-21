@@ -5,25 +5,52 @@ name: Angular App Deploy
 
 on:
   pull_request:
-    branches: [ "main" ]
+    types:
+      - closed
+    branches:
+      - main
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    environment:
+      name: production
+    env:
+      HOST: ssh.rosti.cz
+      USER: app
+      PORT: 27211
+      NODE_VERSION: 21.2.0
+      APP_NAME: ng-recipe-app
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'v21.2.0'
+
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Setup hostkey
+        run: echo "ssh.rosti.cz ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCFSt7pJyGOZzCMrM3uJ3GTf0cNA+cXjsz72bwKmdeuYjLM+K0JaFQvhpKIO1I8W6gkIYb6H10Tpb7BApjl+ws6oks0bBJD3Q4zWyhRpcQ7f51JchfXtujkeG2cV2/WHm6jfnFcEZK8NOgR4MRHzkqspVyUNRpzfnymxv6iuqaD/Bo59XpkbtPYpSrHu5PzLWVvqdkRHoxIZ/egI1cBNphwzit0fHK/1EOKTASmLWNuux8SHNxPaBzTAQg4ZZslA3VkGGB7dKB1XfqpHEznEzG5sVFoROGqTiigbCnaLamvLVkyi12gdGNxQg3YhJtUCkG6KDVYASjE1sPlKtxdGrk9" > ./known_hosts
+
+#      - name: env
+#        run: |
+#          cat << EOF > .env
+#          ${{ secrets.ENV }}
+#          EOF
+
+      - name: npm install
+        run: npm install
+
+      - name: build
+        run: ng build --configuration production
+
+      # Copy app files to server 'public' folder
+      - name: Copy public folder files
+        run: |
+          rsync -ae "ssh -o UserKnownHostsFile=./known_hosts -p $PORT" \
+          --include=* \
+          --include=*/ \
+          --exclude=index.html \
+          ./dist/$APP_NAME/ $USER@$HOST:/srv/app/express/public
