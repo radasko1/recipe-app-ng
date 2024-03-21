@@ -34,12 +34,6 @@ jobs:
       - name: Setup hostkey
         run: echo "ssh.rosti.cz ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCFSt7pJyGOZzCMrM3uJ3GTf0cNA+cXjsz72bwKmdeuYjLM+K0JaFQvhpKIO1I8W6gkIYb6H10Tpb7BApjl+ws6oks0bBJD3Q4zWyhRpcQ7f51JchfXtujkeG2cV2/WHm6jfnFcEZK8NOgR4MRHzkqspVyUNRpzfnymxv6iuqaD/Bo59XpkbtPYpSrHu5PzLWVvqdkRHoxIZ/egI1cBNphwzit0fHK/1EOKTASmLWNuux8SHNxPaBzTAQg4ZZslA3VkGGB7dKB1XfqpHEznEzG5sVFoROGqTiigbCnaLamvLVkyi12gdGNxQg3YhJtUCkG6KDVYASjE1sPlKtxdGrk9" > ./known_hosts
 
-#      - name: env
-#        run: |
-#          cat << EOF > .env
-#          ${{ secrets.ENV }}
-#          EOF
-
       - name: npm install
         run: npm install
 
@@ -52,5 +46,12 @@ jobs:
           rsync -ae "ssh -o UserKnownHostsFile=./known_hosts -p $PORT" \
           --include=* \
           --include=*/ \
-          --exclude=index.html \
+          --exclude=*.html \
           ./dist/$APP_NAME/ $USER@$HOST:/srv/app/express/public
+
+      - name: Apply changes
+        run: |
+          ssh -o UserKnownHostsFile=./known_hosts -p $PORT $USER@$HOST supervisorctl reread
+          ssh -o UserKnownHostsFile=./known_hosts -p $PORT $USER@$HOST supervisorctl update
+          ssh -o UserKnownHostsFile=./known_hosts -p $PORT $USER@$HOST supervisorctl restart app
+          ssh -o UserKnownHostsFile=./known_hosts -p $PORT $USER@$HOST supervisorctl restart nginx
