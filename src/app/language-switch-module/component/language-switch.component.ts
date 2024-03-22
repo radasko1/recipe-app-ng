@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import locale from '../locale.json';
 import { CZECH_LANG, ENGLISH_LANG, Language } from '../models/language.type';
@@ -49,6 +49,7 @@ type LanguageButton = {
       </ul>
     </mat-menu>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class LanguageSwitchComponent {
   protected readonly locale = locale;

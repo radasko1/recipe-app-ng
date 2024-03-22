@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
@@ -25,6 +25,7 @@ import { LanguageService } from '../../../shared/services/language-service/langu
       </div>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class AutocompleteComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { APP_PAGE_TITLE } from "../../../app.settings";
@@ -22,6 +22,7 @@ import locale from './search.locale.json';
       <app-recipe />
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchPageComponent {
   protected readonly locale = locale;

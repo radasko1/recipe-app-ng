@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -52,6 +52,7 @@ import sharedLocale from '../../shared/general.locale.json';
       </div>
     </mat-dialog-actions>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class SourcePageDialogComponent {
   protected readonly locale = locale;

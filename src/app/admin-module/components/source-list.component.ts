@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DataCollectionSource } from '../models/data-collection-source.interface';
@@ -79,6 +79,7 @@ import locale from '../admin.locale.json';
       </table>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class SourceListComponent {
   protected readonly locale = locale;

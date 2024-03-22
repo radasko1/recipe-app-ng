@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import locale from '../admin.locale.json';
@@ -73,6 +73,7 @@ import { DataCollectionService } from '../services/data-collection.service';
       </table>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class RecipeListComponent {
   protected readonly locale = locale;
