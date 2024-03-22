@@ -44,8 +44,8 @@ jobs:
       - name: Copy public folder files
         run: |
           rsync -ae "ssh -o UserKnownHostsFile=./known_hosts -p $PORT" \
-          --filter='dir - / -- exclude *.html' \
-          ./dist/$APP_NAME/ $USER@$HOST:/srv/app/express/public
+          --filter='- index.html' \
+          ./dist/$APP_NAME/* $USER@$HOST:/srv/app/express/public
 
       - name: Apply changes
         run: |
