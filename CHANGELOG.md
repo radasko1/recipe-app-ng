@@ -2,6 +2,11 @@
 
 List of application versions with description
 
+### 1.6.1
+
+- npm audit fix vulnerability
+- fix deploy pipeline
+
 ### 1.6.0
 
 - use `material-icons` package instead of using `link`
