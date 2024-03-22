@@ -2,7 +2,7 @@
 
 List of application versions with description
 
-### 1.6.1
+### 1.6.2
 
 - npm audit fix vulnerability
 - fix deploy pipeline
