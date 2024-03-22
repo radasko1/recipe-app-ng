@@ -2,6 +2,10 @@
 
 List of application versions with description
 
+### 1.6.0
+
+- use `material-icons` package instead of using `link`
+
 ### 1.5.0
 
 - turn off hashing for PROD bundle (don't need that when has 'nonce')

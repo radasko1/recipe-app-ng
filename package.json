@@ -1,6 +1,6 @@
 {
   "name": "ng-recipe-app",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.2.2",
     "@angular/platform-browser-dynamic": "^17.2.2",
     "@angular/router": "^17.2.2",
+    "material-icons": "^1.13.12",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.4"
