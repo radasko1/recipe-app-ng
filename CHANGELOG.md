@@ -2,6 +2,12 @@
 
 List of application versions with description
 
+### 1.7.0
+
+- set `ViewEncapsulation.None` as default
+- remove endpoint for Auth0 login/logout
+- update Angular from `17.2.2` to `17.3.1`
+
 ### 1.6.2
 
 - npm audit fix vulnerability
