@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import locale from './app.locale.json';
 import { LanguageService } from './shared/services/language-service/language.service';
 
@@ -41,6 +41,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
       2024
     </footer>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   protected readonly locale = locale;

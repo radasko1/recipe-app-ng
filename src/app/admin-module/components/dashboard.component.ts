@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
     </ul>
   </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
   constructor() {}

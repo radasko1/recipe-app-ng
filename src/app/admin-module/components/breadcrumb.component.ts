@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 type Breadcrumb = {
   label: string;
@@ -28,6 +28,7 @@ type Breadcrumb = {
   host: {
     '[class]': '["py-3", "block"]',
   },
+  encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbComponent {
   @Input() list: Breadcrumb[] = [];

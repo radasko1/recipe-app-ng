@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -74,6 +74,7 @@ import sharedLocale from '../../shared/general.locale.json';
     </div>
     </ng-container>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class SourceDetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();

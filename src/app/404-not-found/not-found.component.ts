@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { LanguageService } from '../shared/services/language-service/language.service';
@@ -26,6 +26,7 @@ import locale from './not-found.locale.json';
       </div>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None,
   imports: [RouterLink],
 })
 export class NotFoundComponent {

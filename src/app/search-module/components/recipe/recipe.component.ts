@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -99,6 +99,7 @@ import generalLocale from '../../../shared/general.locale.json';
       <p class="text-medium text-red-600">{{ locale[lang.language].EmptySearchResult }}</p>
     </ng-template>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class RecipeComponent implements OnInit, OnDestroy {
   private readonly subs = new Subject<boolean>();

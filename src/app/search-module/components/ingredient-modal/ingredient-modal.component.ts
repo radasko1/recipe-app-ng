@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { CategoryService } from '../../services/category.service';
@@ -49,6 +49,7 @@ import locale from '../../../shared/general.locale.json';
       </mat-dialog-actions>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class IngredientModalComponent {
   protected readonly locale = locale;

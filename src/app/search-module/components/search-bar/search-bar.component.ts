@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -53,6 +53,7 @@ import { LanguageService } from '../../../shared/services/language-service/langu
       </div>
     </div>
   `,
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
