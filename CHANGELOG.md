@@ -2,6 +2,10 @@
 
 List of application versions with description
 
+### 1.7.1
+
+- npm audit
+
 ### 1.7.0
 
 - set `ViewEncapsulation.None` as default
