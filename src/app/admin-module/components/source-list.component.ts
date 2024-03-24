@@ -1,10 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { DataCollectionSourceForm } from '../models/data-collection-source-form.model';
 import { DataCollectionSource } from '../models/data-collection-source.interface';
+import { DataCollectionSourcePageForm } from '../models/data-collection-source-page-form.model';
 import { DataCollectionService } from '../services/data-collection.service';
+import { SourceDialogComponent } from './source-dialog.component';
 import { SourcePageDialogComponent } from './source-page-dialog.component';
 import { LanguageService } from '../../shared/services/language-service/language.service';
+import { LocaleService } from '../../shared/services/locale-service/locale.service';
 import locale from '../admin.locale.json';
 
 @Component({
@@ -21,7 +26,11 @@ import locale from '../admin.locale.json';
       <!--content-->
       <h1 class="font-medium text-3xl my-6">{{ locale[langService.language].SourceList }}</h1>
       <div class="my-3 text-right">
-        <button type="button" class="rounded px-4 py-2 bg-blue-700 text-white">
+        <button
+          type="button"
+          class="rounded px-4 py-2 bg-blue-700 text-white"
+          (click)="addSource()"
+        >
           {{ locale[langService.language].AddSource }}
         </button>
       </div>
@@ -40,25 +49,26 @@ import locale from '../admin.locale.json';
         </thead>
         <!---->
         <tbody>
-          <ng-container *ngIf="dataCollection$ | async as collection">
+          <!--TODO empty list?-->
+          <ng-container *ngIf="sourceList$ | async as sourceList">
             <tr
               class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              *ngFor="let item of collection"
+              *ngFor="let dataSource of sourceList"
             >
               <!--origin-->
               <td class="px-6 py-4">
-                {{ item.origin }}
+                {{ dataSource.origin }}
               </td>
               <!--link-->
               <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                <a [href]="item.url" rel="noreferrer noopener" target="_blank">
-                  {{ item.url }}
+                <a [href]="dataSource.url" rel="noreferrer noopener" target="_blank">
+                  {{ dataSource.url }}
                 </a>
               </td>
               <!--actions-->
               <td class="px-6 py-4 text-right">
                 <a
-                  [routerLink]="['/', 'admin', 'source', item.id]"
+                  [routerLink]="['/', 'admin', 'source', dataSource.id]"
                   class="inline-block text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                   rel="noreferrer noopener"
                   >Detail</a
@@ -67,7 +77,7 @@ import locale from '../admin.locale.json';
                   <button
                     type="button"
                     class="rounded px-4 py-2 bg-blue-700 text-white"
-                    (click)="openDialog(item)"
+                    (click)="addPageURL(dataSource)"
                   >
                     {{ locale[langService.language].AddPage }}
                   </button>
@@ -79,25 +89,60 @@ import locale from '../admin.locale.json';
       </table>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class SourceListComponent {
   protected readonly locale = locale;
-  protected readonly dataCollection$ = this.dataCollectionService.getDataCollectionSource();
+  protected readonly sourceList$ = this.dataCollectionService.getDataCollectionSource();
 
   constructor(
     private readonly dataCollectionService: DataCollectionService,
     protected readonly langService: LanguageService,
-    private readonly dialog: MatDialog
+    protected readonly localeService: LocaleService,
+    private readonly dialog: MatDialog,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   /**
-   * Open dialog to add new page to it
+   * Add new source
+   */
+  protected addSource() {
+    this.dialog.open(SourceDialogComponent, {
+      data: {
+        onSubmit: (formData: DataCollectionSourceForm) =>
+          this.dataCollectionService.addSource(formData).subscribe({
+            next: () => {
+              this.snackbar.open(
+                this.localeService.getLocaleValue(locale, 'SourceAddedMessage'),
+                undefined,
+                { duration: 2000 }
+              );
+            },
+          }),
+      },
+    });
+  }
+
+  /**
+   * Open dialog to add new page url to the source
    * @param source
    */
-  protected openDialog(source: DataCollectionSource) {
+  protected addPageURL(source: DataCollectionSource) {
     this.dialog.open(SourcePageDialogComponent, {
-      data: { sourceId: source.id, origin: source.origin },
+      data: {
+        source: source.origin,
+        onSubmit: (formData: DataCollectionSourcePageForm) => {
+          this.dataCollectionService.addSourceLink(source.id, formData.url).subscribe({
+            next: () => {
+              this.snackbar.open(
+                this.localeService.getLocaleValue(locale, 'SourcePageAddedMessage'),
+                undefined,
+                { duration: 2000 }
+              );
+            },
+          });
+        },
+      },
     });
   }
 }

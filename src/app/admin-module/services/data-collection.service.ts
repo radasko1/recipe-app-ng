@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { DataCollectionSourceForm } from '../models/data-collection-source-form.model';
 import { DataCollectionSource } from '../models/data-collection-source.interface';
 import { DataCollection } from '../models/data-collection.interface';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
@@ -75,6 +76,15 @@ export class DataCollectionService {
   public addSourceLink(id: number, link: string) {
     const url = this.url + '/source/add-link';
     return this.httpClient.post(url, { id, link });
+  }
+
+  /**
+   * Create new source
+   * @param formData
+   */
+  public addSource(formData: DataCollectionSourceForm) {
+    const url = this.url + '/add-source';
+    return this.httpClient.post(url, formData);
   }
 
   /**

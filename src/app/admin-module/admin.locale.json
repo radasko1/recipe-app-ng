@@ -6,10 +6,14 @@
     "AddPage": "Přidat stránku",
     "Action": "Akce",
     "Link": "Odkaz",
+    "Origin": "Origin",
     "Source": "Zdroj",
     "LinkToSource": "Přiřadit stránku ke zdroji",
+    "NewSource": "Vytvořit nový zdroj",
     "GoToPage": "Přejít na stránku webu",
-    "Config": "Nastavení"
+    "Config": "Nastavení",
+    "SourceAddedMessage": "Zdroj byl úspěšně přidán.",
+    "SourcePageAddedMessage": "Stránka byla úspěšně přidána."
   },
   "en": {
     "SourceList": "Source list",
@@ -18,9 +22,13 @@
     "AddPage": "Add page",
     "Action": "Action",
     "Link": "Link",
+    "Origin": "Origin",
     "Source": "Source",
     "LinkToSource": "Link website page to the source",
+    "NewSource": "Create a new source",
     "GoToPage": "Go to the web page",
-    "Config": "Configuration"
+    "Config": "Configuration",
+    "SourceAddedMessage": "Source was successfully added.",
+    "SourcePageAddedMessage": "Source page was successfully added."
   }
 }

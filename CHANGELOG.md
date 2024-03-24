@@ -2,6 +2,10 @@
 
 List of application versions with description
 
+### 1.8.0
+
+- add form to create a new source
+
 ### 1.7.1
 
 - npm audit
