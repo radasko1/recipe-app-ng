@@ -13,7 +13,8 @@
     "GoToPage": "Přejít na stránku webu",
     "Config": "Nastavení",
     "SourceAddedMessage": "Zdroj byl úspěšně přidán.",
-    "SourcePageAddedMessage": "Stránka byla úspěšně přidána."
+    "SourcePageAddedMessage": "Stránka byla úspěšně přidána.",
+    "ExistMessage": "Tato položka už existuje. Zkontrolujte vyplněné údaje a zkuste to znovu."
   },
   "en": {
     "SourceList": "Source list",
@@ -29,6 +30,7 @@
     "GoToPage": "Go to the web page",
     "Config": "Configuration",
     "SourceAddedMessage": "Source was successfully added.",
-    "SourcePageAddedMessage": "Source page was successfully added."
+    "SourcePageAddedMessage": "Source page was successfully added.",
+    "ExistMessage": "This item has already exist. Check your data and try again."
   }
 }

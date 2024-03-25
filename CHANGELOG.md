@@ -2,6 +2,12 @@
 
 List of application versions with description
 
+### 1.9.0
+
+- changed `DataCollection` endpoints
+- added error message when `DataCollectionPage` already exist
+- new logo
+
 ### 1.8.1
 
 - change style of Empty recipe list message
