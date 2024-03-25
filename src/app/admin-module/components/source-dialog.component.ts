@@ -6,39 +6,52 @@ import { LanguageService } from '../../shared/services/language-service/language
 import locale from '../admin.locale.json';
 import sharedLocale from '../../shared/general.locale.json';
 
-type SourcePageDialog = {
-  source: string;
-  onSubmit: (data: { source: string; url: string }) => void;
+type Source = { value: string; disabled: boolean };
+type DialogWindowConfig = {
+  source: Source;
+  onSubmit: (data: any) => void;
 };
 
 @Component({
-  selector: 'app-source-page-dialog',
+  selector: 'app-source-dialog',
   template: `
-    <h2 mat-dialog-title class="text-black">{{ locale[langService.language].LinkToSource }}</h2>
+    <h2 mat-dialog-title class="text-black">{{ locale[langService.language].NewSource }}</h2>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-dialog-content>
-        <!--source-->
-        <div class="block mb-5">
-          <label for="name" class="block font-medium mb-1 text-black">
-            {{ locale[langService.language].Source }}
-          </label>
-          <input
-            id="name"
-            type="text"
-            formControlName="source"
-            class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
-          />
-        </div>
         <!--url-->
-        <div class="block">
+        <div class="block mb-5">
           <label for="url" class="block font-medium mb-1 text-black">
             {{ locale[langService.language].Link }}
           </label>
-          <textarea
+          <input
             id="url"
+            type="text"
+            formControlName="url"
+            class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          />
+        </div>
+        <!--origin-->
+        <div class="block mb-5">
+          <label for="origin" class="block font-medium mb-1 text-black">
+            {{ locale[langService.language].Origin }}
+          </label>
+          <input
+            id="origin"
+            type="text"
+            formControlName="origin"
+            class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          />
+        </div>
+        <!--config-->
+        <div class="block">
+          <label for="config" class="block font-medium mb-1 text-black">
+            {{ locale[langService.language].Config }}
+          </label>
+          <textarea
+            id="config"
             class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
             [class.border-rose-500]="form.status === 'INVALID' && form.touched"
-            formControlName="url"
+            formControlName="config"
             rows="3"
             cols="70"
           ></textarea>
@@ -55,23 +68,25 @@ type SourcePageDialog = {
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class SourcePageDialogComponent {
+export class SourceDialogComponent {
   protected readonly locale = locale;
   protected readonly sharedLocale = sharedLocale;
   protected readonly form = this.fb.group({
-    source: this.fb.control<string>(
-      { value: this.data.source, disabled: true },
-      { validators: [Validators.required, Validators.minLength(1)] }
-    ),
     url: this.fb.control<string>('', {
+      validators: [Validators.required, Validators.minLength(1)],
+    }),
+    origin: this.fb.control<string>('', {
+      validators: [Validators.required, Validators.minLength(1)],
+    }),
+    config: this.fb.control<string>('', {
       validators: [Validators.required, Validators.minLength(1)],
     }),
   });
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) protected data: SourcePageDialog,
+    @Inject(MAT_DIALOG_DATA) protected data: DialogWindowConfig,
     protected readonly langService: LanguageService,
-    private readonly dialogRef: MatDialogRef<SourcePageDialogComponent>,
+    private readonly dialogRef: MatDialogRef<SourceDialogComponent>,
     private readonly fb: NonNullableFormBuilder
   ) {}
 
