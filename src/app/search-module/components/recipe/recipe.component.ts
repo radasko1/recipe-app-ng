@@ -96,10 +96,12 @@ import generalLocale from '../../../shared/general.locale.json';
 
     <!--Empty Recipe list result-->
     <ng-template [ngIf]="recipeList && !recipeList.length">
-      <p class="text-medium text-red-600">{{ locale[lang.language].EmptySearchResult }}</p>
+      <div class="block w-full bg-blue-100 text-blue-700 rounded p-5">
+        <p class="text-medium">{{ locale[lang.language].EmptySearchResult }}</p>
+      </div>
     </ng-template>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class RecipeComponent implements OnInit, OnDestroy {
   private readonly subs = new Subject<boolean>();
