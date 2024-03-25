@@ -32,7 +32,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Setup hostkey
-        run: echo "ssh.rosti.cz ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCFSt7pJyGOZzCMrM3uJ3GTf0cNA+cXjsz72bwKmdeuYjLM+K0JaFQvhpKIO1I8W6gkIYb6H10Tpb7BApjl+ws6oks0bBJD3Q4zWyhRpcQ7f51JchfXtujkeG2cV2/WHm6jfnFcEZK8NOgR4MRHzkqspVyUNRpzfnymxv6iuqaD/Bo59XpkbtPYpSrHu5PzLWVvqdkRHoxIZ/egI1cBNphwzit0fHK/1EOKTASmLWNuux8SHNxPaBzTAQg4ZZslA3VkGGB7dKB1XfqpHEznEzG5sVFoROGqTiigbCnaLamvLVkyi12gdGNxQg3YhJtUCkG6KDVYASjE1sPlKtxdGrk9" > ./known_hosts
+        run: echo "ssh.rosti.cz ssh-rsa ${{ secrets.SSH_KEY }}" > ./known_hosts
 
       - name: npm install
         run: npm install

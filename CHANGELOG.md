@@ -2,6 +2,10 @@
 
 List of application versions with description
 
+### 1.9.2
+
+- edit deploy pipeline
+
 ### 1.9.1
 
 - remove unused code
