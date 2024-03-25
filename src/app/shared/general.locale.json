@@ -3,12 +3,14 @@
     "Close": "Zavřít",
     "Unknown": "Neznámé",
     "Add": "Přidat",
-    "Save": "Uložit"
+    "Save": "Uložit",
+    "ErrorOccurred": "Něco se nepovedlo. Zkuste tuto akci později."
   },
   "en": {
     "Close": "Close",
     "Unknown": "Unknown",
     "Add": "Add",
-    "Save": "Save"
+    "Save": "Save",
+    "ErrorOccurred": "Something bad happened. Try it again later."
   }
 }

@@ -1,22 +1,25 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { LanguageService } from '../../shared/services/language-service/language.service';
+import { LocaleService } from '../../shared/services/locale-service/locale.service';
 import locale from '../admin.locale.json';
 import sharedLocale from '../../shared/general.locale.json';
+import { DataCollectionSource } from '../models/data-collection-source.interface';
+import { DataCollectionService } from '../services/data-collection.service';
 
 type SourcePageDialog = {
-  source: string;
-  onSubmit: (data: { source: string; url: string }) => void;
+  source: DataCollectionSource;
 };
 
 @Component({
   selector: 'app-source-page-dialog',
   template: `
     <h2 mat-dialog-title class="text-black">{{ locale[langService.language].LinkToSource }}</h2>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-dialog-content>
+    <mat-dialog-content>
+      <form [formGroup]="form">
         <!--source-->
         <div class="block mb-5">
           <label for="name" class="block font-medium mb-1 text-black">
@@ -43,15 +46,19 @@ type SourcePageDialog = {
             cols="70"
           ></textarea>
         </div>
-      </mat-dialog-content>
-      <mat-dialog-actions align="end">
-        <div class="mx-4">
-          <button type="submit" class="block rounded px-4 py-2 bg-blue-700 text-white">
-            {{ sharedLocale[langService.language].Add }}
-          </button>
-        </div>
-      </mat-dialog-actions>
-    </form>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <div class="mx-4">
+        <button
+          type="button"
+          class="block rounded px-4 py-2 bg-blue-700 text-white"
+          (click)="onSubmit()"
+        >
+          {{ sharedLocale[langService.language].Add }}
+        </button>
+      </div>
+    </mat-dialog-actions>
   `,
   encapsulation: ViewEncapsulation.None,
 })
@@ -60,7 +67,7 @@ export class SourcePageDialogComponent {
   protected readonly sharedLocale = sharedLocale;
   protected readonly form = this.fb.group({
     source: this.fb.control<string>(
-      { value: this.data.source, disabled: true },
+      { value: this.data.source.origin, disabled: true },
       { validators: [Validators.required, Validators.minLength(1)] }
     ),
     url: this.fb.control<string>('', {
@@ -72,7 +79,10 @@ export class SourcePageDialogComponent {
     @Inject(MAT_DIALOG_DATA) protected data: SourcePageDialog,
     protected readonly langService: LanguageService,
     private readonly dialogRef: MatDialogRef<SourcePageDialogComponent>,
-    private readonly fb: NonNullableFormBuilder
+    private readonly fb: NonNullableFormBuilder,
+    private readonly dataCollectionService: DataCollectionService,
+    private readonly snackbar: MatSnackBar,
+    private readonly localeService: LocaleService
   ) {}
 
   protected onSubmit() {
@@ -80,8 +90,28 @@ export class SourcePageDialogComponent {
       return;
     }
 
-    this.data.onSubmit(this.form.getRawValue());
-    this.form.reset();
-    this.dialogRef.close();
+    const id = this.data.source.id;
+    const url = this.form.controls.url.value;
+
+    this.dataCollectionService.addSourceLink(id, url).subscribe({
+      next: () => {
+        this.form.reset();
+        this.dialogRef.close();
+        this.snackbar.open(
+          this.localeService.getLocaleValue(locale, 'SourcePageAddedMessage'),
+          undefined,
+          { duration: 2000 }
+        );
+      },
+      error: (err) => {
+        if (err.status === 409) {
+          this.snackbar.open(
+            this.localeService.getLocaleValue(locale, 'ExistMessage'),
+            undefined,
+            { duration: 5000 }
+          );
+        }
+      },
+    });
   }
 }

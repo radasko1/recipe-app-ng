@@ -18,7 +18,6 @@ import { SourcePageDialogComponent } from './components/source-page-dialog.compo
 import { DataCollectionService } from './services/data-collection.service';
 import { SharedMaterialModule } from '../shared/shared-material.module';
 
-// TODO need component declaration? because imported modules
 @NgModule({
   declarations: [
     DashboardComponent,

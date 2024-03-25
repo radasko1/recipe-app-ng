@@ -1,15 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { DataCollectionSourceForm } from '../models/data-collection-source-form.model';
 import { DataCollectionSource } from '../models/data-collection-source.interface';
-import { DataCollectionSourcePageForm } from '../models/data-collection-source-page-form.model';
 import { DataCollectionService } from '../services/data-collection.service';
 import { SourceDialogComponent } from './source-dialog.component';
 import { SourcePageDialogComponent } from './source-page-dialog.component';
 import { LanguageService } from '../../shared/services/language-service/language.service';
-import { LocaleService } from '../../shared/services/locale-service/locale.service';
 import locale from '../admin.locale.json';
 
 @Component({
@@ -96,31 +92,16 @@ export class SourceListComponent {
   protected readonly sourceList$ = this.dataCollectionService.getDataCollectionSource();
 
   constructor(
-    private readonly dataCollectionService: DataCollectionService,
     protected readonly langService: LanguageService,
-    protected readonly localeService: LocaleService,
-    private readonly dialog: MatDialog,
-    private readonly snackbar: MatSnackBar
+    private readonly dataCollectionService: DataCollectionService,
+    private readonly dialog: MatDialog
   ) {}
 
   /**
    * Add new source
    */
   protected addSource() {
-    this.dialog.open(SourceDialogComponent, {
-      data: {
-        onSubmit: (formData: DataCollectionSourceForm) =>
-          this.dataCollectionService.addSource(formData).subscribe({
-            next: () => {
-              this.snackbar.open(
-                this.localeService.getLocaleValue(locale, 'SourceAddedMessage'),
-                undefined,
-                { duration: 2000 }
-              );
-            },
-          }),
-      },
-    });
+    this.dialog.open(SourceDialogComponent);
   }
 
   /**
@@ -130,18 +111,7 @@ export class SourceListComponent {
   protected addPageURL(source: DataCollectionSource) {
     this.dialog.open(SourcePageDialogComponent, {
       data: {
-        source: source.origin,
-        onSubmit: (formData: DataCollectionSourcePageForm) => {
-          this.dataCollectionService.addSourceLink(source.id, formData.url).subscribe({
-            next: () => {
-              this.snackbar.open(
-                this.localeService.getLocaleValue(locale, 'SourcePageAddedMessage'),
-                undefined,
-                { duration: 2000 }
-              );
-            },
-          });
-        },
+        source: source,
       },
     });
   }

@@ -15,7 +15,7 @@ export class DataCollectionService {
 
   /** */
   public getDataCollectionPageList() {
-    const url = this.url + '/list/analyzed-pages';
+    const url = this.url + '/page/for-analyze';
     return this.httpClient.get<DataCollection[]>(url);
   }
 
@@ -27,7 +27,7 @@ export class DataCollectionService {
 
   /** */
   public getDataCollectionSource() {
-    const url = this.url + '/list/sources';
+    const url = this.url + '/source/list';
     return this.httpClient.get<DataCollectionSource[]>(url);
   }
 
@@ -83,7 +83,7 @@ export class DataCollectionService {
    * @param formData
    */
   public addSource(formData: DataCollectionSourceForm) {
-    const url = this.url + '/add-source';
+    const url = this.url + '/source/create';
     return this.httpClient.post(url, formData);
   }
 

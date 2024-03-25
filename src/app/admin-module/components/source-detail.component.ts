@@ -13,7 +13,6 @@ import sharedLocale from '../../shared/general.locale.json';
   selector: 'app-source-detail',
   template: `
     <ng-container *ngIf="sourceDetail as source">
-    <!--TODO component?-->
     <app-admin-breadcrumb
       [list]="[
           { label: 'Dashboard', link: '/admin/dashboard' },
