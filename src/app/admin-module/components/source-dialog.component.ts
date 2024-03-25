@@ -12,7 +12,6 @@ import { DataCollectionService } from '../services/data-collection.service';
 type Source = { value: string; disabled: boolean };
 type DialogWindowConfig = {
   source: Source;
-  onSubmit: (data: any) => void;
 };
 
 @Component({

@@ -2,6 +2,10 @@
 
 List of application versions with description
 
+### 1.9.1
+
+- remove unused code
+
 ### 1.9.0
 
 - changed `DataCollection` endpoints
