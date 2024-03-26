@@ -6,10 +6,14 @@ import { LanguageService } from './shared/services/language-service/language.ser
   selector: 'app-root',
   template: `
     <!--navigation-->
-    <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm">
+    <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm fixed w-full z-10 top-0">
       <div class="container py-4 flex flex-wrap items-center justify-between">
         <!--logo-->
-        <a routerLink="/" class="block rounded text-gray-500 hover:text-black" rel="noreferrer noopener">
+        <a
+          routerLink="/"
+          class="block rounded text-gray-500 hover:text-black"
+          rel="noreferrer noopener"
+        >
           <img
             src="../assets/logo.png"
             class="select-none pointer-events-none max-w-[8rem]"
@@ -33,15 +37,14 @@ import { LanguageService } from './shared/services/language-service/language.ser
       </div>
     </nav>
     <!-- content -->
-    <main class="relative min-h-full block container">
+    <main class="relative block container mt-20 main-height">
       <router-outlet></router-outlet>
     </main>
     <!-- footer-->
-    <footer class="bg-sky-900 text-white py-2 text-center font-medium">
-      2024
-    </footer>
+    <footer class="bg-sky-900 text-white py-2 text-center font-medium">2024</footer>
   `,
-  encapsulation: ViewEncapsulation.None
+  styles: ['.main-height { min-height: calc(100vh - 5rem - 2rem); }'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   protected readonly locale = locale;

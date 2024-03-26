@@ -1,6 +1,18 @@
 # CHANGELOG
 
+Run command for (without commit):
+
+- major: `npm version major --no-git-tag-version`
+- minor: `npm version minor --no-git-tag-version`
+- patch: `npm version patch --no-git-tag-version`
+
 List of application versions with description
+
+### 1.9.4
+
+- fix `DashboardComponent` styles
+- remove Paginator number of items
+- fix layout styles
 
 ### 1.9.3
 
