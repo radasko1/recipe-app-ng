@@ -90,6 +90,7 @@ import generalLocale from '../../../shared/general.locale.json';
         [length]="recipeList.length"
         [pageSize]="pageSize"
         [pageIndex]="pageIndex"
+        [hidePageSize]="true"
         (page)="onPage($event)"
       ></mat-paginator>
     </ng-template>
@@ -108,7 +109,6 @@ export class RecipeComponent implements OnInit, OnDestroy {
   protected readonly locale = locale;
   protected readonly generalLocale = generalLocale;
   protected recipeList: ResponseList<Recipe> | undefined;
-  //
   protected pageIndex = 0;
   protected readonly pageSize = 5;
 

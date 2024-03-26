@@ -1,6 +1,6 @@
 {
   "name": "ng-recipe-app",
-  "version": "1.9.1",
+  "version": "1.9.4",
   "scripts": {
     "start": "ng serve",
     "build": "ng build",

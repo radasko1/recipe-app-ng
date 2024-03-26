@@ -1,6 +1,26 @@
 # CHANGELOG
 
+Run command for (without commit):
+
+- major: `npm version major --no-git-tag-version`
+- minor: `npm version minor --no-git-tag-version`
+- patch: `npm version patch --no-git-tag-version`
+
 List of application versions with description
+
+### 1.9.4
+
+- fix `DashboardComponent` styles
+- remove Paginator number of items
+- fix layout styles
+
+### 1.9.3
+
+- fix `AuthGuard` to redirect user whether not authenticated
+
+### 1.9.2
+
+- edit deploy pipeline
 
 ### 1.9.1
 
@@ -52,9 +72,11 @@ List of application versions with description
 - option to edit configuration setting for `DataCollectionSource` in `SourceDetailComponent`
 
 ### 1.3.0
+
 - rename app to `Reci-pier`
 
 ### 1.2.0
+
 - refactor of `AdminModule`
   - page for Source list `SourceListComponent`
   - page for Source detail `SourceDetailComponent`
@@ -62,14 +84,17 @@ List of application versions with description
   - page for Recipe detail `RecipeDetailComponent`
 
 ### 1.1.0
+
 - new `RecipeDetailBreadcrumbComponent` component
 
 ### 1.0.2
+
 - add language values for `Language` type
 
 ### 1.0.1
+
 - Paginator component for Recipe page search
 
 ### 1.0.0
-- default starting version
 
+- default starting version
