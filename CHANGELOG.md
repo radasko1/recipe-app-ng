@@ -8,6 +8,10 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.9.5
+
+- npm audit
+
 ### 1.9.4
 
 - fix `DashboardComponent` styles
