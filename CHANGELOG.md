@@ -8,6 +8,10 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.9.6
+
+- add border to autocomplete component input
+
 ### 1.9.5
 
 - npm audit

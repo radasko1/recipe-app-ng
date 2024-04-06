@@ -9,9 +9,8 @@ import { LanguageService } from '../../../shared/services/language-service/langu
   template: `
     <div class="block relative w-full">
       <div class="flex rounded-md">
-        <!--TODO add border to input-->
         <input
-          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-0"
+          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 rounded border outline-none"
           [formControl]="inputValue"
           [placeholder]="placeholder"
           [matAutocomplete]="ingredientList"
