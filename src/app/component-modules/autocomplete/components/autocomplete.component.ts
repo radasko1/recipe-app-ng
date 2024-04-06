@@ -10,7 +10,7 @@ import { LanguageService } from '../../../shared/services/language-service/langu
     <div class="block relative w-full">
       <div class="flex rounded-md">
         <input
-          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-0"
+          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 rounded border outline-none"
           [formControl]="inputValue"
           [placeholder]="placeholder"
           [matAutocomplete]="ingredientList"
@@ -25,7 +25,7 @@ import { LanguageService } from '../../../shared/services/language-service/langu
       </div>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AutocompleteComponent implements OnInit, OnDestroy {
   private subscription = new Subject<boolean>();
