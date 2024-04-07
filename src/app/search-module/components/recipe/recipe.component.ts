@@ -1,13 +1,20 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Subject, takeUntil } from 'rxjs';
+import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
+import generalLocale from '../../../shared/general.locale.json';
+import { ResponseList } from '../../../shared/models/response-list.type';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
 
 import { Recipe } from '../../models/recipe.interface';
 import { RecipeService } from '../../services/recipe.service';
 import locale from './recipe.locale.json';
-import { LanguageService } from '../../../shared/services/language-service/language.service';
-import { ResponseList } from '../../../shared/models/response-list.type';
-import generalLocale from '../../../shared/general.locale.json';
 
 @Component({
   selector: 'app-recipe',
@@ -29,7 +36,9 @@ import generalLocale from '../../../shared/general.locale.json';
             <img [src]="recipe.image_url" [alt]="recipe.name" class="img-fluid" />
           </div>
           <div class="w-3/4">
-            <h5 class="text-2xl font-semibold mb-3">{{ recipe.name }}</h5>
+            <h5 class="text-2xl font-semibold mb-3">
+              {{ recipe | recipeTitle: lang.language }}
+            </h5>
             <div class="inline-flex items-center mb-4">
               <!--cooking time-->
               <div class="inline-flex items-center mr-6">
@@ -102,6 +111,7 @@ import generalLocale from '../../../shared/general.locale.json';
       </div>
     </ng-template>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class RecipeComponent implements OnInit, OnDestroy {
@@ -114,19 +124,45 @@ export class RecipeComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly lang: LanguageService,
-    private readonly recipeService: RecipeService
+    private readonly recipeService: RecipeService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    // Load all Recipes for paginator to avoid re-fetch everytime use go to next/prev page
-    this.recipeService.onSearch$.pipe(takeUntil(this.subs)).subscribe((recipes) => {
-      this.recipeList = recipes;
+    // Listen for language change
+    this.lang.onLanguageChange$.pipe(takeUntil(this.subs)).subscribe(() => {
+      this.cdr.markForCheck();
     });
+    // Load all Recipes for paginator to avoid re-fetch everytime use go to next/prev page
+    this.recipeService.onSearch$
+      .pipe(
+        takeUntil(this.subs),
+        tap((recipes) => {
+          // Update data and trigger change detection:
+          this.recipeList = recipes;
+          this.updateView();
+        }),
+        catchError((err) => {
+          // Handle error and reset state:
+          this.recipeList = undefined;
+          this.updateView();
+          return of(undefined);
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {
     this.subs.next(true);
     this.subs.unsubscribe();
+  }
+
+  /**
+   * Reset recipe list paginator (redirect you on the first page) and update view
+   */
+  private updateView() {
+    this.pageIndex = 0;
+    this.cdr.markForCheck();
   }
 
   /**
