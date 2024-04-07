@@ -8,6 +8,10 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.11.1
+
+- add option to change `title` of `DataCollectionPage` in component `RecipeTitleDialogComponent`
+
 ### 1.11.0
 
 - add pipe `recipeTitle` to detect language change and show recipe title based on current language
@@ -15,6 +19,7 @@ List of application versions with description
 - add observable `onLanguageChange$` in `LanguageService`
 
 ### 1.10.0
+
 - change way of showing data on page `/admin/page`
 - add option to change localized title for recipe on detail page `/admin/page`
 - move all Angular Material modules to `SharedMaterialModule`

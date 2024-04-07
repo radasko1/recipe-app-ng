@@ -9,6 +9,7 @@ import { LanguageService } from '../../shared/services/language-service/language
 import { DataCollectionService } from '../services/data-collection.service';
 
 interface TitleForm {
+  title: string;
   czech: string;
   english: string;
 }
@@ -17,6 +18,7 @@ type TitleFormGroup = {
 };
 type DialogData = {
   id: string;
+  title: string | null;
   locale: Localized | null;
 };
 
@@ -26,13 +28,25 @@ type DialogData = {
     <h2 mat-dialog-title class="text-black">{{ locale[langService.language].LocalizedTitle }}</h2>
     <mat-dialog-content>
       <form [formGroup]="titleForm">
+        <!--title-->
+        <div class="block mb-5">
+          <label for="title" class="block font-medium mb-1 text-black">
+            {{ locale[langService.language].Title }}
+          </label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            class="block rounded border outline-none leading-tight appearance-none p-3 w-96"
+          />
+        </div>
         <!--czech-->
         <div class="block mb-5">
-          <label for="name" class="block font-medium mb-1 text-black">
+          <label for="czech" class="block font-medium mb-1 text-black">
             {{ locale[langService.language].CzechLanguage }}
           </label>
           <input
-            id="name"
+            id="czech"
             type="text"
             formControlName="czech"
             class="block rounded border outline-none leading-tight appearance-none p-3 w-96"
@@ -40,11 +54,11 @@ type DialogData = {
         </div>
         <!--english-->
         <div class="block mb-5">
-          <label for="name" class="block font-medium mb-1 text-black">
+          <label for="english" class="block font-medium mb-1 text-black">
             {{ locale[langService.language].EnglishLanguage }}
           </label>
           <input
-            id="name"
+            id="english"
             type="text"
             formControlName="english"
             class="block rounded border outline-none leading-tight appearance-none p-3 w-96"
@@ -78,6 +92,7 @@ export class RecipeTitleDialogComponent {
     const dialogData = this.data;
 
     this.titleForm = this.fb.group<TitleFormGroup>({
+      title: this.fb.control(dialogData.title ?? '', { validators: [Validators.required] }),
       czech: this.fb.control(dialogData.locale?.cs ?? '', { validators: [Validators.required] }),
       english: this.fb.control(dialogData.locale?.en ?? '', { validators: [Validators.required] }),
     });
@@ -95,13 +110,14 @@ export class RecipeTitleDialogComponent {
     const id = parseInt(this.data.id, 10);
 
     this.dataCollectionService
-      .updatePageTitleLocale(id, { cs: formData.czech, en: formData.english })
+      .updatePageTitleLocale(id, formData.title, { cs: formData.czech, en: formData.english })
       .subscribe({
         next: () => {
           this.dialogRef.close();
+          // TODO message + update page?
         },
         error: () => {
-          //
+          // TODO message
         },
       });
   }

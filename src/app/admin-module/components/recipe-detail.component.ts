@@ -243,13 +243,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   protected openTitleDialog() {
+    let title = null;
     let titleLocale = null;
     if (this.dataCollectionDetail) {
+      title = this.dataCollectionDetail.title;
       titleLocale = this.dataCollectionDetail.titleLocale;
     }
 
     this.dialog.open(RecipeTitleDialogComponent, {
-      data: { id: this.paramId, locale: titleLocale },
+      data: { id: this.paramId, title: title, locale: titleLocale },
     });
   }
 }

@@ -101,10 +101,11 @@ export class DataCollectionService {
   /**
    * Update DataCollectionPage localized title
    * @param id
+   * @param title
    * @param locale
    */
-  public updatePageTitleLocale(id: number, locale: Localized) {
+  public updatePageTitleLocale(id: number, title: string, locale: Localized) {
     const url = this.url + '/update/page-title-locale';
-    return this.httpClient.patch(url, { id, locale });
+    return this.httpClient.patch(url, { id, title, locale });
   }
 }
