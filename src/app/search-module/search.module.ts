@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { SharedMaterialModule } from '../shared/shared-material.module';
+import { RecipeTitlePipe } from "./pipes/recipe-title.pipe";
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -20,6 +21,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     SearchBarComponent,
     RecipeComponent,
     IngredientModalComponent,
+    RecipeTitlePipe
   ],
   imports: [
     SearchRoutingModule,
