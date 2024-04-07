@@ -35,7 +35,7 @@ import { DataCollectionService } from '../services/data-collection.service';
               class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               *ngFor="let item of collection"
             >
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+              <th scope="row" class="px-6 py-4 font-medium text-blue-500 underline">
                 <a [href]="item.page_url" rel="noreferrer noopener" target="_blank">
                   {{ item.page_data.title }}
                 </a>
@@ -43,19 +43,19 @@ import { DataCollectionService } from '../services/data-collection.service';
               <!--status-->
               <td class="px-6 py-4">
                 <span
-                  *ngIf="!item.checked && !item.approved"
+                  *ngIf="!item.approved && !item.recipe_id"
                   class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-blue-500 text-white"
-                  >created</span
+                  >collected</span
                 >
                 <span
-                  *ngIf="item.checked && !item.approved"
-                  class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-amber-500 text-white"
-                  >checked</span
-                >
-                <span
-                  *ngIf="item.checked && item.approved"
+                  *ngIf="item.approved && !item.recipe_id"
                   class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-green-500 text-white"
                   >approved</span
+                >
+                <span
+                  *ngIf="item.recipe_id"
+                  class="rounded-lg inline-block px-2 py-1 text-xs font-medium select-none bg-red-700 text-white"
+                  >created</span
                 >
               </td>
               <!--detail-->
@@ -73,7 +73,7 @@ import { DataCollectionService } from '../services/data-collection.service';
       </table>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class RecipeListComponent {
   protected readonly locale = locale;

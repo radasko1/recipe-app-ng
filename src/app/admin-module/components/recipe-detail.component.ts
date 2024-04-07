@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -7,6 +8,7 @@ import { IngredientService } from '../../search-module/services/ingredient.servi
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import { DataCollectionService } from '../services/data-collection.service';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
+import { RecipeTitleDialogComponent } from './recipe-title-dialog.component';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,7 +24,14 @@ import { DataCollectionDetail } from '../models/data-collection-detail.interface
       />
       <!--content-->
       <div class="py-9">
-        <h2 class="text-4xl font-medium mb-4">{{ dataCollection.title }}</h2>
+        <div class="flex flex-row justify-start items-center mb-4">
+          <h2 class="text-4xl font-medium">{{ dataCollection.title }}</h2>
+          <mat-icon
+            class="text-blue-400 material-icons-outlined ml-2 cursor-pointer"
+            fontIcon="edit_square"
+            (click)="openTitleDialog()"
+          ></mat-icon>
+        </div>
         <div class="inline-flex items-center">
           <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
           <a
@@ -140,7 +149,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private readonly router: ActivatedRoute,
     private readonly dataCollectionService: DataCollectionService,
     private readonly ingredientService: IngredientService,
-    private readonly languageService: LanguageService
+    private readonly languageService: LanguageService,
+    private readonly dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -230,5 +240,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     }
 
     this.dataCollectionService.approvePageData(this.paramId).subscribe();
+  }
+
+  protected openTitleDialog() {
+    let titleLocale = null;
+    if (this.dataCollectionDetail) {
+      titleLocale = this.dataCollectionDetail.titleLocale;
+    }
+
+    this.dialog.open(RecipeTitleDialogComponent, {
+      data: { id: this.paramId, locale: titleLocale },
+    });
   }
 }
