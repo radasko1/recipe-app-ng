@@ -12,6 +12,9 @@
     "NewSource": "Vytvořit nový zdroj",
     "GoToPage": "Přejít na stránku webu",
     "Config": "Nastavení",
+    "CzechLanguage": "Čeština",
+    "EnglishLanguage": "Angličtina",
+    "LocalizedTitle": "Lokalizovatelný Název",
     "SourceAddedMessage": "Zdroj byl úspěšně přidán.",
     "SourcePageAddedMessage": "Stránka byla úspěšně přidána.",
     "ExistMessage": "Tato položka už existuje. Zkontrolujte vyplněné údaje a zkuste to znovu."
@@ -29,6 +32,9 @@
     "NewSource": "Create a new source",
     "GoToPage": "Go to the web page",
     "Config": "Configuration",
+    "CzechLanguage": "Czech",
+    "EnglishLanguage": "English",
+    "LocalizedTitle": "Localized Title",
     "SourceAddedMessage": "Source was successfully added.",
     "SourcePageAddedMessage": "Source page was successfully added.",
     "ExistMessage": "This item has already exist. Check your data and try again."

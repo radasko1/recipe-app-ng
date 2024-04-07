@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
@@ -11,6 +8,7 @@ import { BreadcrumbComponent } from './components/breadcrumb.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { RecipeListComponent } from './components/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe-detail.component';
+import { RecipeTitleDialogComponent } from './components/recipe-title-dialog.component';
 import { SourceDetailComponent } from './components/source-detail.component';
 import { SourceDialogComponent } from './components/source-dialog.component';
 import { SourceListComponent } from './components/source-list.component';
@@ -28,11 +26,9 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     SourceDialogComponent,
     SourcePageDialogComponent,
     BreadcrumbComponent,
+    RecipeTitleDialogComponent,
   ],
   imports: [
-    MatCheckboxModule,
-    MatDialogModule,
-    MatSnackBarModule,
     ReactiveFormsModule,
     SharedMaterialModule,
     AdminRoutingModule,
@@ -40,6 +36,5 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     AutocompleteModule,
   ],
   providers: [DataCollectionService],
-  exports: [],
 })
 export class AdminModule {}

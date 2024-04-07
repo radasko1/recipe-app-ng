@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Localized } from '../../shared/models/localized.type';
 
 import { DataCollectionSourceForm } from '../models/data-collection-source-form.model';
 import { DataCollectionSource } from '../models/data-collection-source.interface';
@@ -95,5 +96,15 @@ export class DataCollectionService {
   public updateDataSource(id: number, source: DataCollectionSource) {
     const url = this.url + '/update/data-source';
     return this.httpClient.patch<DataCollectionSource>(url, { id, config: source });
+  }
+
+  /**
+   * Update DataCollectionPage localized title
+   * @param id
+   * @param locale
+   */
+  public updatePageTitleLocale(id: number, locale: Localized) {
+    const url = this.url + '/update/page-title-locale';
+    return this.httpClient.patch(url, { id, locale });
   }
 }

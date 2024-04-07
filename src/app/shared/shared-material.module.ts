@@ -1,9 +1,36 @@
 import { NgModule } from '@angular/core';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  imports: [MatIconModule, MatPaginatorModule],
-  exports: [MatIconModule, MatPaginatorModule],
+  imports: [
+    MatDialogModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+  ],
+  exports: [
+    MatDialogModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+  ],
 })
 export class SharedMaterialModule {}

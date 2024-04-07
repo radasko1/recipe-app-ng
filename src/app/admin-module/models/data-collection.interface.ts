@@ -6,4 +6,5 @@ export interface DataCollection {
   page_url: string;
   checked: boolean;
   approved: boolean;
+  recipe_id: number | null;
 }

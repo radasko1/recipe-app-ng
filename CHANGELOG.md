@@ -8,6 +8,11 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.10.0
+- change way of showing data on page `/admin/page`
+- add option to change localized title for recipe on detail page `/admin/page`
+- move all Angular Material modules to `SharedMaterialModule`
+
 ### 1.9.6
 
 - add border to autocomplete component input
