@@ -8,6 +8,11 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.12.1
+
+- set Czech as default language
+- add info about Recipe calories and preparation time
+
 ### 1.12.0
 
 - refactor `RecipeDetailComponent`
