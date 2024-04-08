@@ -66,9 +66,12 @@ type DialogData = {
         </div>
       </form>
       <mat-dialog-actions align="end">
+        <button type="button" class="block rounded px-4 py-2 bg-black text-white" mat-dialog-close>
+          {{ sharedLocale[langService.language].Close }}
+        </button>
         <button
           type="button"
-          class="block rounded px-4 py-2 bg-blue-700 text-white"
+          class="block rounded px-4 py-2 bg-blue-700 text-white ml-3"
           (click)="save()"
         >
           {{ sharedLocale[langService.language].Save }}
@@ -83,7 +86,7 @@ export class RecipeTitleDialogComponent {
   protected readonly titleForm: FormGroup<TitleFormGroup>;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) protected data: DialogData,
+    @Inject(MAT_DIALOG_DATA) protected readonly data: DialogData,
     private readonly dialogRef: MatDialogRef<RecipeTitleDialogComponent>,
     private readonly fb: NonNullableFormBuilder,
     private readonly dataCollectionService: DataCollectionService,

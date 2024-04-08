@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { SharedMaterialModule } from '../shared/shared-material.module';
-import { RecipeTitlePipe } from "./pipes/recipe-title.pipe";
+import { SharedModule } from '../shared/shared.module';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -12,7 +12,6 @@ import { RecipeComponent } from './components/recipe/recipe.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
 import { RecipeService } from './services/recipe.service';
 import { CategoryService } from './services/category.service';
-import { IngredientService } from './services/ingredient.service';
 import { IngredientDialogService } from './services/ingredient-dialog.service';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     SearchBarComponent,
     RecipeComponent,
     IngredientModalComponent,
-    RecipeTitlePipe
   ],
   imports: [
     SearchRoutingModule,
@@ -29,7 +27,8 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     CommonModule,
     ReactiveFormsModule,
     SharedMaterialModule,
+    SharedModule,
   ],
-  providers: [RecipeService, CategoryService, IngredientService, IngredientDialogService],
+  providers: [RecipeService, CategoryService, IngredientDialogService],
 })
 export class SearchModule {}

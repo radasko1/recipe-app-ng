@@ -96,7 +96,7 @@ export class SourceDialogComponent {
   ) {}
 
   protected onSubmit() {
-    if (this.form.status === 'INVALID') {
+    if (this.form.invalid) {
       return;
     }
 

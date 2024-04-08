@@ -8,6 +8,15 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.12.0
+
+- refactor `RecipeDetailComponent`
+- created `SharedModule` to share pipes, components, ...
+- create `LanguageObject` to define localized text inside single component (don't need to create .json file for that)
+- share `LocalizedTitlePipe` and refactor it to make reusable
+- component `RecipeDetailCheckboxListComponent` to show checkboxes inside `RecipeDetailComponent` + services
+- make `IngredientService` available global (for root) + save response
+
 ### 1.11.1
 
 - add option to change `title` of `DataCollectionPage` in component `RecipeTitleDialogComponent`

@@ -1,31 +1,51 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { Ingredient } from '../../search-module/models/ingredient.interface';
-import { IngredientService } from '../../search-module/services/ingredient.service';
+import { IngredientService } from '../../shared/services/ingredient-service/ingredient.service';
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import { DataCollectionService } from '../services/data-collection.service';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
+import { RequiredIngredientCheckboxListService } from '../services/required-ingredient-checkbox-list.service';
+import { RecipeDetailCheckboxListComponent } from './recipe-detail-checkbox-list.component';
 import { RecipeTitleDialogComponent } from './recipe-title-dialog.component';
+import { LanguageObject } from '../../language-switch-module/models/language-object.type';
+
+/** Localized text collection */
+const LOCALE_TEXT: LanguageObject = {
+  cs: {
+    RecipeLink: 'Přejít na stránku s receptem',
+    RequiredIngredients: 'Požadované Suroviny',
+    OptionalIngredients: 'Volitelné Suroviny',
+    Recipe: 'Ingredience z receptu',
+    IngredientName: 'Název suroviny',
+  },
+  en: {
+    RecipeLink: 'Go to the recipe page',
+    RequiredIngredients: 'Required Ingredients',
+    OptionalIngredients: 'Optional Ingredients',
+    Recipe: 'Ingredients from Recipe',
+    IngredientName: 'Ingredient name',
+  },
+};
 
 @Component({
   selector: 'app-recipe-detail',
   template: `
     <ng-container *ngIf="dataCollectionDetail as dataCollection">
       <!--breadcrumb-->
-      <app-admin-breadcrumb
-        [list]="[
-          { label: 'Dashboard', link: '/admin/dashboard' },
-          { label: 'Recipe List', link: '/admin/page' },
-          { label: dataCollection.title, link: null }
-        ]"
-      />
+      <app-admin-breadcrumb [list]="breadcrumbPageList(dataCollection)" />
       <!--content-->
       <div class="py-9">
         <div class="flex flex-row justify-start items-center mb-4">
-          <h2 class="text-4xl font-medium">{{ dataCollection.title }}</h2>
+          <h2 class="text-4xl font-medium">
+            {{
+              dataCollection.titleLocale
+                | localizedTitle: languageService.language : dataCollection.title
+            }}
+          </h2>
           <mat-icon
             class="text-blue-400 material-icons-outlined ml-2 cursor-pointer"
             fontIcon="edit_square"
@@ -40,71 +60,37 @@ import { RecipeTitleDialogComponent } from './recipe-title-dialog.component';
             rel="noreferrer noopener"
             class="ml-3 underline"
           >
-            Odkaz na recept
+            {{ LOCALE_TEXT[languageService.language]['RecipeLink'] }}
           </a>
         </div>
-
         <!---->
         <div class="flex flex-row -mx-5 mt-10">
-          <div class="basis-1/3 px-5">
-            <h3 class="text-2xl font-medium">Recept</h3>
-            <ul>
-              @for (ingredient of dataCollection.ingredients; track ingredient) {
-              <li>
-                <mat-checkbox>{{ ingredient }}</mat-checkbox>
-              </li>
-              }
-            </ul>
-          </div>
-          <!---->
-          <div class="basis-1/3 px-5">
-            <h3 class="text-2xl font-medium">Pozadovane ingredience</h3>
-            <ul>
-              @for (ingredient of requiredIngredients; track ingredient; let i = $index) {
-              <li class="flex flex-row items-center justify-between">
-                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="Delete"
-                  fontIcon="delete"
-                  class="cursor-pointer text-red-600"
-                  (click)="remove(requiredIngredients, i)"
-                ></mat-icon>
-              </li>
-              }
-            </ul>
-            <ng-autocomplete
-              [list]="ingredientList"
-              searchProp="locale"
-              placeholder="Přidat ingredienci"
-              (onSelect)="select(requiredIngredients, $event)"
-            />
-          </div>
-          <!---->
-          <div class="basis-1/3 px-5">
-            <h3 class="text-2xl font-medium">Volitelne ingredience</h3>
-            <ul>
-              @for (ingredient of optionalIngredients; track ingredient; let ingredientIndex =
-              $index) {
-              <li class="flex flex-row items-center justify-between">
-                <mat-checkbox>{{ ingredient.locale[lang] }}</mat-checkbox>
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="Delete"
-                  fontIcon="delete"
-                  class="cursor-pointer text-red-600"
-                  (click)="remove(optionalIngredients, ingredientIndex)"
-                ></mat-icon>
-              </li>
-              }
-            </ul>
-            <ng-autocomplete
-              [list]="ingredientList"
-              searchProp="locale"
-              placeholder="Přidat ingredienci"
-              (onSelect)="select(optionalIngredients, $event)"
-            />
-          </div>
+          <!--recipe ingredient-->
+          <app-recipe-detail-checkbox-list
+            class="basis-1/3 px-5"
+            [title]="LOCALE_TEXT[languageService.language]['Recipe']"
+            [list]="dataCollection.ingredients"
+          />
+          <!--required ingredients-->
+          <app-recipe-detail-checkbox-list
+            #requiredIng
+            class="basis-1/3 px-5"
+            [title]="LOCALE_TEXT[languageService.language]['RequiredIngredients']"
+            [list]="requiredIngredients"
+            [dataService]="reqIngCheckListService"
+            [showAutocomplete]="true"
+            [autocompleteList]="ingredientList"
+          />
+          <!--optional ingredients-->
+          <app-recipe-detail-checkbox-list
+            #optionalIng
+            class="basis-1/3 px-5"
+            [title]="LOCALE_TEXT[languageService.language]['OptionalIngredients']"
+            [list]="optionalIngredients"
+            [dataService]="reqIngCheckListService"
+            [showAutocomplete]="true"
+            [autocompleteList]="ingredientList"
+          />
         </div>
 
         <div class="mt-5">
@@ -134,28 +120,34 @@ import { RecipeTitleDialogComponent } from './recipe-title-dialog.component';
     </ng-container>
   `,
   encapsulation: ViewEncapsulation.None,
-  providers: [IngredientService],
+  providers: [RequiredIngredientCheckboxListService],
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
+  @ViewChild('requiredIng') requiredListComponent:
+    | RecipeDetailCheckboxListComponent<Ingredient, Ingredient>
+    | undefined;
+
   private subs = new Subject<boolean>();
   private paramId: number | undefined;
   protected dataCollectionDetail: DataCollectionDetail | undefined;
   protected requiredIngredients: Ingredient[] = [];
   protected optionalIngredients: Ingredient[] = [];
   protected ingredientList: Ingredient[] = [];
-  protected readonly lang = this.languageService.language;
+  protected readonly LOCALE_TEXT = LOCALE_TEXT;
 
   constructor(
+    protected readonly languageService: LanguageService,
     private readonly router: ActivatedRoute,
     private readonly dataCollectionService: DataCollectionService,
     private readonly ingredientService: IngredientService,
-    private readonly languageService: LanguageService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    // better use separated instance for each list
+    protected readonly reqIngCheckListService: RequiredIngredientCheckboxListService
   ) {}
 
   ngOnInit() {
     const routeParam = this.router.snapshot.params;
-    const detailId = routeParam['id']; // parseInt(routeParam['id'], 10);
+    const detailId = routeParam['id'];
     this.paramId = detailId;
 
     this.dataCollectionService
@@ -180,34 +172,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  /**
-   * Autocomplete option select handler.
-   * Push selected item inside specified array
-   * @param array
-   * @param item
-   */
-  protected select(array: any[], item: any) {
-    if (!Array.isArray(array)) {
-      return;
-    }
-    if (!item) {
-      return;
-    }
-
-    array.push(item);
-  }
-
-  /**
-   * Remove item from array based on index
-   * @param sourceArray
-   * @param index
-   */
-  protected remove(sourceArray: Ingredient[], index: number) {
-    if (index < 0) {
-      return;
-    }
-
-    sourceArray.splice(index, 1);
+  protected breadcrumbPageList(dataCollection: DataCollectionDetail) {
+    return [
+      { label: 'Dashboard', link: '/admin/dashboard' },
+      { label: 'Recipe List', link: '/admin/page' },
+      { label: dataCollection.title, link: null },
+    ];
   }
 
   /** Save Recipe Ingredients for specific Data Collection */
@@ -216,6 +186,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // list is mutated (reference)
     const requiredIngredientList = this.requiredIngredients.map((ing) => ing.id);
     const optionalIngredientList = this.optionalIngredients.map((ing) => ing.id);
 
@@ -243,8 +214,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   protected openTitleDialog() {
-    let title = null;
-    let titleLocale = null;
+    let title = null,
+      titleLocale = null;
     if (this.dataCollectionDetail) {
       title = this.dataCollectionDetail.title;
       titleLocale = this.dataCollectionDetail.titleLocale;
