@@ -8,6 +8,12 @@ Run command for (without commit):
 
 List of application versions with description
 
+### 1.13.0
+
+- fix API endpoint for `data-collection-source`
+- refactor `RecipeDetailComponent` how to handle and show data from web-scraper
+- created module `DataCollectionModule` holding components to handle data collection information
+
 ### 1.12.1
 
 - set Czech as default language

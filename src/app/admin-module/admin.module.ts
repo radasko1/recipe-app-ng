@@ -7,9 +7,10 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { BreadcrumbComponent } from './components/breadcrumb.component';
 import { DashboardComponent } from './components/dashboard.component';
-import { RecipeDetailCheckboxListComponent } from "./components/recipe-detail-checkbox-list.component";
+import { RecipeDetailCheckboxListComponent } from './components/recipe-detail-checkbox-list.component';
 import { RecipeListComponent } from './components/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe-detail.component';
+import { DataCollectionModule } from '../data-collection/data-collection.module';
 import { RecipeTitleDialogComponent } from './components/recipe-title-dialog.component';
 import { SourceDetailComponent } from './components/source-detail.component';
 import { SourceDialogComponent } from './components/source-dialog.component';
@@ -29,7 +30,7 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     SourcePageDialogComponent,
     BreadcrumbComponent,
     RecipeTitleDialogComponent,
-    RecipeDetailCheckboxListComponent
+    RecipeDetailCheckboxListComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -37,6 +38,7 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     AdminRoutingModule,
     CommonModule,
     AutocompleteModule,
+    DataCollectionModule,
     SharedModule,
   ],
   providers: [DataCollectionService],
