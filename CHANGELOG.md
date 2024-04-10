@@ -12,6 +12,10 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.7
+
+- add paginator on page `RecipeListComponent`
+
 ### 1.13.6
 
 - replace all snackbar usage with `SnackBarService`

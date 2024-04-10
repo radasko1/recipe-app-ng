@@ -9,10 +9,8 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 import { LanguageObject } from '../../../language-switch-module/models/language-object.type';
-import generalLocale from '../../../shared/general.locale.json';
 import { ResponseList } from '../../../shared/models/response-list.type';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
-
 import { Recipe } from '../../models/recipe.interface';
 import { RecipeService } from '../../services/recipe.service';
 import locale from './recipe.locale.json';
@@ -130,7 +128,6 @@ const LOCALE_TEXT: LanguageObject = {
 export class RecipeComponent implements OnInit, OnDestroy {
   private readonly subs = new Subject<boolean>();
   protected readonly locale = locale;
-  protected readonly generalLocale = generalLocale;
   protected recipeList: ResponseList<Recipe> | undefined;
   protected pageIndex = 0;
   protected readonly pageSize = 5;
