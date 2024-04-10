@@ -4,7 +4,8 @@ import { Ingredient } from './ingredient.interface';
 export interface Recipe {
   name: string;
   link: string;
-  calories: number;
+  calories: number | null;
+  preparation_time: number | null;
   locale: Locale;
   image_url: string | null;
   requiredIngredients: Ingredient[];

@@ -8,6 +8,24 @@ Run command for (without commit):
 
 List of application versions with description
 
+---
+
+## Versions
+
+### 1.13.0
+
+- fix API endpoint for `data-collection-source`
+- refactor `RecipeDetailComponent` how to handle and show data from web-scraper
+- created module `DataCollectionModule` holding components to handle data collection information
+- move `RecipeDetailComponent` into component directory
+- remove unused method from `RecipeDetailCheckboxListComponent`
+- created `RecipeIngredientDialogComponent` where can edit list of required ingredients 
+
+### 1.12.1
+
+- set Czech as default language
+- add info about Recipe calories and preparation time
+
 ### 1.12.0
 
 - refactor `RecipeDetailComponent`

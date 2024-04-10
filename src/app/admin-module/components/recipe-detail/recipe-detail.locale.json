@@ -1,0 +1,36 @@
+{
+  "cs": {
+    "RecipeLink": "Přejít na stránku s receptem",
+    "RequiredIngredients": "Požadované Suroviny",
+    "OptionalIngredients": "Volitelné Suroviny",
+    "Recipe": "Ingredience z receptu",
+    "IngredientName": "Název suroviny",
+    "RecipeList": "Seznam receptů",
+    "FormControlName_url": "URL",
+    "FormControlName_title": "Název",
+    "FormControlName_titleLocale": "Lokalizovaný Název",
+    "FormControlName_calories": "Počet kalorií",
+    "FormControlName_cookingTime": "Doba přípravy",
+    "FormControlName_ingredients": "Ingredience (ze stránky)",
+    "FormControlName_requiredIngredients": "Požadované ingredience do receptu",
+    "FormControlName_optionalIngredients": "Volitelné ingredience do receptu",
+    "RequiredIngredientsButtonLabel": "Editovat ingredience"
+  },
+  "en": {
+    "RecipeLink": "Go to the recipe page",
+    "RequiredIngredients": "Required Ingredients",
+    "OptionalIngredients": "Optional Ingredients",
+    "Recipe": "Ingredients from Recipe",
+    "IngredientName": "Ingredient name",
+    "RecipeList": "Recipe list",
+    "FormControlName_url": "URL",
+    "FormControlName_title": "Title",
+    "FormControlName_titleLocale": "Localized Title",
+    "FormControlName_calories": "Calories",
+    "FormControlName_cookingTime": "Preparation time",
+    "FormControlName_ingredients": "Ingredients (from page)",
+    "FormControlName_requiredIngredients": "Required ingredients for recipe",
+    "FormControlName_optionalIngredients": "Optional ingredients for recipe",
+    "RequiredIngredientsButtonLabel": "Edit ingredients"
+  }
+}

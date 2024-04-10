@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './components/dashboard.component';
 import { RecipeListComponent } from './components/recipe-list.component';
-import { RecipeDetailComponent } from './components/recipe-detail.component';
+import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import { SourceDetailComponent } from './components/source-detail.component';
 import { SourceListComponent } from "./components/source-list.component";
 
