@@ -1,21 +1,27 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DataFieldCustomAction } from '../../../admin-module/models/data-field-custom-action.type';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
-import locale from './data-field.locale.json';
+import locale from './text-data-field.locale.json';
 
 @Component({
-  selector: 'app-data-field',
+  selector: 'app-text-data-field',
   template: `
-    <div class="block mb-5 relative" [formGroup]="formGroupRef">
-      <label [for]="formControlNameRef" class="mb-2 block font-medium">
+    <div class="block mb-5 relative">
+      <label class="mb-2 block font-medium">
         {{ title }}
       </label>
       <textarea
         type="text"
-        [id]="formControlNameRef"
-        [formControlName]="formControlNameRef"
+        [value]="textValue"
         class="block rounded border outline-0 p-2 w-full"
+        (change)="valueChange($event)"
       ></textarea>
       <!--setting icon-->
       <div class="block absolute top-0 right-0">
@@ -41,28 +47,55 @@ import locale from './data-field.locale.json';
       </div>
     </div>
   `,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextDataFieldComponent),
+      multi: true,
+    },
+  ],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataFieldComponent {
-  // TODO (nice to have): what if pass here FormControl instead FormGroup and control key?
-  /** Form reference */
-  @Input({ required: true }) formGroupRef!: FormGroup;
-  @Input({ required: true }) formControlNameRef!: string;
+export class TextDataFieldComponent implements ControlValueAccessor {
   /** Label for input field */
   @Input({ required: true }) title!: string;
   /** List of custom actions */
   @Input() customActionList: DataFieldCustomAction[] | undefined;
 
+  protected onChange = (value: any) => {};
+  protected onTouched = () => {};
+
   protected readonly locale = locale;
+  protected textValue: string | null = '';
 
   constructor(protected readonly lang: LanguageService) {}
 
+  writeValue(value: string | null) {
+    this.textValue = value;
+  }
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  /**
+   * Change event handler
+   * @param event Change event
+   */
+  protected valueChange(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    this.textValue = target.value;
+    this.onChange(target.value);
+  }
+
   /** Set form control value to NULL */
   protected toNull() {
-    const control = this.formGroupRef.get(this.formControlNameRef);
-    if (!control) {
-      return;
-    }
-    control.setValue(null);
+    this.textValue = null;
+    this.onChange(null);
   }
 }

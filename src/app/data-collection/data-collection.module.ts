@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { DataFieldComponent } from './components/data-field/data-field.component';
 import { LocalizationDialogComponent } from './components/localization-dialog/localization-dialog.component';
 import { SharedMaterialModule } from '../shared/shared-material.module';
 import { SharedModule } from '../shared/shared.module';
+import { TextDataFieldComponent } from './components/text-data-field/text-data-field.component';
 
 @NgModule({
-  declarations: [DataFieldComponent, LocalizationDialogComponent],
+  declarations: [TextDataFieldComponent, LocalizationDialogComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedMaterialModule, SharedModule],
-  exports: [DataFieldComponent],
+  exports: [TextDataFieldComponent],
 })
 export class DataCollectionModule {}

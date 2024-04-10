@@ -12,6 +12,11 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.1
+
+- fix problem with writing into `TextDataFieldComponent`
+- refactor `RecipeDetailComponent` to add custom action for optional ingredients also
+
 ### 1.13.0
 
 - fix API endpoint for `data-collection-source`
@@ -19,7 +24,7 @@ List of application versions with description
 - created module `DataCollectionModule` holding components to handle data collection information
 - move `RecipeDetailComponent` into component directory
 - remove unused method from `RecipeDetailCheckboxListComponent`
-- created `RecipeIngredientDialogComponent` where can edit list of required ingredients 
+- created `RecipeIngredientDialogComponent` where can edit list of required ingredients
 
 ### 1.12.1
 
