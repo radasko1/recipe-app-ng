@@ -5,4 +5,5 @@ export interface Ingredient {
   name: string;
   locale: Locale;
   selected: boolean;
+  category_id: number;
 }

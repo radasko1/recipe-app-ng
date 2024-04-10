@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 
 @Component({
@@ -81,14 +80,14 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Select item from suggestion
-   * @param item Selected item
+   * Selected option from Autocomplete
+   * @param selectedOption
    */
-  protected select(item: any) {
-    if (!item) {
+  protected select(selectedOption: any) {
+    if (!selectedOption) {
       return;
     }
-    this.selected.next(item);
+    this.selected.next(selectedOption);
     this.inputValue.reset();
   }
 }

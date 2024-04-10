@@ -12,6 +12,9 @@ List of application versions with description
 
 ## Versions
 
+### ?
+- refactor function which find and match searched/selected ingredient
+
 ### 1.13.7
 
 - add paginator on page `RecipeListComponent`

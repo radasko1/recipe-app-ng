@@ -22,7 +22,8 @@ import { LanguageService } from './shared/services/language-service/language.ser
         </a>
         <!--links-->
         <ul class="flex items-center justify-between md:flex w-auto font-medium md:p-4">
-          <li class="">
+          <li>
+            <!--@router-->
             <a
               [routerLink]="['/', 'search']"
               class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"

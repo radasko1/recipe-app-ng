@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, mergeMap, Observable, tap } from 'rxjs';
-import { environment } from "../../../environments/environment";
-
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { IngredientCategory } from '../models/ingredient-category.interface';
-import { Ingredient } from '../models/ingredient.interface';
 
 @Injectable()
 export class CategoryService {
@@ -22,16 +20,6 @@ export class CategoryService {
     return this.http
       .get<IngredientCategory[]>(`${environment.SERVER_API}/ingredient/categories`)
       .pipe(tap((data) => this.subject.next(data)));
-  }
-
-  /**
-   * Get Ingredients from all Categories
-   */
-  public getAllIngredients(): Observable<Ingredient[]> {
-    return this.subject.pipe(
-      // Transform each Category into an Observable of its Ingredients
-      mergeMap((categories) => categories.map((category) => category.ingredients))
-    );
   }
 
   /**
