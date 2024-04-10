@@ -35,21 +35,20 @@ type LanguageButton = {
       <ul class="text-sm text-gray-700 dark:text-gray-200">
         @for (item of languageConfig; track item) {
         <li>
-          <a
-            class="cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          <button
+            type="button"
+            class="outline-0 border-0 text-left text-gray-700 w-full block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             role="menuitem"
-            tabindex="-1"
-            rel="noreferrer noopener"
-            (click)="langService.change(item.code)"
+            (click)="handleClick(item)"
           >
             {{ localeService.getLocaleValue(locale, item.translation) }}
-          </a>
+          </button>
         </li>
         }
       </ul>
     </mat-menu>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class LanguageSwitchComponent {
   protected readonly locale = locale;
@@ -62,6 +61,10 @@ export class LanguageSwitchComponent {
     protected readonly langService: LanguageService,
     protected readonly localeService: LocaleService
   ) {}
+
+  protected handleClick(item: LanguageButton) {
+    this.langService.change(item.code);
+  }
 
   /** Get translated language label */
   protected get languageLabel() {

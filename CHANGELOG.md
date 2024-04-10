@@ -12,6 +12,20 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.4
+
+- fix missing image in `RecipeDetailComponent`
+- mark null value in `TextDataFieldComponent`
+
+### 1.13.3
+
+- added Angular Lint tool
+- refactor code due lint analysis
+
+### 1.13.2
+
+- update Angular from 17.3.1 to 17.3.3
+
 ### 1.13.1
 
 - fix problem with writing into `TextDataFieldComponent`
