@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { parseNull } from '../../../shared/functions/parse-null.function';
 import { LocaleService } from '../../../shared/services/locale-service/locale.service';
 import { DataFieldCustomAction } from '../../models/data-field-custom-action.type';
 import { RecipeIngredientDialogData } from '../../models/recipe-ingredient-dialog-data.type';
@@ -121,6 +122,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       url: this.fb.control(null),
       title: this.fb.control(null),
       titleLocale: this.fb.control(null),
+      image: this.fb.control(null),
       calories: this.fb.control(null),
       cookingTime: this.fb.control(null),
       ingredients: this.fb.control(null),
@@ -140,8 +142,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         Object.keys(value).forEach((key) => {
           const k = key as keyof DataCollectionDetail;
-          // stringify response object
-          this.dataCollectionFormGroup.get(key)?.setValue(JSON.stringify(value[k]));
+          const parsedValue = parseNull(value[k]);
+          this.dataCollectionFormGroup.get(key)?.setValue(parsedValue);
         });
         this.dataCollectionDetail = value;
       });
@@ -175,6 +177,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       { formControlName: 'url' },
       { formControlName: 'title' },
       { formControlName: 'titleLocale' },
+      { formControlName: 'image' },
       { formControlName: 'calories' },
       { formControlName: 'cookingTime' },
       { formControlName: 'ingredients' },

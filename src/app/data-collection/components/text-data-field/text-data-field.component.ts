@@ -21,6 +21,7 @@ import locale from './text-data-field.locale.json';
         type="text"
         [value]="textValue"
         class="block rounded border outline-0 p-2 w-full"
+        [class.border-red-600]="textValue === null"
         (change)="valueChange($event)"
       ></textarea>
       <!--setting icon-->
