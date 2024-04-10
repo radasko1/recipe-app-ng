@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { parseNull } from '../../../shared/functions/parse-null.function';
 import { LocaleService } from '../../../shared/services/locale-service/locale.service';
+import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
 import { DataFieldCustomAction } from '../../models/data-field-custom-action.type';
 import { RecipeIngredientDialogData } from '../../models/recipe-ingredient-dialog-data.type';
 import { DataCollectionService } from '../../services/data-collection.service';
@@ -114,7 +114,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly router: ActivatedRoute,
     private readonly dataCollectionService: DataCollectionService,
-    private readonly snackBar: MatSnackBar,
+    private readonly snackbar: SnackBarService,
     private readonly dialog: MatDialog
   ) {
     // empty == null? how to set null values?
@@ -289,14 +289,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     const parsedDataCollection = this.formatFormControl();
     this.dataCollectionService.updatePageData(this.paramId, parsedDataCollection).subscribe({
       next: () => {
-        this.snackBar.open(sharedLocale[this.languageService.language].SaveSuccessful, undefined, {
-          duration: 2000,
-        });
+        this.snackbar.showSimpleMessage(sharedLocale[this.languageService.language].SaveSuccessful);
       },
       error: () => {
-        this.snackBar.open(sharedLocale[this.languageService.language].SaveFailed, undefined, {
-          duration: 2000,
-        });
+        this.snackbar.showSimpleMessage(sharedLocale[this.languageService.language].SaveFailed);
       },
     });
   }
