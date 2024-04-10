@@ -12,6 +12,10 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.2
+
+- update Angular from 17.3.1 to 17.3.3
+
 ### 1.13.1
 
 - fix problem with writing into `TextDataFieldComponent`
