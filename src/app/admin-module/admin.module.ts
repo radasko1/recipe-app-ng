@@ -35,13 +35,11 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     RecipeIngredientDialogComponent,
   ],
   imports: [
-    ReactiveFormsModule,
+    SharedModule,
     SharedMaterialModule,
     AdminRoutingModule,
-    CommonModule,
     AutocompleteModule,
     DataCollectionModule,
-    SharedModule,
   ],
   providers: [DataCollectionService],
 })

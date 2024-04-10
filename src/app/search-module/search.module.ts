@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { SharedMaterialModule } from '../shared/shared-material.module';
@@ -21,14 +19,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     RecipeComponent,
     IngredientModalComponent,
   ],
-  imports: [
-    SearchRoutingModule,
-    AutocompleteModule,
-    CommonModule,
-    ReactiveFormsModule,
-    SharedMaterialModule,
-    SharedModule,
-  ],
+  imports: [SearchRoutingModule, AutocompleteModule, SharedMaterialModule, SharedModule],
   providers: [RecipeService, CategoryService, IngredientDialogService],
 })
 export class SearchModule {}

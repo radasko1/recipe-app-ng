@@ -12,6 +12,11 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.5
+
+- changed button bar in `RecipeDetailComponent`
+- added custom action default value to `titleLocale` form control in `RecipeDetailComponent`
+
 ### 1.13.4
 
 - fix missing image in `RecipeDetailComponent`
