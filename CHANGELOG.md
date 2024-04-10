@@ -12,6 +12,10 @@ List of application versions with description
 
 ## Versions
 
+### 1.X.X
+
+- changed button bar in `RecipeDetailComponent`
+
 ### 1.13.4
 
 - fix missing image in `RecipeDetailComponent`

@@ -4,6 +4,7 @@
     "Unknown": "Neznámé",
     "Add": "Přidat",
     "Save": "Uložit",
+    "Approve": "Schválit",
     "ErrorOccurred": "Něco se nepovedlo. Zkuste tuto akci později.",
     "SaveSuccessful": "Uložení proběhlo v pořádku.",
     "SaveFailed": "Nepodařilo se uložit změny. Někde se stala chyba."
@@ -13,6 +14,7 @@
     "Unknown": "Unknown",
     "Add": "Add",
     "Save": "Save",
+    "Approve": "Approve",
     "ErrorOccurred": "Something bad happened. Try it again later.",
     "SaveSuccessful": "Save was successful",
     "SaveFailed": "Failed to save changes. Something happened."
