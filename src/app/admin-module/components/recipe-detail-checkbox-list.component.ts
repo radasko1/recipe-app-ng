@@ -16,9 +16,6 @@ const LOCALE_TEXT: LanguageObject = {
 @Component({
   selector: 'app-recipe-detail-checkbox-list',
   template: `
-    <h3 class="text-2xl font-medium mb-2">
-      {{ title }}
-    </h3>
     <ul>
       @for (item of list; track item; let i = $index) {
       <li class="flex flex-row items-center justify-between">
@@ -50,8 +47,6 @@ const LOCALE_TEXT: LanguageObject = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
-  /** Title above list */
-  @Input({ required: true }) title!: string;
   /** Type of items inside list */
   @Input({ required: true }) list!: ListType[];
   /** Show autocomplete component */
@@ -69,13 +64,6 @@ export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
   constructor(protected readonly langService: LanguageService) {}
 
   /**
-   * Return current state of 'list' input
-   */
-  get currentList() {
-    return this.list;
-  }
-
-  /**
    * Remove item from array based on index
    * @param sourceArray
    * @param index
@@ -84,7 +72,6 @@ export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
     if (index < 0) {
       return;
     }
-
     sourceArray.splice(index, 1);
   }
 
@@ -101,7 +88,6 @@ export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
     if (!item) {
       return;
     }
-
     array.push(item);
   }
 }
