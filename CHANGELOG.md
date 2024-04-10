@@ -12,6 +12,11 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.3
+
+- added Angular Lint tool
+- refactor code due lint analysis
+
 ### 1.13.2
 
 - update Angular from 17.3.1 to 17.3.3
