@@ -14,7 +14,7 @@
     "FormControlName_ingredients": "Ingredience (ze stránky)",
     "FormControlName_requiredIngredients": "Požadované ingredience do receptu",
     "FormControlName_optionalIngredients": "Volitelné ingredience do receptu",
-    "RequiredIngredientsButtonLabel": "Editovat ingredience"
+    "IngredientsButtonLabel": "Editovat ingredience"
   },
   "en": {
     "RecipeLink": "Go to the recipe page",
@@ -31,6 +31,6 @@
     "FormControlName_ingredients": "Ingredients (from page)",
     "FormControlName_requiredIngredients": "Required ingredients for recipe",
     "FormControlName_optionalIngredients": "Optional ingredients for recipe",
-    "RequiredIngredientsButtonLabel": "Edit ingredients"
+    "IngredientsButtonLabel": "Edit ingredients"
   }
 }

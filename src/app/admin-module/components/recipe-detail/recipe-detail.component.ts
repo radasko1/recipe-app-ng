@@ -58,17 +58,16 @@ type RecipeDetailDataField = {
         <!---->
         <hr class="my-5" />
         <!--Render all FormControl from FormGroup-->
-        <div class="block">
-          <app-data-field
+        <form class="block" [formGroup]="dataCollectionFormGroup">
+          <app-text-data-field
             *ngFor="let control of formControlSettings"
             [title]="
               localeService.getLocaleValue(locale, 'FormControlName_' + control.formControlName)
             "
-            [formGroupRef]="dataCollectionFormGroup"
-            [formControlNameRef]="control.formControlName"
+            [formControlName]="control.formControlName"
             [customActionList]="control.actions"
           />
-        </div>
+        </form>
         <!---->
         <div class="mt-5">
           <button
@@ -164,6 +163,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   /** Provide list of all Form Group control keys with custom action definition */
   protected get formControlSettings(): RecipeDetailDataField[] {
+    if (!this.dataCollectionDetail) {
+      return [];
+    }
+
+    const { requiredIngredients, optionalIngredients } = this.dataCollectionDetail;
+    const requiredIngredientsTitle = this.locale[this.languageService.language].RequiredIngredients;
+    const optionalIngredientsTitle = this.locale[this.languageService.language].RequiredIngredients;
+
     return [
       { formControlName: 'url' },
       { formControlName: 'title' },
@@ -175,14 +182,32 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         formControlName: 'requiredIngredients',
         actions: [
           {
-            label: locale[this.languageService.language].RequiredIngredientsButtonLabel,
+            label: locale[this.languageService.language].IngredientsButtonLabel,
             onClick: () => {
-              this.openDialogForIngredients();
+              this.openDialogForIngredients(
+                requiredIngredientsTitle,
+                'requiredIngredients',
+                requiredIngredients
+              );
             },
           },
         ],
       },
-      { formControlName: 'optionalIngredients' },
+      {
+        formControlName: 'optionalIngredients',
+        actions: [
+          {
+            label: locale[this.languageService.language].IngredientsButtonLabel,
+            onClick: () => {
+              this.openDialogForIngredients(
+                optionalIngredientsTitle,
+                'optionalIngredients',
+                optionalIngredients
+              );
+            },
+          },
+        ],
+      },
     ];
   }
 
@@ -200,24 +225,28 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   /**
    * Open dialog with RecipeIngredientDialogComponent.
+   * @param dialogTitle
+   * @param formControlName
+   * @param itemList
    */
-  protected openDialogForIngredients() {
+  protected openDialogForIngredients(
+    dialogTitle: string,
+    formControlName: string,
+    itemList: any[]
+  ) {
     if (!this.dataCollectionDetail) {
       return;
     }
-
-    // TODO may have parameter to set these data manually and be dynamic
-    const dialogTitle = this.locale[this.languageService.language].RequiredIngredients;
 
     this.dialog.open<RecipeIngredientDialogComponent, RecipeIngredientDialogData>(
       RecipeIngredientDialogComponent,
       {
         data: {
           dialogTitle: dialogTitle,
-          list: this.dataCollectionDetail.requiredIngredients,
+          list: itemList,
           serviceInstance: this.reqIngCheckListService,
           onSave: (value: string) => {
-            const control = this.dataCollectionFormGroup.get('requiredIngredients');
+            const control = this.dataCollectionFormGroup.get(formControlName);
             if (!control) {
               return;
             }
