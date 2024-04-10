@@ -44,7 +44,7 @@ type RecipeDetailDataField = {
             }}
           </h2>
         </div>
-        <!--link-->
+        <!--link to the page-->
         <div class="inline-flex items-center">
           <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
           <a
@@ -70,27 +70,27 @@ type RecipeDetailDataField = {
           />
         </form>
         <!---->
-        <div class="mt-5">
+        <div class="mt-6 text-right">
           <button
             type="button"
-            class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3"
+            class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3 mr-2"
             (click)="approveData()"
           >
-            Schvalit
+            {{ sharedLocale[languageService.language].Approve }}
           </button>
           <button
             type="button"
-            class="rounded bg-red-700 text-white cursor-pointer font-medium py-2 px-3"
+            class="rounded bg-red-700 text-white cursor-pointer font-medium py-2 px-3 mr-2"
             (click)="deleteData()"
           >
-            Vymazat data
+            {{ locale[languageService.language].DeleteDataButtonLabel }}
           </button>
           <button
             type="button"
             class="rounded bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
             (click)="save()"
           >
-            Ulozit
+            {{ sharedLocale[languageService.language].Save }}
           </button>
         </div>
       </div>
@@ -105,6 +105,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   protected dataCollectionFormGroup: FormGroup<PageDataFormGroup>;
   protected dataCollectionDetail: DataCollectionDetail | undefined;
   protected readonly locale = locale;
+  protected readonly sharedLocale = sharedLocale;
 
   constructor(
     protected readonly languageService: LanguageService,
@@ -143,7 +144,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         Object.keys(value).forEach((key) => {
           const k = key as keyof DataCollectionDetail;
           const parsedValue = parseNull(value[k]);
-          this.dataCollectionFormGroup.get(key)?.setValue(parsedValue);
+          // default is null, so it does not need to be re-assigned again
+          if (parsedValue) {
+            this.dataCollectionFormGroup.get(key)?.setValue(parsedValue);
+          }
         });
         this.dataCollectionDetail = value;
       });
@@ -176,7 +180,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     return [
       { formControlName: 'url' },
       { formControlName: 'title' },
-      { formControlName: 'titleLocale' },
+      {
+        formControlName: 'titleLocale',
+        actions: [
+          {
+            label: sharedLocale[this.languageService.language].Reset,
+            onClick: () => {
+              this.setLocaleDefaultValue();
+            },
+          },
+        ],
+      },
       { formControlName: 'image' },
       { formControlName: 'calories' },
       { formControlName: 'cookingTime' },
@@ -258,6 +272,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         },
       }
     );
+  }
+
+  /** Set default value to 'titleLocale' form control */
+  protected setLocaleDefaultValue() {
+    const value = JSON.stringify({ cs: '', en: '' });
+    this.dataCollectionFormGroup.controls['titleLocale'].setValue(value);
   }
 
   /** Save Recipe Ingredients for specific Data Collection */
