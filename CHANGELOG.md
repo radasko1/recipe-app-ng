@@ -12,9 +12,10 @@ List of application versions with description
 
 ## Versions
 
-### ?
+### 1.13.9
 
 - refactor application logic to render all data from web-page-scrapping
+- fix problem with show current value in `TextDataFieldComponent`
 
 ### 1.13.8
 
