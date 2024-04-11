@@ -12,6 +12,10 @@ List of application versions with description
 
 ## Versions
 
+### ?
+
+- refactor application logic to render all data from web-page-scrapping
+
 ### 1.13.8
 
 - refactor function which find and match searched/selected ingredient
