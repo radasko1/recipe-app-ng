@@ -16,6 +16,8 @@ List of application versions with description
 - refactor function which find and match searched/selected ingredient
 - refactor loading and fetching data from `CategoryService` 
 - define custom CSS classes for Input element in `AutocompleteComponent`
+- move components into folders inside module
+- remove unused `RecipeTitleDialogComponent`
 
 ### 1.13.7
 
@@ -55,7 +57,7 @@ List of application versions with description
 - refactor `RecipeDetailComponent` how to handle and show data from web-scraper
 - created module `DataCollectionModule` holding components to handle data collection information
 - move `RecipeDetailComponent` into component directory
-- remove unused method from `RecipeDetailCheckboxListComponent`
+- remove unused method from `CheckboxListComponent`
 - created `RecipeIngredientDialogComponent` where can edit list of required ingredients
 
 ### 1.12.1
@@ -69,7 +71,7 @@ List of application versions with description
 - created `SharedModule` to share pipes, components, ...
 - create `LanguageObject` to define localized text inside single component (don't need to create .json file for that)
 - share `LocalizedTitlePipe` and refactor it to make reusable
-- component `RecipeDetailCheckboxListComponent` to show checkboxes inside `RecipeDetailComponent` + services
+- component `CheckboxListComponent` to show checkboxes inside `RecipeDetailComponent` + services
 - make `IngredientService` available global (for root) + save response
 
 ### 1.11.1

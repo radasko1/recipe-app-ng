@@ -2,12 +2,12 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import { LocaleService } from '../../shared/services/locale-service/locale.service';
-import { SnackBarService } from '../../shared/services/snackbar/snackbar.service';
-import locale from '../admin.locale.json';
-import sharedLocale from '../../shared/general.locale.json';
-import { DataCollectionService } from '../services/data-collection.service';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { LocaleService } from '../../../shared/services/locale-service/locale.service';
+import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
+import locale from '../../admin.locale.json';
+import sharedLocale from '../../../shared/general.locale.json';
+import { DataCollectionService } from '../../services/data-collection.service';
 
 type Source = { value: string; disabled: boolean };
 type DialogWindowConfig = {

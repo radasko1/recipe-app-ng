@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { LanguageObject } from '../../language-switch-module/models/language-object.type';
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import { CheckboxListService } from '../models/checkbox-list-service.interface';
+import { LanguageObject } from '../../../language-switch-module/models/language-object.type';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { CheckboxListService } from '../../models/checkbox-list-service.interface';
 
 /** Localized text collection */
 const LOCALE_TEXT: LanguageObject = {
@@ -47,7 +47,7 @@ const LOCALE_TEXT: LanguageObject = {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
+export class CheckboxListComponent<ListType, AutocompleteType> {
   /** Type of items inside list */
   @Input({ required: true }) list!: ListType[];
   /** Show autocomplete component */
