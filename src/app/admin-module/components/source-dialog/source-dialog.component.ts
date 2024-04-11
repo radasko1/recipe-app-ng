@@ -1,7 +1,6 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { LocaleService } from '../../../shared/services/locale-service/locale.service';
 import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';

@@ -12,12 +12,14 @@ List of application versions with description
 
 ## Versions
 
-### ?
+### 1.13.8
+
 - refactor function which find and match searched/selected ingredient
-- refactor loading and fetching data from `CategoryService` 
+- refactor loading and fetching data from `CategoryService`
 - define custom CSS classes for Input element in `AutocompleteComponent`
 - move components into folders inside module
 - remove unused `RecipeTitleDialogComponent`
+- refactor project structure
 
 ### 1.13.7
 

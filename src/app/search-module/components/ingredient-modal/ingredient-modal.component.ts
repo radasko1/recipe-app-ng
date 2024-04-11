@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { CategoryService } from '../../services/category.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
-import { IngredientCategory } from '../../models/ingredient-category.interface';
 import locale from '../../../shared/general.locale.json';
 
 @Component({

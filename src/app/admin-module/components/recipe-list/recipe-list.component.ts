@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import locale from '../../admin.locale.json';
 import { DataCollectionService } from '../../services/data-collection.service';

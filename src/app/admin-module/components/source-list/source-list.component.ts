@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import { DataCollectionSource } from '../../models/data-collection-source.interface';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { SourceDialogComponent } from '../source-dialog/source-dialog.component';

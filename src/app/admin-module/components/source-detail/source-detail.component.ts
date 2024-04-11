@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-
 import { DataCollectionSource } from '../../models/data-collection-source.interface';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { LanguageService } from '../../../shared/services/language-service/language.service';

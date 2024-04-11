@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import { IngredientService } from '../../../shared/services/ingredient-service/ingredient.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import locale from './search-bar.locale.json';
