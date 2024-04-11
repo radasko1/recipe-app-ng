@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { CreateFormControlComponent } from './components/create-form-control/create-form-control.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CheckboxListComponent } from './components/checkbox-list/checkbox-list.component';
 import { RecipeIngredientDialogComponent } from './components/recipe-ingredient-dialog/recipe-ingredient-dialog.component';
@@ -29,6 +29,7 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     BreadcrumbComponent,
     CheckboxListComponent,
     RecipeIngredientDialogComponent,
+    CreateFormControlComponent,
   ],
   imports: [
     SharedModule,
