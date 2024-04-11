@@ -11,7 +11,7 @@ export class IngredientDialogService {
 
   constructor(private readonly categoryService: CategoryService) {
     // Get ingredient categories - memory leak?
-    this.categoryService.getCategories().subscribe({
+    this.categoryService.loadCategories().subscribe({
       next: (data) => {
         this.categoryList = data;
       },

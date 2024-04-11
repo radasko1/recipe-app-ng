@@ -52,7 +52,7 @@ import locale from '../../../shared/general.locale.json';
 })
 export class IngredientModalComponent {
   protected readonly locale = locale;
-  protected readonly categoryList$ = this.categoryService.getCategories();
+  protected readonly categoryList$ = this.categoryService.loadCategories();
 
   constructor(
     protected readonly langService: LanguageService,

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { LanguageService } from '../../../shared/services/language-service/language.service';
-import { parseNull } from '../../../shared/functions/parse-null.function';
+import { parseNull } from '../../functions/parse-null.function';
 import { LocaleService } from '../../../shared/services/locale-service/locale.service';
 import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
 import { DataFieldCustomAction } from '../../models/data-field-custom-action.type';

@@ -14,6 +14,7 @@ List of application versions with description
 
 ### ?
 - refactor function which find and match searched/selected ingredient
+- refactor loading and fetching data from `CategoryService` 
 
 ### 1.13.7
 
