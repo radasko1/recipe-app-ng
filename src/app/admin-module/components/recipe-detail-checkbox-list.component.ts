@@ -38,6 +38,7 @@ const LOCALE_TEXT: LanguageObject = {
     </ul>
     <ng-autocomplete
       *ngIf="showAutocomplete && autocompleteList && autocompleteList.length"
+      inputClassName="rounded border"
       [list]="autocompleteList"
       searchProp="locale"
       [placeholder]="LOCALE_TEXT[langService.language]['IngredientName']"

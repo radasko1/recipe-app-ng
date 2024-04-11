@@ -9,7 +9,8 @@ import { LanguageService } from '../../../shared/services/language-service/langu
     <div class="block relative w-full">
       <div class="flex rounded-md">
         <input
-          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 rounded border outline-none"
+          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-none"
+          [class]="inputClassName"
           [formControl]="inputValue"
           [placeholder]="placeholder"
           [matAutocomplete]="ingredientList"
@@ -42,6 +43,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   @Input() searchProp: string | number | undefined;
   /** Placeholder text */
   @Input() placeholder = '';
+  @Input() inputClassName = '';
   /** On autocomplete suggestion item select */
   @Output() onSelect = this.selected.asObservable();
 

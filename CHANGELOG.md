@@ -15,6 +15,7 @@ List of application versions with description
 ### ?
 - refactor function which find and match searched/selected ingredient
 - refactor loading and fetching data from `CategoryService` 
+- define custom CSS classes for Input element in `AutocompleteComponent`
 
 ### 1.13.7
 
