@@ -1,14 +1,13 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import { LocaleService } from '../../shared/services/locale-service/locale.service';
-import locale from '../admin.locale.json';
-import sharedLocale from '../../shared/general.locale.json';
-import { DataCollectionSource } from '../models/data-collection-source.interface';
-import { DataCollectionService } from '../services/data-collection.service';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { LocaleService } from '../../../shared/services/locale-service/locale.service';
+import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
+import locale from '../../admin.locale.json';
+import sharedLocale from '../../../shared/general.locale.json';
+import { DataCollectionSource } from '../../models/data-collection-source.interface';
+import { DataCollectionService } from '../../services/data-collection.service';
 
 type SourcePageDialog = {
   source: DataCollectionSource;
@@ -81,7 +80,7 @@ export class SourcePageDialogComponent {
     private readonly dialogRef: MatDialogRef<SourcePageDialogComponent>,
     private readonly fb: NonNullableFormBuilder,
     private readonly dataCollectionService: DataCollectionService,
-    private readonly snackbar: MatSnackBar,
+    private readonly snackbar: SnackBarService,
     private readonly localeService: LocaleService
   ) {}
 
@@ -97,18 +96,14 @@ export class SourcePageDialogComponent {
       next: () => {
         this.form.reset();
         this.dialogRef.close();
-        this.snackbar.open(
-          this.localeService.getLocaleValue(locale, 'SourcePageAddedMessage'),
-          undefined,
-          { duration: 2000 }
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(locale, 'SourcePageAddedMessage')
         );
       },
       error: (err) => {
         if (err.status === 409) {
-          this.snackbar.open(
-            this.localeService.getLocaleValue(locale, 'ExistMessage'),
-            undefined,
-            { duration: 5000 }
+          this.snackbar.showSimpleMessage(
+            this.localeService.getLocaleValue(locale, 'ExistMessage')
           );
         }
       },

@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   forwardRef,
   Input,
@@ -12,42 +13,7 @@ import locale from './text-data-field.locale.json';
 
 @Component({
   selector: 'app-text-data-field',
-  template: `
-    <div class="block mb-5 relative">
-      <label class="mb-2 block font-medium">
-        {{ title }}
-      </label>
-      <textarea
-        type="text"
-        [value]="textValue"
-        class="block rounded border outline-0 p-2 w-full"
-        [class.border-red-600]="textValue === null"
-        (change)="valueChange($event)"
-      ></textarea>
-      <!--setting icon-->
-      <div class="block absolute top-0 right-0">
-        <!--Custom Actions-->
-        <ng-template [ngIf]="customActionList && customActionList.length">
-          <button
-            *ngFor="let action of customActionList"
-            type="button"
-            class="px-2 rounded bg-black text-white text-sm font-medium mr-2"
-            (click)="action.onClick()"
-          >
-            {{ action.label }}
-          </button>
-        </ng-template>
-        <!--Set to Null Button-->
-        <button
-          type="button"
-          class="px-2 rounded bg-blue-700 text-white text-sm font-medium"
-          (click)="toNull()"
-        >
-          {{ locale[lang.language].NullButtonLabel }}
-        </button>
-      </div>
-    </div>
-  `,
+  templateUrl: 'text-data-field.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -70,10 +36,14 @@ export class TextDataFieldComponent implements ControlValueAccessor {
   protected readonly locale = locale;
   protected textValue: string | null = '';
 
-  constructor(protected readonly lang: LanguageService) {}
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    protected readonly lang: LanguageService
+  ) {}
 
   writeValue(value: string | null) {
     this.textValue = value;
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: any) {

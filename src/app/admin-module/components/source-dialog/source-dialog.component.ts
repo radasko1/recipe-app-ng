@@ -1,13 +1,12 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import { LocaleService } from '../../shared/services/locale-service/locale.service';
-import locale from '../admin.locale.json';
-import sharedLocale from '../../shared/general.locale.json';
-import { DataCollectionService } from '../services/data-collection.service';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { LocaleService } from '../../../shared/services/locale-service/locale.service';
+import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
+import locale from '../../admin.locale.json';
+import sharedLocale from '../../../shared/general.locale.json';
+import { DataCollectionService } from '../../services/data-collection.service';
 
 type Source = { value: string; disabled: boolean };
 type DialogWindowConfig = {
@@ -91,7 +90,7 @@ export class SourceDialogComponent {
     private readonly dialogRef: MatDialogRef<SourceDialogComponent>,
     private readonly fb: NonNullableFormBuilder,
     private readonly dataCollectionService: DataCollectionService,
-    private readonly snackbar: MatSnackBar,
+    private readonly snackbar: SnackBarService,
     private readonly localeService: LocaleService
   ) {}
 
@@ -105,18 +104,14 @@ export class SourceDialogComponent {
       next: () => {
         this.form.reset();
         this.dialogRef.close();
-        this.snackbar.open(
-          this.localeService.getLocaleValue(locale, 'SourceAddedMessage'),
-          undefined,
-          { duration: 2000 }
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(locale, 'SourceAddedMessage')
         );
       },
       error: (err) => {
         if (err.status === 409) {
-          this.snackbar.open(
-            this.localeService.getLocaleValue(locale, 'ExistMessage'),
-            undefined,
-            { duration: 5000 }
+          this.snackbar.showSimpleMessage(
+            this.localeService.getLocaleValue(locale, 'ExistMessage')
           );
         }
       },

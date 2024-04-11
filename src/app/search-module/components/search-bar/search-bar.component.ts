@@ -1,11 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
-
 import { IngredientService } from '../../../shared/services/ingredient-service/ingredient.service';
+import { Ingredient } from '../../models/ingredient.interface';
 import locale from './search-bar.locale.json';
-import { IngredientCategory } from '../../models/ingredient-category.interface';
-import { CategoryService } from '../../services/category.service';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
 import { RecipeService } from '../../services/recipe.service';
@@ -53,47 +50,30 @@ import { LanguageService } from '../../../shared/services/language-service/langu
       </div>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class SearchBarComponent implements OnInit, OnDestroy {
-  private subscription = new Subject<boolean>();
+export class SearchBarComponent {
   protected readonly locale = locale;
   protected readonly ingredientList$ = this.ingredientService.getList();
-  protected categoryList: IngredientCategory[] = [];
 
   constructor(
     protected readonly langService: LanguageService,
     protected readonly ingredientDialogService: IngredientDialogService,
     private readonly ingredientService: IngredientService,
-    private readonly categoryService: CategoryService,
     private readonly recipeService: RecipeService,
     private readonly dialog: MatDialog
   ) {}
-
-  ngOnInit() {
-    // Get ingredient categories
-    this.categoryService
-      .getCategories()
-      .pipe(takeUntil(this.subscription))
-      .subscribe((data) => {
-        this.categoryList = data;
-      });
-  }
-
-  ngOnDestroy() {
-    this.subscription.next(true);
-    this.subscription.unsubscribe();
-  }
 
   protected openIngredientDialog() {
     const dialogRef = this.dialog.open(IngredientModalComponent);
   }
 
-  protected onSelect(item: any) {
-    if (!item) {
+  /** Select Ingredient from Autocomplete component */
+  protected onSelect(selectedItem: Ingredient) {
+    if (!selectedItem) {
       return;
     }
-    this.ingredientDialogService.ingredientSelect(item, this.categoryList);
+    this.ingredientDialogService.ingredientSelect(selectedItem);
   }
 
   protected onSearch() {

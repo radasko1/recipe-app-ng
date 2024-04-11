@@ -1,12 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { DataCollectionSource } from '../models/data-collection-source.interface';
-import { DataCollectionService } from '../services/data-collection.service';
-import { SourceDialogComponent } from './source-dialog.component';
-import { SourcePageDialogComponent } from './source-page-dialog.component';
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import locale from '../admin.locale.json';
+import { DataCollectionSource } from '../../models/data-collection-source.interface';
+import { DataCollectionService } from '../../services/data-collection.service';
+import { SourceDialogComponent } from '../source-dialog/source-dialog.component';
+import { SourcePageDialogComponent } from '../source-page-dialog/source-page-dialog.component';
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import locale from '../../admin.locale.json';
 
 @Component({
   selector: 'app-source-list',

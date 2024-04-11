@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { CategoryService } from '../../services/category.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
-import { IngredientCategory } from '../../models/ingredient-category.interface';
 import locale from '../../../shared/general.locale.json';
 
 @Component({
@@ -29,7 +27,7 @@ import locale from '../../../shared/general.locale.json';
                   'text-amber-50 bg-amber-500': ingredient.selected,
                   'text-gray-900 bg-gray-100': !ingredient.selected
                 }"
-                (click)="changeState(ingredient, !ingredient.selected, categoryList)"
+                (click)="changeState(ingredient, !ingredient.selected)"
               >
                 {{ ingredient.locale[langService.language] }}
               </span>
@@ -48,11 +46,11 @@ import locale from '../../../shared/general.locale.json';
       </mat-dialog-actions>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class IngredientModalComponent {
   protected readonly locale = locale;
-  protected readonly categoryList$ = this.categoryService.getCategories();
+  protected readonly categoryList$ = this.categoryService.loadCategories();
 
   constructor(
     protected readonly langService: LanguageService,
@@ -60,11 +58,7 @@ export class IngredientModalComponent {
     private readonly categoryService: CategoryService
   ) {}
 
-  protected changeState(
-    ingredient: Ingredient,
-    state: boolean,
-    categoryList: IngredientCategory[]
-  ) {
-    this.ingredientDialogService.toggleIngredientSelection(ingredient, state, categoryList);
+  protected changeState(ingredient: Ingredient, state: boolean) {
+    this.ingredientDialogService.toggleIngredientSelection(ingredient, state);
   }
 }

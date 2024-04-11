@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
-import locale from '../locale.json';
+import locale from './language-switch.locale.json';
 import { CZECH_LANG, ENGLISH_LANG, Language } from '../models/language.type';
 import { LanguageService } from '../../shared/services/language-service/language.service';
 import { LocaleService } from '../../shared/services/locale-service/locale.service';

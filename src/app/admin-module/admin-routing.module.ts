@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './components/dashboard.component';
-import { RecipeListComponent } from './components/recipe-list.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
-import { SourceDetailComponent } from './components/source-detail.component';
-import { SourceListComponent } from "./components/source-list.component";
+import { SourceDetailComponent } from './components/source-detail/source-detail.component';
+import { SourceListComponent } from "./components/source-list/source-list.component";
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },

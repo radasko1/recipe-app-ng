@@ -12,6 +12,28 @@ List of application versions with description
 
 ## Versions
 
+### 1.13.9
+
+- refactor application logic to render all data from web-page-scrapping
+- fix problem with show current value in `TextDataFieldComponent`
+
+### 1.13.8
+
+- refactor function which find and match searched/selected ingredient
+- refactor loading and fetching data from `CategoryService`
+- define custom CSS classes for Input element in `AutocompleteComponent`
+- move components into folders inside module
+- remove unused `RecipeTitleDialogComponent`
+- refactor project structure
+
+### 1.13.7
+
+- add paginator on page `RecipeListComponent`
+
+### 1.13.6
+
+- replace all snackbar usage with `SnackBarService`
+
 ### 1.13.5
 
 - changed button bar in `RecipeDetailComponent`
@@ -42,7 +64,7 @@ List of application versions with description
 - refactor `RecipeDetailComponent` how to handle and show data from web-scraper
 - created module `DataCollectionModule` holding components to handle data collection information
 - move `RecipeDetailComponent` into component directory
-- remove unused method from `RecipeDetailCheckboxListComponent`
+- remove unused method from `CheckboxListComponent`
 - created `RecipeIngredientDialogComponent` where can edit list of required ingredients
 
 ### 1.12.1
@@ -56,7 +78,7 @@ List of application versions with description
 - created `SharedModule` to share pipes, components, ...
 - create `LanguageObject` to define localized text inside single component (don't need to create .json file for that)
 - share `LocalizedTitlePipe` and refactor it to make reusable
-- component `RecipeDetailCheckboxListComponent` to show checkboxes inside `RecipeDetailComponent` + services
+- component `CheckboxListComponent` to show checkboxes inside `RecipeDetailComponent` + services
 - make `IngredientService` available global (for root) + save response
 
 ### 1.11.1

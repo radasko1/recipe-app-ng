@@ -1,23 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { LanguageObject } from '../../language-switch-module/models/language-object.type';
-import { LanguageService } from '../../shared/services/language-service/language.service';
-import { CheckboxListService } from '../models/checkbox-list-service.interface';
-
-/** Localized text collection */
-const LOCALE_TEXT: LanguageObject = {
-  cs: {
-    IngredientName: 'Název suroviny',
-  },
-  en: {
-    IngredientName: 'Ingredient name',
-  },
-};
+import { LanguageService } from '../../../shared/services/language-service/language.service';
+import { CheckboxListService } from '../../models/checkbox-list-service.interface';
+import locale from './checkbox-list.locale.json';
 
 @Component({
   selector: 'app-recipe-detail-checkbox-list',
   template: `
     <ul>
-      @for (item of list; track item; let i = $index) {
+      @for (item of list; track item; let idx = $index) {
       <li class="flex flex-row items-center justify-between">
         <!--Use default item from list, or change it with service-->
         <ng-template [ngIf]="dataService">
@@ -31,22 +21,23 @@ const LOCALE_TEXT: LanguageObject = {
           aria-label="Delete"
           fontIcon="delete"
           class="cursor-pointer text-red-600"
-          (click)="remove(list, i)"
+          (click)="remove(list, idx)"
         ></mat-icon>
       </li>
       }
     </ul>
     <ng-autocomplete
       *ngIf="showAutocomplete && autocompleteList && autocompleteList.length"
+      inputClassName="rounded border"
       [list]="autocompleteList"
       searchProp="locale"
-      [placeholder]="LOCALE_TEXT[langService.language]['IngredientName']"
+      [placeholder]="locale[langService.language]['IngredientName']"
       (onSelect)="select(list, $event)"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
+export class CheckboxListComponent<ListType, AutocompleteType> {
   /** Type of items inside list */
   @Input({ required: true }) list!: ListType[];
   /** Show autocomplete component */
@@ -59,7 +50,7 @@ export class RecipeDetailCheckboxListComponent<ListType, AutocompleteType> {
    */
   @Input() dataService: CheckboxListService | undefined;
 
-  protected readonly LOCALE_TEXT = LOCALE_TEXT;
+  protected readonly locale = locale;
 
   constructor(protected readonly langService: LanguageService) {}
 

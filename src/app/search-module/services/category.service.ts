@@ -1,43 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, mergeMap, Observable, tap } from 'rxjs';
-import { environment } from "../../../environments/environment";
-
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { IngredientCategory } from '../models/ingredient-category.interface';
-import { Ingredient } from '../models/ingredient.interface';
 
 @Injectable()
 export class CategoryService {
-  private readonly subject = new BehaviorSubject<IngredientCategory[]>([]);
+  private readonly categoryList = new BehaviorSubject<IngredientCategory[]>([]);
 
-  constructor(private readonly http: HttpClient) {
-    this.getCategoryData().subscribe();
-  }
+  constructor(private readonly http: HttpClient) {}
 
   /**
-   * Get list of all Categories.
-   * Response is saved to avoid call endpoint multiple times.
+   * Load IngredientCategory list from server
+   * @private
    */
-  private getCategoryData(): Observable<IngredientCategory[]> {
+  private fetchCategories(): Observable<IngredientCategory[]> {
+    const url = `${environment.SERVER_API}/ingredient/categories`;
     return this.http
-      .get<IngredientCategory[]>(`${environment.SERVER_API}/ingredient/categories`)
-      .pipe(tap((data) => this.subject.next(data)));
-  }
-
-  /**
-   * Get Ingredients from all Categories
-   */
-  public getAllIngredients(): Observable<Ingredient[]> {
-    return this.subject.pipe(
-      // Transform each Category into an Observable of its Ingredients
-      mergeMap((categories) => categories.map((category) => category.ingredients))
-    );
+      .get<IngredientCategory[]>(url)
+      .pipe(tap(this.categoryList.next.bind(this.categoryList)));
   }
 
   /**
    * Get list of all categories with ingredients
    */
-  public getCategories(): Observable<IngredientCategory[]> {
-    return this.subject;
+  public loadCategories() {
+    return this.categoryList.pipe(
+      switchMap((categories) => (categories.length ? this.categoryList : this.fetchCategories()))
+    );
   }
 }
