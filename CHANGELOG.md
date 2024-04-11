@@ -6,11 +6,13 @@ Run command for (without commit):
 - minor: `npm version minor --no-git-tag-version`
 - patch: `npm version patch --no-git-tag-version`
 
-List of application versions with description
-
 ---
 
 ## Versions
+
+### 1.14.0
+
+- add `CreateFormControlComponent` which is to create new form control in `RecipeDetailComponent`
 
 ### 1.13.9
 

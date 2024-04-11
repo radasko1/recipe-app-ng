@@ -1,0 +1,10 @@
+{
+  "cs": {
+    "DialogTitle": "Vytvořit pole",
+    "Label": "Název pole"
+  },
+  "en": {
+    "DialogTitle": "Create field",
+    "Label": "Field name"
+  }
+}

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ locale[languageService.language].DialogTitle }}</h2>
+<mat-dialog-content>
+  <div class="block">
+    <label for="name" class="block text-black mb-1">
+      {{ locale[languageService.language].Label }}
+    </label>
+    <input
+      id="name"
+      type="text"
+      class="block rounded border outline-none leading-tight appearance-none p-3"
+      [formControl]="fieldName"
+    />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="mx-4 w-full">
+    <button
+      mat-dialog-close
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-black text-white mr-2"
+    >
+      {{ sharedLocale[languageService.language].Close }}
+    </button>
+    <button
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-blue-700 text-white"
+      (click)="create()"
+    >
+      {{ sharedLocale[languageService.language].Add }}
+    </button>
+  </div>
+</mat-dialog-actions>
