@@ -1,9 +1,6 @@
-import { Locale } from './locale.interface';
+import { IngredientPayload } from './ingredient-payload.interface';
 
-export interface Ingredient {
+export interface Ingredient extends IngredientPayload {
   id: number;
-  name: string;
-  locale: Locale;
   selected: boolean;
-  category_id: number;
 }

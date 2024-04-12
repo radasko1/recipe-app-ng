@@ -6,6 +6,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { CreateFormControlComponent } from './components/create-form-control/create-form-control.component';
 import { AdminDashboardPageComponent } from './components/admin-dashboard-page/admin-dashboard-page.component';
 import { CheckboxListComponent } from './components/checkbox-list/checkbox-list.component';
+import { CreateIngredientComponent } from './components/create-ingredient/create-ingredient.component';
 import { RecipeIngredientDialogComponent } from './components/recipe-ingredient-dialog/recipe-ingredient-dialog.component';
 import { RecipeListPageComponent } from './components/recipe-list-page/recipe-list-page.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
@@ -30,6 +31,7 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     CheckboxListComponent,
     RecipeIngredientDialogComponent,
     CreateFormControlComponent,
+    CreateIngredientComponent,
   ],
   imports: [
     SharedModule,

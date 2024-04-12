@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, tap } from 'rxjs';
-
 import { environment } from '../../../../environments/environment';
+import { IngredientPayload } from '../../../search-module/models/ingredient-payload.interface';
 import { Ingredient } from '../../../search-module/models/ingredient.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -23,5 +23,14 @@ export class IngredientService {
         this.list = list;
       })
     );
+  }
+
+  /**
+   * Send HTTP request to create new Ingredient
+   * @param ingredient
+   */
+  create(ingredient: IngredientPayload) {
+    const url = `${environment.SERVER_API}/ingredient/create`;
+    return this.http.post<Ingredient>(url, ingredient);
   }
 }

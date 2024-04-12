@@ -10,9 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
-### ?
+### 1.15.0
 
 - convert `CreateFormControlComponent` into form group from form control
+- new page component `CreateIngredientComponent` which is for create new ingredient
 
 ### 1.14.1
 
