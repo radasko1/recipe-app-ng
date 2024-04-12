@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-page',
   template: `
     <div class="relative overflow-x-auto">
       <ul class="flex mt-5">
@@ -26,4 +26,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class DashboardComponent {}
+export class AdminDashboardPageComponent {}

@@ -10,6 +10,11 @@ Run command for (without commit):
 
 ## Versions
 
+### ?
+
+- use `.html` files for component templates
+- rename component name where component is used as page
+
 ### 1.14.0
 
 - add `CreateFormControlComponent` which is to create new form control in `RecipeDetailComponent`

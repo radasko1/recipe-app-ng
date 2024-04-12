@@ -10,69 +10,8 @@ import sharedLocale from '../../../shared/general.locale.json';
 
 @Component({
   selector: 'app-source-detail',
-  template: `
-    <ng-container *ngIf="sourceDetail as source">
-    <app-admin-breadcrumb
-      [list]="[
-          { label: 'Dashboard', link: '/admin/dashboard' },
-          { label: locale[langService.language].SourceList, link: '/admin/source' },
-          { label: source.origin, link: null }
-        ]"
-    />
-    <div class="py-9">
-    <!--header-->
-    <div class="header relative">
-      <h2 class="text-4xl font-medium mb-4">{{ source.origin }}</h2>
-      <!--link-->
-      <div class="inline-flex items-center">
-        <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
-        <a [href]="source.url" target="_blank" rel="noreferrer noopener" class="ml-3 underline">
-          {{ locale[langService.language].GoToPage }}
-        </a>
-      </div>
-      <div class="block md:flex md:justify-end">
-        <button
-          type="button"
-          class="rounded px-4 py-2 border-none outline-none cursor-pointer bg-sky-700 text-white"
-          (click)="saveChanges()"
-        >
-          {{ sharedLocale[langService.language].Save }}
-        </button>
-      </div>
-    </div>
-    <!--content-->
-    <div class="block mt-10">
-      <div class="block mb-6">
-        <label for="link" class="block font-medium mb-1 text-black">
-          {{ locale[langService.language].Link }}
-        </label>
-        <input
-          id="link"
-          type="text"
-          [value]="source.url"
-          class="block rounded outline-none leading-tight appearance-none p-3"
-          disabled
-        />
-      </div>
-      <!--config-->
-      <div class="block">
-        <label for="config" class="block font-medium mb-1 text-black">
-          {{ locale[langService.language].Config }}
-        </label>
-        <textarea
-          id="config"
-          rows="10"
-          cols="70"
-          class="block rounded border outline-none leading-tight appearance-none p-3"
-          [formControl]="config"
-        >{{ config.value }}</textarea
-        >
-      </div>
-    </div>
-    </div>
-    </ng-container>
-  `,
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './source-detail.component.html',
+  encapsulation: ViewEncapsulation.None,
 })
 export class SourceDetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();
