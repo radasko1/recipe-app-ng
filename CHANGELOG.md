@@ -14,6 +14,7 @@ Run command for (without commit):
 
 - use `.html` files for component templates
 - rename component name where component is used as page
+- lazy load `NotFoundPageComponent`
 
 ### 1.14.0
 
