@@ -1,0 +1,16 @@
+{
+  "cs": {
+    "NameCode": "Kód Ingredience",
+    "Localization": "Lokalizace",
+    "Category": "Kategorie",
+    "CreatedSuccessMessage": "Ingredience byla vytvořena.",
+    "CreatedFailedMessage": "Ingredienci se nepodařilo vytvořit. Někde se stala chyba."
+  },
+  "en": {
+    "NameCode": "Ingredient Code Name",
+    "Localization": "Localization",
+    "Category": "Category",
+    "CreatedSuccessMessage": "Ingredient was created.",
+    "CreatedFailedMessage": "Ingredient creation process failed. Something bad happened."
+  }
+}

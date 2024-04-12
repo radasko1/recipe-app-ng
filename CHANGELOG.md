@@ -10,6 +10,17 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.15.0
+
+- convert `CreateFormControlComponent` into form group from form control
+- new page component `CreateIngredientComponent` which is for create new ingredient
+
+### 1.14.1
+
+- use `.html` files for component templates
+- rename component name where component is used as page
+- lazy load `NotFoundPageComponent`
+
 ### 1.14.0
 
 - add `CreateFormControlComponent` which is to create new form control in `RecipeDetailComponent`

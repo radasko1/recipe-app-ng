@@ -1,0 +1,52 @@
+<div class="block mx-auto max-w-2xl w-full">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <!---->
+    <div class="block mb-5">
+      <label for="name" class="block font-medium mb-2 text-black">
+        {{ locale[languageService.language].NameCode }}
+      </label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+      />
+    </div>
+    <!---->
+    <div class="block mb-5">
+      <label for="locale" class="block font-medium mb-2 text-black">
+        {{ locale[languageService.language].Localization }}
+      </label>
+      <input
+        id="locale"
+        type="text"
+        formControlName="locale"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+      />
+    </div>
+    <!---->
+    <ng-container *ngIf="categoryList$ | async as categoryList">
+      <div class="block">
+        <label for="category" class="block font-medium mb-2 text-black">
+          {{ locale[languageService.language].Category }}
+        </label>
+        <select
+          id="category"
+          name="category"
+          formControlName="category"
+          class="border rounded block p-3 w-full"
+        >
+          <option *ngFor="let category of categoryList" [value]="category.id">
+            {{ category.locale[languageService.language] }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+    <!---->
+    <div class="block text-right w-full mt-5">
+      <button type="submit" class="bg-blue-700 inline-block text-white px-4 py-2 rounded">
+        {{ sharedLocale[languageService.language].Create }}
+      </button>
+    </div>
+  </form>
+</div>

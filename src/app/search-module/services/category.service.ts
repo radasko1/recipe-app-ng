@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { IngredientCategory } from '../models/ingredient-category.interface';
 
+// provided in 2 modules
 @Injectable()
 export class CategoryService {
   private readonly categoryList = new BehaviorSubject<IngredientCategory[]>([]);
