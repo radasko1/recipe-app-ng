@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
+import { LocalizationModule } from "../localization-module/localization.module";
 import { SharedMaterialModule } from '../shared/shared-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { SearchRoutingModule } from './search-routing.module';
@@ -19,7 +20,7 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     RecipeComponent,
     IngredientModalComponent,
   ],
-  imports: [SearchRoutingModule, AutocompleteModule, SharedMaterialModule, SharedModule],
+    imports: [SearchRoutingModule, AutocompleteModule, SharedMaterialModule, SharedModule, LocalizationModule],
   providers: [RecipeService, CategoryService, IngredientDialogService],
 })
 export class SearchModule {}

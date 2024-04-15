@@ -1,0 +1,51 @@
+<!--TODO translate-->
+<h2 mat-dialog-title class="text-black">{{ locale[langService.language].NewSource }}</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <!--url-->
+    <div class="block mb-5">
+      <label for="url" class="block font-medium mb-1 text-black">
+        {{ locale[langService.language].Link }}
+      </label>
+      <input
+        id="url"
+        type="text"
+        formControlName="url"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+      />
+    </div>
+    <!--origin-->
+    <div class="block mb-5">
+      <label for="origin" class="block font-medium mb-1 text-black">
+        {{ locale[langService.language].Origin }}
+      </label>
+      <input
+        id="origin"
+        type="text"
+        formControlName="origin"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+      />
+    </div>
+    <!--config-->
+    <div class="block">
+      <label for="config" class="block font-medium mb-1 text-black">
+        {{ locale[langService.language].Config }}
+      </label>
+      <textarea
+        id="config"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+        [class.border-rose-500]="form.status === 'INVALID' && form.touched"
+        formControlName="config"
+        rows="3"
+        cols="70"
+      ></textarea>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <div class="mx-4">
+      <button type="submit" class="block rounded px-4 py-2 bg-blue-700 text-white">
+        {{ generalLocale | translate: 'Add' : langService.language }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

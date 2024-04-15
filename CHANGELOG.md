@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.0
+
+- remove `LanguageSwitch` module, use `LocalizationModule` as replacement
+
 ### 1.15.0
 
 - convert `CreateFormControlComponent` into form group from form control

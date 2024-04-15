@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Language } from '../../language-switch-module/models/language.type';
+import { Language } from '../../localization-module/models/language.type';
 import { Localized } from '../models/localized.type';
 
+// TODO is shared?
 @Pipe({
   name: 'localizedTitle',
   pure: true,

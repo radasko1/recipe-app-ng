@@ -29,12 +29,12 @@ import { LanguageService } from './shared/services/language-service/language.ser
               class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"
               rel="noreferrer noopener"
             >
-              {{ locale[languageService.language].Search }}
+              {{ locale | translate: 'Search' : languageService.language }}
             </a>
           </li>
         </ul>
         <!--lang-->
-        <app-language-switch />
+        <app-locale-change />
       </div>
     </nav>
     <!-- content -->

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
   ViewEncapsulation,
@@ -10,9 +11,10 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import sharedLocale from '../../../shared/general.locale.json';
+import { LocaleFileKey } from '../../../localization-module/models/locale-file-key.type';
+import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
-import { LocaleService } from '../../../shared/services/locale-service/locale.service';
+import { LocaleService } from '../../../localization-module/services/locale.service';
 import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
 import { parseNull } from '../../functions/parse-null.function';
 import { CreateFormControlData } from '../../models/create-form-control-data.type';
@@ -53,9 +55,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   protected formControlConfiguration: FormControlFieldConfiguration[] = [];
   protected dataCollectionDetail: DataCollectionDetail | undefined;
   protected readonly locale = locale;
-  protected readonly sharedLocale = sharedLocale;
 
   constructor(
+    @Inject(GeneralLocale) protected generalLocale: LocaleFileKey,
     protected readonly languageService: LanguageService,
     protected readonly reqIngCheckListService: RequiredIngredientCheckboxListService, // better use separated instance for each list
     protected readonly localeService: LocaleService,
@@ -132,7 +134,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     if (formControlName === 'titleLocale') {
       return [
         {
-          label: sharedLocale[this.languageService.language].Reset,
+          label: this.localeService.getLocaleValue(this.generalLocale, 'Reset'),
           onClick: () => {
             this.setLocaleDefaultValue();
           },
@@ -253,10 +255,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     const parsedDataCollection = this.formatFormControl();
     this.dataCollectionService.updatePageData(this.paramId, parsedDataCollection).subscribe({
       next: () => {
-        this.snackbar.showSimpleMessage(sharedLocale[this.languageService.language].SaveSuccessful);
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(this.generalLocale, 'SaveSuccessful')
+        );
       },
       error: () => {
-        this.snackbar.showSimpleMessage(sharedLocale[this.languageService.language].SaveFailed);
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(this.generalLocale, 'SaveFailed')
+        );
       },
     });
   }

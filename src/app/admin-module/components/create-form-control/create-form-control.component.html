@@ -24,14 +24,14 @@
       type="button"
       class="inline-block rounded px-4 py-2 bg-black text-white mr-2"
     >
-      {{ sharedLocale[languageService.language].Close }}
+      {{ generalLocale | translate: 'Close' : languageService.language }}
     </button>
     <button
       type="button"
       class="inline-block rounded px-4 py-2 bg-blue-700 text-white"
       (click)="create()"
     >
-      {{ sharedLocale[languageService.language].Add }}
+      {{ generalLocale | translate: 'Add' : languageService.language }}
     </button>
   </div>
 </mat-dialog-actions>

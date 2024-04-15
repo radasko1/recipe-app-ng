@@ -33,4 +33,5 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatAutocompleteTrigger,
   ],
 })
+// TODO be aware where to use it, yo don't need all packages
 export class SharedMaterialModule {}

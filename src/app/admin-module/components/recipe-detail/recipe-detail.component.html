@@ -51,7 +51,7 @@
         class="rounded bg-green-700 text-white cursor-pointer font-medium py-2 px-3 mr-2"
         (click)="approveData()"
       >
-        {{ sharedLocale[languageService.language].Approve }}
+        {{ generalLocale | translate: 'Approve' : languageService.language }}
       </button>
       <button
         type="button"
@@ -65,7 +65,7 @@
         class="rounded bg-blue-700 text-white cursor-pointer font-medium py-2 px-3"
         (click)="save()"
       >
-        {{ sharedLocale[languageService.language].Save }}
+        {{ generalLocale | translate: 'Save' : languageService.language }}
       </button>
     </div>
   </div>
