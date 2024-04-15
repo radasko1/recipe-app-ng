@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
+import { LocaleFileKey } from '../../../localization-module/models/locale-file-key.type';
+import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { Locale } from '../../../search-module/models/locale.interface';
 import { CategoryService } from '../../../search-module/services/category.service';
 import { IngredientService } from '../../../shared/services/ingredient-service/ingredient.service';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { SnackBarService } from '../../../shared/services/snackbar/snackbar.service';
 import locale from './create-ingredient.locale.json';
-import sharedLocale from '../../../shared/general.locale.json';
 
 interface IngredientForm {
   name: string;
@@ -26,7 +27,6 @@ type IngredientFormGroup = {
 })
 export class CreateIngredientComponent {
   protected readonly locale = locale;
-  protected readonly sharedLocale = sharedLocale;
   protected readonly formGroup = this.formBuilder.group<IngredientFormGroup>({
     name: this.formBuilder.control('', {
       validators: [Validators.required, Validators.minLength(1), Validators.pattern('^[a-z_]+$')],
@@ -41,8 +41,9 @@ export class CreateIngredientComponent {
   protected readonly categoryList$ = this.categoryService.loadCategories();
 
   constructor(
-    private readonly formBuilder: NonNullableFormBuilder,
+    @Inject(GeneralLocale) protected generaLocale: LocaleFileKey,
     protected readonly languageService: LanguageService,
+    private readonly formBuilder: NonNullableFormBuilder,
     private readonly categoryService: CategoryService,
     private readonly ingredientService: IngredientService,
     private readonly snackbar: SnackBarService

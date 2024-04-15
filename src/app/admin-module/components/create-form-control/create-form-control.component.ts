@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import sharedLocale from '../../../shared/general.locale.json';
+import { LocaleFileKey } from '../../../localization-module/models/locale-file-key.type';
+import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import { CreateFormControlData } from '../../models/create-form-control-data.type';
 import locale from './create-form-control.locale.json';
@@ -18,7 +19,6 @@ type FieldNameFormGroup = {
   templateUrl: './create-form-control.component.html',
 })
 export class CreateFormControlComponent {
-  protected readonly sharedLocale = sharedLocale;
   protected readonly locale = locale;
   protected readonly fieldNameFormGroup = this.formBuilder.group<FieldNameFormGroup>({
     name: this.formBuilder.control<string>('', {
@@ -29,6 +29,7 @@ export class CreateFormControlComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) protected readonly data: CreateFormControlData,
+    @Inject(GeneralLocale) protected readonly generalLocale: LocaleFileKey,
     protected readonly languageService: LanguageService,
     private readonly dialogRef: MatDialogRef<CreateFormControlComponent>,
     private readonly formBuilder: NonNullableFormBuilder

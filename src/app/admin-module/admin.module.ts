@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { LocalizationModule } from "../localization-module/localization.module";
 import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AutocompleteModule } from '../component-modules/autocomplete/autocomplete.module';
@@ -33,13 +34,14 @@ import { SharedMaterialModule } from '../shared/shared-material.module';
     CreateFormControlComponent,
     CreateIngredientComponent,
   ],
-  imports: [
-    SharedModule,
-    SharedMaterialModule,
-    AdminRoutingModule,
-    AutocompleteModule,
-    DataCollectionModule,
-  ],
+    imports: [
+        SharedModule,
+        SharedMaterialModule,
+        AdminRoutingModule,
+        AutocompleteModule,
+        DataCollectionModule,
+        LocalizationModule,
+    ],
   providers: [DataCollectionService],
 })
 export class AdminModule {}

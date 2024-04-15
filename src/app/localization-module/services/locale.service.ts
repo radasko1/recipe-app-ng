@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { LanguageService } from '../language-service/language.service';
+import { LanguageService } from '../../shared/services/language-service/language.service';
 
-type Locale = {
-  [key1: string]: {
-    [key2: string]: string;
+type LocaleFile = {
+  // [L in keyof Language]: {
+  [LanguageKey: string]: {
+    [LocaleTextKey: string]: string;
   };
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LocaleService {
   constructor(private readonly langService: LanguageService) {}
 
@@ -18,7 +17,7 @@ export class LocaleService {
    * @param localeObject
    * @param localeKey
    */
-  getLocaleValue(localeObject: Locale, localeKey: string) {
+  getLocaleValue(localeObject: LocaleFile, localeKey: string) {
     return localeObject[this.langService.language][localeKey];
   }
 }

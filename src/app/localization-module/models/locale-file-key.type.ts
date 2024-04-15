@@ -1,9 +1,9 @@
 import { Language } from './language.type';
 
-type LanguageValue = {
+interface LocaleTranslationKey {
   [key: string]: string;
-};
+}
 /**
  * Type of language objects used inside component to define easy localization texts.
  */
-export type LanguageObject = Record<Language, LanguageValue>;
+export type LocaleFileKey = Record<Language, LocaleTranslationKey>;

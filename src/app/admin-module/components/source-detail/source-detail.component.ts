@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { LocaleFileKey } from '../../../localization-module/models/locale-file-key.type';
+import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { DataCollectionSource } from '../../models/data-collection-source.interface';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 import locale from '../../admin.locale.json';
-import sharedLocale from '../../../shared/general.locale.json';
 
 @Component({
   selector: 'app-source-detail',
@@ -18,14 +19,14 @@ export class SourceDetailComponent implements OnInit, OnDestroy {
   private paramId: number | undefined;
   protected sourceDetail: DataCollectionSource | undefined;
   protected readonly locale = locale;
-  protected readonly sharedLocale = sharedLocale;
   protected config = this.fb.control<string>('', { validators: [Validators.required] });
 
   constructor(
+    @Inject(GeneralLocale) protected generalLocale: LocaleFileKey,
+    protected readonly langService: LanguageService,
     private readonly router: ActivatedRoute,
     private readonly dataCollectionService: DataCollectionService,
-    private readonly fb: NonNullableFormBuilder,
-    protected readonly langService: LanguageService
+    private readonly fb: NonNullableFormBuilder
   ) {}
 
   ngOnInit() {
