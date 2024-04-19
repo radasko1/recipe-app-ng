@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.1
+
+- add component class into Taiwind
+
 ### 1.16.0
 
 - remove `LanguageSwitch` module, use `LocalizationModule` as replacement

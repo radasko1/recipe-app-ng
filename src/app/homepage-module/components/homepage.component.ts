@@ -19,11 +19,7 @@ import locale from './homepage.locale.json';
       </h2>
       <div class="mt-6">
         <!--@router-->
-        <button
-          type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          routerLink="/search"
-        >
+        <button type="button" class="button-primary mr-2 mb-2" routerLink="/search">
           {{ locale | translate: 'Button' : langService.language }}
         </button>
       </div>

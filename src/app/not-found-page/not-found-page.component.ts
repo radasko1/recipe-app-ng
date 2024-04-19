@@ -17,11 +17,7 @@ import locale from './not-found-page.locale.json';
       </p>
       <div class="block text-center">
         <!--@router-->
-        <a
-          routerLink="/"
-          class="cursor-pointer rounded text-sm font-medium bg-blue-700 text-white py-2 px-4 outline-none"
-          rel="noreferrer noopener"
-        >
+        <a routerLink="/" class="button-primary" rel="noreferrer noopener">
           {{ locale | translate: 'Button' : lang.language }}
         </a>
       </div>
