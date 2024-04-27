@@ -16,10 +16,12 @@ import { Localized } from '../models/localized.type';
  */
 export class LocalizedTitlePipe implements PipeTransform {
   transform(localizedTitle: Localized | null, language: Language, title: string): string {
-    // if there's any value in locale
-    if (localizedTitle && localizedTitle[language].trim().length) {
-      return localizedTitle[language].trim();
+    // fallback when localized value not exist
+    if (!localizedTitle) {
+      return title;
     }
-    return title;
+    // if there's any value in locale
+    const _title = localizedTitle[language].trim();
+    return _title.length ? _title : title;
   }
 }
