@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.3
+
+- refactor `NotFoundPageComponent`
+
 ### 1.16.2
 
 - change `HomepageModule` into standalone `HomepageComponent`
