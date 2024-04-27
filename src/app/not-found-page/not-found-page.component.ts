@@ -5,8 +5,8 @@ import { LanguageService } from '../shared/services/language-service/language.se
 import locale from './not-found-page.locale.json';
 
 @Component({
-  standalone: true,
   selector: 'page-not-found',
+  standalone: true,
   template: `
     <div class="py-10 mx-14">
       <h1 class="text-4xl font-semibold mb-8 text-center">

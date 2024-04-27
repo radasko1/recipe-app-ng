@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.2
+
+- change `HomepageModule` into standalone `HomepageComponent`
+
 ### 1.16.1
 
 - add component class into Taiwind
