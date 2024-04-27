@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.4
+
+- npm audit fix
+
 ### 1.16.3
 
 - refactor `NotFoundPageComponent`
