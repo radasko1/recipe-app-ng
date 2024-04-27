@@ -10,6 +10,15 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.16.6
+
+- set title for Error page (404)
+- refactor `LocalizedTitlePipe`
+
+### 1.16.5
+
+- update Angular v17 core
+
 ### 1.16.4
 
 - npm audit fix
