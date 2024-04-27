@@ -1,6 +1,6 @@
 {
   "name": "ng-recipe-app",
-  "version": "1.16.0",
+  "version": "1.16.3",
   "scripts": {
     "start": "ng serve",
     "build:dev": "ng build --configuration development",

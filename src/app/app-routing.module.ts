@@ -5,8 +5,8 @@ import { AuthGuard } from './shared/guards/auth-guard/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./homepage-module/homepage.module').then((module) => module.HomepageModule),
+    loadComponent: () =>
+      import('./homepage/homepage.component').then((module) => module.HomepageComponent),
   },
   {
     path: 'search',

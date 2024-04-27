@@ -1,0 +1,15 @@
+<!--promo text-->
+<div class="py-9 md:mx-14">
+  <h2 class="text-4xl font-semibold mb-1">
+    {{ locale | translate: 'PromoText1' : langService.language }}
+  </h2>
+  <h2 class="text-4xl font-semibold">
+    {{ locale | translate: 'PromoText2' : langService.language }}
+  </h2>
+  <div class="mt-6">
+    <!--@router-->
+    <button type="button" class="button-primary mr-2 mb-2" routerLink="/search">
+      {{ locale | translate: 'Button' : langService.language }}
+    </button>
+  </div>
+</div>

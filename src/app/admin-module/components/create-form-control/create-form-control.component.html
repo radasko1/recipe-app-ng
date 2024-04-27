@@ -19,18 +19,10 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <div class="mx-4 w-full">
-    <button
-      mat-dialog-close
-      type="button"
-      class="inline-block rounded px-4 py-2 bg-black text-white mr-2"
-    >
+    <button mat-dialog-close type="button" class="inline-block button-secondary mr-2">
       {{ generalLocale | translate: 'Close' : languageService.language }}
     </button>
-    <button
-      type="button"
-      class="inline-block rounded px-4 py-2 bg-blue-700 text-white"
-      (click)="create()"
-    >
+    <button type="button" class="inline-block button-primary" (click)="create()">
       {{ generalLocale | translate: 'Add' : languageService.language }}
     </button>
   </div>
