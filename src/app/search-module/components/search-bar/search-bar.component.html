@@ -1,0 +1,38 @@
+<div class="block my-8">
+  <div class="flex relative rounded border-[1px] border-black shadow-sm">
+    <!-- Search bar -->
+    <ng-container *ngIf="ingredientList$ | async as ingredients">
+      <ng-autocomplete
+        class="flex-1"
+        searchProp="locale"
+        [list]="ingredients"
+        [placeholder]="locale[langService.language].SearchIngredient"
+        (onSelect)="onSelect($event)"
+      ></ng-autocomplete>
+    </ng-container>
+    <!-- List button -->
+    <button
+      aria-label="Ingredient List Button"
+      type="button"
+      class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
+      (click)="openIngredientDialog()"
+    >
+      <span class="h-6" *ngIf="!ingredientDialogService.selectedCount">
+        <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
+      </span>
+      <span class="hidden md:block" *ngIf="ingredientDialogService.selectedCount">
+        {{ ingredientDialogService.selectedCount }}
+      </span>
+      <span class="hidden md:block ml-2">{{ locale[langService.language].ListButton }}</span>
+    </button>
+    <!-- Search button -->
+    <button
+      aria-label="Search Recipe Button"
+      type="submit"
+      class="outline-0 py-1 px-4 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white hover:bg-blue-600"
+      (click)="onSearch()"
+    >
+      <mat-icon fontIcon="search"></mat-icon>
+    </button>
+  </div>
+</div>

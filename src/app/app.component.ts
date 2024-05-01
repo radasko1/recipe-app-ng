@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import locale from './app.locale.json';
 import { LanguageService } from './shared/services/language-service/language.service';
 
@@ -7,7 +7,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
   template: `
     <!--navigation-->
     <nav class="bg-white border-gray-200 border-b-[1px] shadow-sm fixed w-full z-10 top-0">
-      <div class="container py-4 flex flex-wrap items-center justify-between">
+      <div class="container px-2 py-4 flex flex-wrap items-center justify-between">
         <!--logo-->
         <a
           routerLink="/"
@@ -16,7 +16,7 @@ import { LanguageService } from './shared/services/language-service/language.ser
         >
           <img
             src="../assets/logo.png"
-            class="select-none pointer-events-none max-w-[8rem]"
+            class="select-none pointer-events-none max-w-[5rem]"
             alt="Recipier"
           />
         </a>
@@ -49,6 +49,5 @@ import { LanguageService } from './shared/services/language-service/language.ser
 })
 export class AppComponent {
   protected readonly locale = locale;
-
-  constructor(protected readonly languageService: LanguageService) {}
+  protected readonly languageService = inject(LanguageService);
 }
