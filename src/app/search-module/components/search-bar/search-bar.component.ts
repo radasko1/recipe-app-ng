@@ -1,6 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { IngredientService } from '../../../shared/services/ingredient-service/ingredient.service';
+import { TimestampService } from '../../../shared/services/timestamp/timestamp.service';
 import { Ingredient } from '../../models/ingredient.interface';
 import locale from './search-bar.locale.json';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
@@ -8,53 +11,22 @@ import { IngredientDialogService } from '../../services/ingredient-dialog.servic
 import { RecipeService } from '../../services/recipe.service';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
 
+/** Interval to wait before you can submit again search button */
+const INTERVAL = 2;
+
 @Component({
   selector: 'app-search-bar',
-  template: `
-    <div class="block my-8">
-      <div class="flex relative rounded border-[1px] border-black shadow-sm">
-        <!-- Search bar -->
-        <ng-container *ngIf="ingredientList$ | async as ingredients">
-          <ng-autocomplete
-            class="flex-1"
-            searchProp="locale"
-            [list]="ingredients"
-            [placeholder]="locale[langService.language].SearchIngredient"
-            (onSelect)="onSelect($event)"
-          ></ng-autocomplete>
-        </ng-container>
-        <!-- List button -->
-        <button
-          aria-label="Ingredient List Button"
-          type="button"
-          class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
-          (click)="openIngredientDialog()"
-        >
-          <span class="h-6" *ngIf="!ingredientDialogService.selectedCount">
-            <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
-          </span>
-          <span class="hidden md:block" *ngIf="ingredientDialogService.selectedCount">
-            {{ ingredientDialogService.selectedCount }}
-          </span>
-          <span class="hidden md:block ml-2">{{ locale[langService.language].ListButton }}</span>
-        </button>
-        <!-- Search button -->
-        <button
-          aria-label="Search Recipe Button"
-          type="submit"
-          class="outline-0 py-1 px-4 inline-flex items-center justify-center text-sm font-medium bg-gray-950 text-white hover:bg-blue-600"
-          (click)="onSearch()"
-        >
-          <mat-icon fontIcon="search"></mat-icon>
-        </button>
-      </div>
-    </div>
-  `,
+  templateUrl: './search-bar.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnDestroy {
+  /** Timestamp when were submitted search form */
+  private prevTimestamp: number | undefined;
+  private subs = new Subject<boolean>();
   protected readonly locale = locale;
   protected readonly ingredientList$ = this.ingredientService.getList();
+  private readonly timestampService = inject(TimestampService);
+  private readonly recaptchaService = inject(ReCaptchaV3Service);
 
   constructor(
     protected readonly langService: LanguageService,
@@ -64,11 +36,31 @@ export class SearchBarComponent {
     private readonly dialog: MatDialog
   ) {}
 
+  ngOnDestroy() {
+    this.subs.next(true);
+    this.subs.unsubscribe();
+  }
+
+  /**
+   * Whether search form can be submitted
+   * @private
+   */
+  private canSubmit() {
+    if (this.prevTimestamp === undefined) {
+      return true;
+    }
+    return this.timestampService.currentTimestamp > this.prevTimestamp + INTERVAL;
+  }
+
   protected openIngredientDialog() {
     const dialogRef = this.dialog.open(IngredientModalComponent);
   }
 
-  /** Select Ingredient from Autocomplete component */
+  /**
+   * Select Ingredient from Autocomplete component
+   * @param selectedItem
+   * @protected
+   */
   protected onSelect(selectedItem: Ingredient) {
     if (!selectedItem) {
       return;
@@ -76,13 +68,28 @@ export class SearchBarComponent {
     this.ingredientDialogService.ingredientSelect(selectedItem);
   }
 
+  /**
+   * Search form submit handler
+   * @protected
+   */
   protected onSearch() {
+    if (!this.canSubmit()) {
+      return;
+    }
+    this.prevTimestamp = this.timestampService.currentTimestamp;
+
     const selectedIngredients = this.ingredientDialogService.selectedList;
     if (!selectedIngredients.length) {
       return;
     }
     const ids = selectedIngredients.map((ingredient) => ingredient.id);
 
-    this.recipeService.findRecipes(ids).subscribe();
+    this.recaptchaService
+      .execute('submit')
+      .pipe(
+        switchMap((token) => this.recipeService.findRecipes(token, ids)),
+        takeUntil(this.subs)
+      )
+      .subscribe();
   }
 }
