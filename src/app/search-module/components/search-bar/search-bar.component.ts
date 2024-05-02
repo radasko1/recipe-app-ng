@@ -1,5 +1,7 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { IngredientService } from '../../../shared/services/ingredient-service/ingredient.service';
 import { TimestampService } from '../../../shared/services/timestamp/timestamp.service';
 import { Ingredient } from '../../models/ingredient.interface';
@@ -17,12 +19,14 @@ const INTERVAL = 2;
   templateUrl: './search-bar.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnDestroy {
   /** Timestamp when were submitted search form */
   private prevTimestamp: number | undefined;
+  private subs = new Subject<boolean>();
   protected readonly locale = locale;
   protected readonly ingredientList$ = this.ingredientService.getList();
   private readonly timestampService = inject(TimestampService);
+  private readonly recaptchaService = inject(ReCaptchaV3Service);
 
   constructor(
     protected readonly langService: LanguageService,
@@ -31,6 +35,11 @@ export class SearchBarComponent {
     private readonly recipeService: RecipeService,
     private readonly dialog: MatDialog
   ) {}
+
+  ngOnDestroy() {
+    this.subs.next(true);
+    this.subs.unsubscribe();
+  }
 
   /**
    * Whether search form can be submitted
@@ -75,6 +84,12 @@ export class SearchBarComponent {
     }
     const ids = selectedIngredients.map((ingredient) => ingredient.id);
 
-    this.recipeService.findRecipes(ids).subscribe();
+    this.recaptchaService
+      .execute('submit')
+      .pipe(
+        switchMap((token) => this.recipeService.findRecipes(token, ids)),
+        takeUntil(this.subs)
+      )
+      .subscribe();
   }
 }

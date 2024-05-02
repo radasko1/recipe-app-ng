@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.17.0
+
+- using recaptcha service when search recipes
+
 ### 1.16.7
 
 - prevent trigger to submit Search recipe form multiple times
