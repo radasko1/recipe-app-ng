@@ -8,7 +8,7 @@ import locale from './search.locale.json';
   selector: 'app-search-page',
   template: `
     <!--page container-->
-    <div class="py-5 md:py-10 mx-auto max-w-[920px]">
+    <div class="py-5 md:py-10 mx-auto max-w-[1020px]">
       <h2 class="font-bold text-3xl md:text-4xl text-center">
         {{ locale[langService.language].FindRecipes }}
       </h2>

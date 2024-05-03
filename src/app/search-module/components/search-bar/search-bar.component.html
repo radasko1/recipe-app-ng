@@ -17,13 +17,22 @@
       class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
       (click)="openIngredientDialog()"
     >
-      <span class="h-6" *ngIf="!ingredientDialogService.selectedCount">
+      <!--NO INGREDIENTS SELECTED-->
+      <div class="h-6" *ngIf="!ingredientDialogService.selectedCount">
         <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
-      </span>
-      <span class="hidden md:block" *ngIf="ingredientDialogService.selectedCount">
-        {{ ingredientDialogService.selectedCount }}
-      </span>
-      <span class="hidden md:block ml-2">{{ locale[langService.language].ListButton }}</span>
+      </div>
+      <!--SELECTED INGREDIENTS-->
+      <div *ngIf="ingredientDialogService.selectedCount">
+        <!--TEXT VARIANT-->
+        <div class="hidden md:block">
+          <span class="inline">{{ ingredientDialogService.selectedCount }}</span>
+          <span class="inline ml-2">{{ locale[langService.language].ListButton }}</span>
+        </div>
+        <!--ICON VARIANT-->
+        <div class="h-6 block md:hidden">
+          <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
+        </div>
+      </div>
     </button>
     <!-- Search button -->
     <button

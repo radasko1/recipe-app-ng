@@ -5,11 +5,6 @@ import { AuthGuard } from './shared/guards/auth-guard/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./homepage/homepage.component').then((module) => module.HomepageComponent),
-  },
-  {
-    path: 'search',
     loadChildren: () =>
       import('./search-module/search.module').then((module) => module.SearchModule),
   },

@@ -1,6 +1,6 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import locale from './app.locale.json';
-import { LanguageService } from './shared/services/language-service/language.service';
+import { APPLICATION_NAME } from './app.settings';
 
 @Component({
   selector: 'app-root',
@@ -17,28 +17,15 @@ import { LanguageService } from './shared/services/language-service/language.ser
           <img
             src="../assets/logo.png"
             class="select-none pointer-events-none max-w-[5rem]"
-            alt="Recipier"
+            [alt]="APPLICATION_NAME"
           />
         </a>
-        <!--links-->
-        <ul class="flex items-center justify-between md:flex w-auto font-medium md:p-4">
-          <li>
-            <!--@router-->
-            <a
-              [routerLink]="['/', 'search']"
-              class="block py-2 px-3 md:p-0 rounded text-gray-500 hover:text-black"
-              rel="noreferrer noopener"
-            >
-              {{ locale | translate: 'Search' : languageService.language }}
-            </a>
-          </li>
-        </ul>
         <!--lang-->
         <app-locale-change />
       </div>
     </nav>
     <!-- content -->
-    <main class="relative block container mt-20 main-height">
+    <main class="relative block px-2 mt-20 main-height">
       <router-outlet></router-outlet>
     </main>
     <!-- footer-->
@@ -49,5 +36,5 @@ import { LanguageService } from './shared/services/language-service/language.ser
 })
 export class AppComponent {
   protected readonly locale = locale;
-  protected readonly languageService = inject(LanguageService);
+  protected readonly APPLICATION_NAME = APPLICATION_NAME;
 }
