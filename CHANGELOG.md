@@ -10,6 +10,13 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.18.0
+
+- remove Homepage and replace it with Search
+- remove navigation links
+- edit layout size
+- change condition to show icon/text inside search bar
+
 ### 1.17.0
 
 - using recaptcha service when search recipes

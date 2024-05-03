@@ -1,10 +1,6 @@
 
-const APPLICATION_NAME = 'Recipier';
+export const APPLICATION_NAME = 'Recipier';
 
-const HOME_PAGE_TITLE = {
-  cs: 'Domů' + ' | ' + APPLICATION_NAME,
-  en: 'Home' + ' | ' + APPLICATION_NAME,
-};
 const SEARCH_PAGE_TITLE = {
   cs: 'Vyhledat recept' + ' | ' + APPLICATION_NAME,
   en: 'Recipe search' + ' | ' + APPLICATION_NAME,
@@ -15,7 +11,6 @@ const PAGE_NOT_FOUND = {
 }
 
 export const APP_PAGE_TITLE = {
-  HOMEPAGE: HOME_PAGE_TITLE,
   SEARCH: SEARCH_PAGE_TITLE,
   PAGE_NOT_FOUND: PAGE_NOT_FOUND
 };
