@@ -1,4 +1,15 @@
-import { Component, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { LanguageService } from '../../../shared/services/language-service/language.service';
@@ -9,11 +20,13 @@ import { LanguageService } from '../../../shared/services/language-service/langu
     <div class="block relative w-full">
       <div class="flex rounded-md">
         <input
-          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-none"
+          #inputElement
+          class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-2 outline-amber-400 placeholder:text-gray-500"
           [class]="inputClassName"
           [formControl]="inputValue"
           [placeholder]="placeholder"
           [matAutocomplete]="ingredientList"
+          tabindex="0"
         />
         <mat-autocomplete #ingredientList="matAutocomplete">
           @for (suggestion of suggestions; track suggestion) {
@@ -27,8 +40,11 @@ import { LanguageService } from '../../../shared/services/language-service/langu
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class AutocompleteComponent implements OnInit, OnDestroy {
+export class AutocompleteComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscription = new Subject<boolean>();
+
+  private readonly fb = inject(NonNullableFormBuilder);
+  protected readonly lang = inject(LanguageService);
 
   /** Autocomplete search value */
   protected inputValue = this.fb.control<string>('');
@@ -44,19 +60,27 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   /** Placeholder text */
   @Input() placeholder = '';
   @Input() inputClassName = '';
+  /** Focus on input element */
+  @Input() autoFocus = false;
   /** On autocomplete suggestion item select */
   @Output() onSelect = this.selected.asObservable();
 
-  constructor(
-    private readonly fb: NonNullableFormBuilder,
-    protected readonly lang: LanguageService
-  ) {}
+  @ViewChild('inputElement') protected inputElement: ElementRef | undefined;
 
   ngOnInit() {
     // Listen changes in form control input
     this.inputValue.valueChanges
       .pipe(takeUntil(this.subscription))
       .subscribe((value) => this.onSearch(value));
+  }
+
+  ngAfterViewInit() {
+    if (!this.inputElement) {
+      return;
+    }
+    if (this.autoFocus) {
+      this.inputElement.nativeElement.focus();
+    }
   }
 
   ngOnDestroy() {

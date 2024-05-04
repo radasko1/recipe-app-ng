@@ -7,6 +7,7 @@
         searchProp="locale"
         [list]="ingredients"
         [placeholder]="locale[langService.language].SearchIngredient"
+        [autoFocus]="true"
         (onSelect)="onSelect($event)"
       ></ng-autocomplete>
     </ng-container>
