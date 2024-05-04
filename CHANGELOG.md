@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.18.2
+
+- npm audit fix
+
 ### 1.18.1
 
 - add outline and focus on search bar input
