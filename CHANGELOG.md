@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.18.3
+
+- change recipe item on search page
+
 ### 1.18.2
 
 - npm audit fix

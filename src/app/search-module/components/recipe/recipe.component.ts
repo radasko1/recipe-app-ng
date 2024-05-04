@@ -25,7 +25,7 @@ export class RecipeComponent implements OnInit, OnDestroy {
   protected readonly locale = locale;
   protected recipeList: ResponseList<Recipe> | undefined;
   protected pageIndex = 0;
-  protected readonly pageSize = 10;
+  protected readonly pageSize = 16;
 
   constructor(
     protected readonly lang: LanguageService,
