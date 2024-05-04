@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.18.1
+
+- add outline and focus on search bar input
+
 ### 1.18.0
 
 - remove Homepage and replace it with Search
