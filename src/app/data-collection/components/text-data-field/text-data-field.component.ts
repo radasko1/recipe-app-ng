@@ -30,6 +30,9 @@ export class TextDataFieldComponent implements ControlValueAccessor {
   /** List of custom actions */
   @Input() customActionList: DataFieldCustomAction[] | undefined;
 
+  // TODO add error message
+  // TODO add form control validator
+
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
 

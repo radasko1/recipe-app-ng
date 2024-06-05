@@ -5,7 +5,6 @@ import {
   Inject,
   OnDestroy,
   OnInit,
-  ViewEncapsulation,
 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,8 +40,7 @@ type FormControlFieldConfiguration = {
 
 @Component({
   selector: 'app-recipe-detail',
-  templateUrl: 'recipe-detail.component.html',
-  encapsulation: ViewEncapsulation.None,
+  templateUrl: './recipe-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RequiredIngredientCheckboxListService],
 })
@@ -73,6 +71,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     const routeParam = this.router.snapshot.params;
     const detailId = routeParam['id'];
     this.paramId = detailId;
+    // TODO create function to parse query params into specified interface
 
     this.dataCollectionService
       .getDataCollectionPageDetail(detailId)
@@ -89,12 +88,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  protected breadcrumbPageList(dataCollection: DataCollectionDetail) {
+  /**
+   * Get list of pages in breadcrumb ordered chronologically
+   * @param currentPageTitle
+   * @protected
+   */
+  protected getBreadcrumbPageList(currentPageTitle: string) {
     const language = this.languageService.language;
     return [
       { label: 'Dashboard', link: '/admin/dashboard' },
       { label: locale[language].RecipeList, link: '/admin/page' },
-      { label: dataCollection.title, link: null },
+      { label: currentPageTitle, link: null },
     ];
   }
 
