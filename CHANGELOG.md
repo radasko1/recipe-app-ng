@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.19.1
+
+- change breadcrumb link to `<a>` tag
+
 ### 1.19.0
 
 - transform AutocompleteModule into standalone component AutocompleteComponent

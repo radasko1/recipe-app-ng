@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { AutocompleteComponent } from '../../reusable-component/autocomplete/autocomplete.component';
+import { BreadcrumbComponent } from '../../reusable-component/breadcrumb/breadcrumb.component';
 import { SharedMaterialModule } from '../../shared/shared-material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { LocalizationModule } from '../localization-module/localization.module';
 import { AdminRoutingModule } from './admin-routing.module';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CreateFormControlComponent } from './components/create-form-control/create-form-control.component';
 import { AdminDashboardPageComponent } from './components/admin-dashboard-page/admin-dashboard-page.component';
 import { CheckboxListComponent } from './components/checkbox-list/checkbox-list.component';
@@ -28,7 +28,6 @@ import { DataCollectionService } from './services/data-collection.service';
     SourceDetailComponent,
     SourceDialogComponent,
     SourcePageDialogComponent,
-    BreadcrumbComponent,
     CheckboxListComponent,
     RecipeIngredientDialogComponent,
     CreateFormControlComponent,
@@ -41,6 +40,7 @@ import { DataCollectionService } from './services/data-collection.service';
     AutocompleteComponent,
     DataCollectionModule,
     LocalizationModule,
+    BreadcrumbComponent,
   ],
   providers: [DataCollectionService],
 })

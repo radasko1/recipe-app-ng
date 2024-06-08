@@ -1,0 +1,15 @@
+<ng-template [ngIf]="pageList && pageList.length">
+  @for (item of pageList; track item; let last = $last) {
+  <!--page link-->
+  <a
+    [routerLink]="item.link"
+    class="inline-block font-medium"
+    [class.underline]="item.link"
+    [class.cursor-pointer]="item.link"
+  >
+    {{ item.label }}
+  </a>
+  <!--page divider-->
+  <div *ngIf="!last" class="inline-block mx-3">/</div>
+  }
+</ng-template>

@@ -23,8 +23,7 @@ export const AuthGuard: CanActivateFn = (
         }
 
         // whether is not authenticated, redirect to the root page
-        router.navigate(['/']);
-        return false;
+        return router.createUrlTree(['/']);
       })
     );
 };

@@ -1,4 +1,5 @@
 <h2 mat-dialog-title>{{ data.dialogTitle }}</h2>
+<!--TODO: title / description text / search box full size / under that 2 columns for checkboxes-->
 <mat-dialog-content>
   <app-recipe-detail-checkbox-list
     [list]="transformedList"
@@ -7,7 +8,6 @@
     [autocompleteList]="ingredientList"
   />
 </mat-dialog-content>
-<!--TODO: title / description text / search box full size / under that 2 columns for checkboxes-->
 <mat-dialog-actions align="end">
   <div class="mx-4 w-full">
     <button

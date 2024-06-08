@@ -1,7 +1,7 @@
 <div class="relative overflow-x-auto">
   <!--breadcrumb-->
-  <app-admin-breadcrumb
-    [list]="[
+  <ng-breadcrumb
+    [pageList]="[
       { label: 'Dashboard', link: '/admin/dashboard' },
       { label: locale[langService.language].RecipeList, link: null }
     ]"

@@ -1,6 +1,6 @@
 <ng-container *ngIf="dataCollectionDetail as dataCollection">
   <!--breadcrumb-->
-  <app-admin-breadcrumb [list]="getBreadcrumbPageList(dataCollection.title)" />
+  <ng-breadcrumb [pageList]="getBreadcrumbPageList(dataCollection.title)" />
   <!--content-->
   <div class="py-9">
     <div class="flex flex-row justify-start items-center mb-4">
