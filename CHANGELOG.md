@@ -10,6 +10,11 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.19.0
+
+- transform AutocompleteModule into standalone component AutocompleteComponent
+- refactor project structure
+
 ### 1.18.3
 
 - change recipe item on search page

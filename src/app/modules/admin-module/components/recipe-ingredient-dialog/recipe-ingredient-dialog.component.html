@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data.dialogTitle }}</h2>
+<mat-dialog-content>
+  <app-recipe-detail-checkbox-list
+    [list]="transformedList"
+    [dataService]="data.serviceInstance"
+    [showAutocomplete]="true"
+    [autocompleteList]="ingredientList"
+  />
+</mat-dialog-content>
+<!--TODO: title / description text / search box full size / under that 2 columns for checkboxes-->
+<mat-dialog-actions align="end">
+  <div class="mx-4 w-full">
+    <button
+      mat-dialog-close
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-black text-white mr-2"
+    >
+      {{ generalLocale | translate: 'Close' : lang.language }}
+    </button>
+    <button
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-blue-700 text-white"
+      (click)="addToCollection()"
+    >
+      {{ generalLocale | translate: 'Save' : lang.language }}
+    </button>
+  </div>
+</mat-dialog-actions>

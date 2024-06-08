@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Language } from '../../localization-module/models/language.type';
+import { Language } from '../../modules/localization-module/models/language.type';
 import { Localized } from '../models/localized.type';
 
 // TODO is shared?

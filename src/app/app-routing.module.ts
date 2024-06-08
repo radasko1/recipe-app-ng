@@ -6,17 +6,18 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./search-module/search.module').then((module) => module.SearchModule),
+      import('./modules/search-module/search.module').then((module) => module.SearchModule),
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin-module/admin.module').then((module) => module.AdminModule),
+    loadChildren: () =>
+      import('./modules/admin-module/admin.module').then((module) => module.AdminModule),
     canActivate: [AuthGuard],
   },
   {
     path: '**',
     loadComponent: () =>
-      import('./not-found-page/not-found-page.component').then(
+      import('./modules/not-found-page/not-found-page.component').then(
         (module) => module.NotFoundPageComponent
       ),
   },
