@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth-guard/auth.guard';
 
+/**
+ * Adjust page width is done in component's template.
+ */
+
 const routes: Routes = [
   {
     path: '',

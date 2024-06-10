@@ -1,4 +1,4 @@
-<ng-container *ngIf="dataCollectionDetail as dataCollection">
+<div class="page-container" *ngIf="dataCollectionDetail as dataCollection">
   <!--breadcrumb-->
   <ng-breadcrumb [pageList]="getBreadcrumbPageList(dataCollection.title)" />
   <!--content-->
@@ -69,4 +69,4 @@
       </button>
     </div>
   </div>
-</ng-container>
+</div>

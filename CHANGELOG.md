@@ -10,6 +10,12 @@ Run command for (without commit):
 
 ## Versions
 
+###
+
+- change list items spacing in `CheckboxListComponent` 
+- style for page container
+- loader component `<ng-loader>`
+
 ### 1.19.1
 
 - change breadcrumb link to `<a>` tag
