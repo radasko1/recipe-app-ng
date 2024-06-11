@@ -1,6 +1,6 @@
 <!--Loader-->
-<div *ngIf="loading">
-  <div class="loader-component w-full h-full flex items-center justify-center rounded">
+<ng-container *ngIf="loading">
+  <div class="flex items-center justify-center h-full w-full bg-slate-200 bg-opacity-30">
     <mat-spinner mode="indeterminate"></mat-spinner>
   </div>
-</div>
+</ng-container>

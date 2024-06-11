@@ -6,6 +6,7 @@ import { IngredientService } from '../../../../shared/services/ingredient-servic
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { TimestampService } from '../../../../shared/services/timestamp/timestamp.service';
 import { Ingredient } from '../../models/ingredient.interface';
+import { RecipeLoaderService } from '../../services/recipe-loader.service';
 import locale from './search-bar.locale.json';
 import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
@@ -33,7 +34,8 @@ export class SearchBarComponent implements OnDestroy {
     protected readonly ingredientDialogService: IngredientDialogService,
     private readonly ingredientService: IngredientService,
     private readonly recipeService: RecipeService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly recipeLoader: RecipeLoaderService
   ) {}
 
   ngOnDestroy() {
@@ -82,6 +84,9 @@ export class SearchBarComponent implements OnDestroy {
     if (!selectedIngredients.length) {
       return;
     }
+    // start loading
+    this.recipeLoader.start();
+    // collect all Ids
     const ids = selectedIngredients.map((ingredient) => ingredient.id);
 
     this.recaptchaService

@@ -18,6 +18,13 @@ import { LoadingService } from './loading.service';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatProgressSpinnerModule],
+  host: {
+    '[class]': '["h-full", "w-full", "top-0", "left-0"]',
+    '[class.absolute]': 'local',
+    '[class.fixed]': '!local',
+    '[class.hidden]': '!loading',
+    '[class.block]': 'loading',
+  },
 })
 export class LoaderComponent implements OnInit, OnDestroy {
   /**

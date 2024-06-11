@@ -19,6 +19,9 @@ import locale from './recipe.locale.json';
   templateUrl: './recipe.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '[class]': '["relative"]',
+  },
 })
 export class RecipeComponent implements OnInit, OnDestroy {
   private readonly subs = new Subject<boolean>();
