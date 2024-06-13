@@ -1,6 +1,18 @@
 <!--TODO split into more components-->
+<!--Recipe Loader-->
+<ng-template [ngIf]="isLoading">
+  <div class="flex flex-row justify-center items-center w-full rounded bg-blue-100 p-3 mb-3">
+    <div class="relative w-[20px] h-[20px] text-red-300">
+      <ng-loader [local]="true" [loading]="true" [showBackground]="false" />
+    </div>
+    <div class="ml-4">
+      <p class="text-black text-md">{{ locale[lang.language].LoaderText }}</p>
+    </div>
+  </div>
+</ng-template>
+
 <!--List of Recipes-->
-<ng-template [ngIf]="recipeList && recipeList.length">
+<ng-template [ngIf]="recipeList && recipeList.length && !isLoading">
   <div class="flex flex-row flex-wrap">
     <!--Single Recipe-->
     <div
@@ -85,20 +97,8 @@
   ></mat-paginator>
 </ng-template>
 
-<!--Recipe Loader-->
-<ng-template [ngIf]="isLoading">
-  <div class="flex flex-row justify-center items-center w-full rounded bg-blue-100 p-3">
-    <div class="relative w-[20px] h-[20px] text-red-300">
-      <ng-loader [local]="true" [loading]="true" [showBackground]="false" />
-    </div>
-    <div class="ml-4">
-      <p class="text-black text-md">{{ locale[lang.language].LoaderText }}</p>
-    </div>
-  </div>
-</ng-template>
-
 <!--Empty Recipe list result-->
-<ng-template [ngIf]="recipeList && !recipeList.length">
+<ng-template [ngIf]="recipeList && !recipeList.length && !isLoading">
   <div class="block w-full bg-blue-100 text-blue-700 rounded p-5">
     <p class="text-medium">{{ locale[lang.language].EmptySearchResult }}</p>
   </div>
