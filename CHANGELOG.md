@@ -10,7 +10,7 @@ Run command for (without commit):
 
 ## Versions
 
-###
+### 1.20.0
 
 - change list items spacing in `CheckboxListComponent` 
 - style for page container
