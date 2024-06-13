@@ -17,6 +17,7 @@ Run command for (without commit):
 - loader component `<ng-loader>`
 - show loading indicator on Search page when recipes are loading
 - reduce modules in `SearchModule`
+- analyzer plugin
 
 ### 1.19.1
 
