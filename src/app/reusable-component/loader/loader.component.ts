@@ -39,6 +39,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
    * @default false
    */
   @Input() loading = false;
+  @Input() showBackground = true;
 
   private readonly subscription = new Subject();
   private readonly cdr = inject(ChangeDetectorRef);

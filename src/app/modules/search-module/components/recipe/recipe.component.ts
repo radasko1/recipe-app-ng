@@ -7,10 +7,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
+import { catchError, of, Subject, takeUntil } from 'rxjs';
 import { ResponseList } from '../../../../shared/models/response-list.type';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { Recipe } from '../../models/recipe.interface';
+import { RecipeLoaderService } from '../../services/recipe-loader.service';
 import { RecipeService } from '../../services/recipe.service';
 import locale from './recipe.locale.json';
 
@@ -29,11 +30,14 @@ export class RecipeComponent implements OnInit, OnDestroy {
   protected recipeList: ResponseList<Recipe> | undefined;
   protected pageIndex = 0;
   protected readonly pageSize = 16;
+  /** Signalization for recipe loading status */
+  protected isLoading = false;
 
   constructor(
     protected readonly lang: LanguageService,
     private readonly recipeService: RecipeService,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    protected readonly recipeLoaderService: RecipeLoaderService
   ) {}
 
   ngOnInit() {
@@ -45,11 +49,6 @@ export class RecipeComponent implements OnInit, OnDestroy {
     this.recipeService.onSearch$
       .pipe(
         takeUntil(this.subs),
-        tap((recipes) => {
-          // Update data and trigger change detection:
-          this.recipeList = recipes;
-          this.updateView();
-        }),
         catchError((err) => {
           // Handle error and reset state:
           this.recipeList = undefined;
@@ -57,7 +56,25 @@ export class RecipeComponent implements OnInit, OnDestroy {
           return of(undefined);
         })
       )
-      .subscribe();
+      .subscribe({
+        next: (recipeList) => {
+          // Update data and trigger change detection:
+          this.recipeList = recipeList;
+          this.isLoading = false;
+          this.updateView();
+        },
+        error: () => {
+          this.isLoading = false;
+          this.updateView();
+        },
+      });
+
+    this.recipeLoaderService.loading$.pipe(takeUntil(this.subs)).subscribe({
+      next: (loading) => {
+        this.isLoading = loading;
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   ngOnDestroy() {

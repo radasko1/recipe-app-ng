@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { AutocompleteComponent } from '../../reusable-component/autocomplete/autocomplete.component';
+import { LoaderComponent } from '../../reusable-component/loader/loader.component';
 import { SharedMaterialModule } from '../../shared/shared-material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { LocalizationModule } from '../localization-module/localization.module';
-import { SearchRoutingModule } from './search-routing.module';
-import { SearchPageComponent } from './components/search-page/search-page.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { RecipeComponent } from './components/recipe/recipe.component';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
-import { RecipeService } from './services/recipe.service';
+import { RecipeComponent } from './components/recipe/recipe.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
+import { SearchRoutingModule } from './search-routing.module';
 import { CategoryService } from './services/category.service';
 import { IngredientDialogService } from './services/ingredient-dialog.service';
+import { RecipeLoaderService } from './services/recipe-loader.service';
+import { RecipeService } from './services/recipe.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { IngredientDialogService } from './services/ingredient-dialog.service';
     SharedMaterialModule,
     SharedModule,
     LocalizationModule,
+    LoaderComponent,
   ],
-  providers: [RecipeService, CategoryService, IngredientDialogService],
+  providers: [RecipeService, CategoryService, IngredientDialogService, RecipeLoaderService],
 })
 export class SearchModule {}
