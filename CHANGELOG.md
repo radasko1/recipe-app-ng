@@ -10,9 +10,13 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.20.1
+
+- npm audit
+
 ### 1.20.0
 
-- change list items spacing in `CheckboxListComponent` 
+- change list items spacing in `CheckboxListComponent`
 - style for page container
 - loader component `<ng-loader>`
 - show loading indicator on Search page when recipes are loading
