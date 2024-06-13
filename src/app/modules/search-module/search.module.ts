@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AutocompleteComponent } from '../../reusable-component/autocomplete/autocomplete.component';
 import { LoaderComponent } from '../../reusable-component/loader/loader.component';
-import { SharedMaterialModule } from '../../shared/shared-material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { LocalizationModule } from '../localization-module/localization.module';
 import { IngredientModalComponent } from './components/ingredient-modal/ingredient-modal.component';
@@ -24,7 +26,9 @@ import { RecipeService } from './services/recipe.service';
   imports: [
     SearchRoutingModule,
     AutocompleteComponent,
-    SharedMaterialModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatDialogModule,
     SharedModule,
     LocalizationModule,
     LoaderComponent,

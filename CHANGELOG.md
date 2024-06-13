@@ -16,6 +16,7 @@ Run command for (without commit):
 - style for page container
 - loader component `<ng-loader>`
 - show loading indicator on Search page when recipes are loading
+- reduce modules in `SearchModule`
 
 ### 1.19.1
 
