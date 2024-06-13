@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { IngredientPayload } from '../../../search-module/models/ingredient-payload.interface';
-import { Ingredient } from '../../../search-module/models/ingredient.interface';
+import { IngredientPayload } from '../../../modules/search-module/models/ingredient-payload.interface';
+import { Ingredient } from '../../../modules/search-module/models/ingredient.interface';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientService {

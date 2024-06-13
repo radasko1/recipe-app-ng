@@ -1,0 +1,33 @@
+<ng-autocomplete
+  *ngIf="showAutocomplete && autocompleteList && autocompleteList.length"
+  inputClassName="rounded border"
+  [list]="autocompleteList"
+  searchProp="locale"
+  [placeholder]="locale[langService.language]['IngredientName']"
+  (onSelect)="select(list, $event)"
+/>
+<!---->
+<ul class="flex flex-row flex-wrap max-w-[28rem] mt-5">
+  @for (item of list; track item; let idx = $index; let odd = $odd; let even = $even) {
+  <li
+    class="basis-1/2 flex flex-row items-center justify-between w-full"
+    [class.pl-3]="odd"
+    [class.pr-3]="even"
+  >
+    <!--Use default item from list, or change it with service-->
+    <ng-template [ngIf]="dataService">
+      <mat-checkbox>{{ dataService.getLabel(item) }}</mat-checkbox>
+    </ng-template>
+    <ng-template [ngIf]="!dataService">
+      <mat-checkbox>{{ item }}</mat-checkbox>
+    </ng-template>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Delete"
+      fontIcon="delete"
+      class="cursor-pointer text-red-600 min-w-[24px]"
+      (click)="remove(list, idx)"
+    ></mat-icon>
+  </li>
+  }
+</ul>

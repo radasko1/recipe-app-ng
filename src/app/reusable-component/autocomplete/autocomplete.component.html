@@ -1,0 +1,20 @@
+<div class="block relative w-full">
+  <div class="flex rounded-md">
+    <input
+      #inputElement
+      class="block flex-1 w-full p-4 bg-transparent text-gray-900 h-12 outline-2 outline-amber-400 placeholder:text-gray-500"
+      [class]="inputClassName"
+      [formControl]="inputValue"
+      [placeholder]="placeholder"
+      [matAutocomplete]="ingredientList"
+      tabindex="0"
+    />
+    <mat-autocomplete #ingredientList="matAutocomplete">
+      @for (suggestion of suggestions; track suggestion) {
+      <mat-option [value]="suggestion" (click)="onSelectOption(suggestion)">
+        {{ searchProp ? suggestion[searchProp][lang.language] : suggestion }}
+      </mat-option>
+      }
+    </mat-autocomplete>
+  </div>
+</div>

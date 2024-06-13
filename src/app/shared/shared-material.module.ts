@@ -9,7 +9,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
-    MatDialogModule,
     MatMenuModule,
     MatDialogModule,
     MatIconModule,
@@ -21,7 +20,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatAutocompleteTrigger,
   ],
   exports: [
-    MatDialogModule,
     MatMenuModule,
     MatDialogModule,
     MatIconModule,

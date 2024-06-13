@@ -10,6 +10,24 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.20.0
+
+- change list items spacing in `CheckboxListComponent` 
+- style for page container
+- loader component `<ng-loader>`
+- show loading indicator on Search page when recipes are loading
+- reduce modules in `SearchModule`
+- analyzer plugin
+
+### 1.19.1
+
+- change breadcrumb link to `<a>` tag
+
+### 1.19.0
+
+- transform AutocompleteModule into standalone component AutocompleteComponent
+- refactor project structure
+
 ### 1.18.3
 
 - change recipe item on search page

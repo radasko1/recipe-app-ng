@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CZECH_LANG, Language } from "../../../localization-module/models/language.type";
+import { CZECH_LANG, Language } from '../../../modules/localization-module/models/language.type';
 
 import { CookieService } from '../cookie-service/cookie.service';
 

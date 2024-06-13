@@ -1,0 +1,9 @@
+<!--Loader-->
+<ng-container *ngIf="loading">
+  <div
+    class="flex items-center justify-center h-full w-full bg-opacity-30"
+    [class.bg-slate-200]="showBackground"
+  >
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+</ng-container>
