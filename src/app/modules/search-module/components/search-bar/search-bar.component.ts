@@ -1,16 +1,18 @@
-import { Component, inject, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { Subject, switchMap, takeUntil } from 'rxjs';
+import { AutocompleteComponent } from '../../../../reusable-component/autocomplete/autocomplete.component';
 import { IngredientService } from '../../../../shared/services/ingredient-service/ingredient.service';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { TimestampService } from '../../../../shared/services/timestamp/timestamp.service';
 import { Ingredient } from '../../models/ingredient.interface';
-import { RecipeLoaderService } from '../../services/recipe-loader.service';
-import locale from './search-bar.locale.json';
-import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
 import { IngredientDialogService } from '../../services/ingredient-dialog.service';
+import { RecipeLoaderService } from '../../services/recipe-loader.service';
 import { RecipeService } from '../../services/recipe.service';
+import { SearchPageHelperService } from '../../services/search-page-helper.service';
+import { IngredientModalComponent } from '../ingredient-modal/ingredient-modal.component';
+import locale from './search-bar.locale.json';
 
 /** Interval to wait before you can submit again search button */
 const INTERVAL = 2;
@@ -20,7 +22,7 @@ const INTERVAL = 2;
   templateUrl: './search-bar.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SearchBarComponent implements OnDestroy {
+export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Timestamp when were submitted search form */
   private prevTimestamp: number | undefined;
   private subs = new Subject<boolean>();
@@ -28,6 +30,11 @@ export class SearchBarComponent implements OnDestroy {
   protected readonly ingredientList$ = this.ingredientService.getList();
   private readonly timestampService = inject(TimestampService);
   private readonly recaptchaService = inject(ReCaptchaV3Service);
+  private readonly helperService = inject(SearchPageHelperService);
+
+  @ViewChild(AutocompleteComponent, { static: false }) autocompleteComponent:
+    | AutocompleteComponent
+    | undefined;
 
   constructor(
     protected readonly langService: LanguageService,
@@ -37,6 +44,22 @@ export class SearchBarComponent implements OnDestroy {
     private readonly dialog: MatDialog,
     private readonly recipeLoader: RecipeLoaderService
   ) {}
+
+  ngOnInit() {
+    this.helperService.onDialogOpen.pipe(takeUntil(this.subs)).subscribe({
+      next: () => {
+        this.openIngredientDialog();
+      },
+    });
+  }
+
+  ngAfterViewInit() {
+    this.helperService.onElementFocus.pipe(takeUntil(this.subs)).subscribe({
+      next: () => {
+        this.autocompleteFocus();
+      },
+    });
+  }
 
   ngOnDestroy() {
     this.subs.next(true);
@@ -54,8 +77,12 @@ export class SearchBarComponent implements OnDestroy {
     return this.timestampService.currentTimestamp > this.prevTimestamp + INTERVAL;
   }
 
+  /**
+   * Open dialog with all ingredients
+   * @protected
+   */
   protected openIngredientDialog() {
-    const dialogRef = this.dialog.open(IngredientModalComponent);
+    this.dialog.open(IngredientModalComponent);
   }
 
   /**
@@ -96,5 +123,13 @@ export class SearchBarComponent implements OnDestroy {
         takeUntil(this.subs)
       )
       .subscribe();
+  }
+
+  /** Trigger autocomplete focus */
+  protected autocompleteFocus() {
+    if (!this.autocompleteComponent) {
+      return;
+    }
+    this.autocompleteComponent.focus();
   }
 }
