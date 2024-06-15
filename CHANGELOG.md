@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.21.0
+
+- interactive anchors on page `SearchPageComponent`
+
 ### 1.20.2
 
 - fix structure and visibility of elements on `RecipeComponent`

@@ -56,14 +56,21 @@ export class AutocompleteComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     // Focus on input field to start writing when component is loaded
-    if (this.inputElement && this.autoFocus) {
-      this.inputElement.nativeElement.focus();
+    if (this.autoFocus) {
+      this.focus();
     }
   }
 
   ngOnDestroy() {
     this.subscription.next(true);
     this.subscription.unsubscribe();
+  }
+
+  /** Focus on input element */
+  focus() {
+    if (this.inputElement) {
+      this.inputElement.nativeElement.focus();
+    }
   }
 
   /**

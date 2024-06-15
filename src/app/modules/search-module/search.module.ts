@@ -15,6 +15,7 @@ import { CategoryService } from './services/category.service';
 import { IngredientDialogService } from './services/ingredient-dialog.service';
 import { RecipeLoaderService } from './services/recipe-loader.service';
 import { RecipeService } from './services/recipe.service';
+import { SearchPageHelperService } from './services/search-page-helper.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,12 @@ import { RecipeService } from './services/recipe.service';
     LocalizationModule,
     LoaderComponent,
   ],
-  providers: [RecipeService, CategoryService, IngredientDialogService, RecipeLoaderService],
+  providers: [
+    RecipeService,
+    CategoryService,
+    IngredientDialogService,
+    RecipeLoaderService,
+    SearchPageHelperService,
+  ],
 })
 export class SearchModule {}
