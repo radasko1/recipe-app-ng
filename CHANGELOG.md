@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.21.1
+
+- fix npm package vulnerabilities
+
 ### 1.21.0
 
 - interactive anchors on page `SearchPageComponent`
