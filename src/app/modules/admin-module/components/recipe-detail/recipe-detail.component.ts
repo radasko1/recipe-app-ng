@@ -1,18 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { SnackBarService } from '../../../../shared/services/snackbar/snackbar.service';
-import { LocaleFileKey } from '../../../localization-module/models/locale-file-key.type';
 import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { LocaleService } from '../../../localization-module/services/locale.service';
 import { parseNull } from '../../functions/parse-null.function';
@@ -53,16 +45,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   protected formControlConfiguration: FormControlFieldConfiguration[] = [];
   protected dataCollectionDetail: DataCollectionDetail | undefined;
   protected readonly locale = locale;
+  protected readonly generalLocale = inject(GeneralLocale);
+  protected readonly languageService = inject(LanguageService);
+  protected readonly reqIngCheckListService = inject(RequiredIngredientCheckboxListService); // better use separated instance for each list
+  protected readonly localeService = inject(LocaleService);
+  private readonly dataCollectionService = inject(DataCollectionService);
+  private readonly snackbar = inject(SnackBarService);
 
   constructor(
-    @Inject(GeneralLocale) protected generalLocale: LocaleFileKey,
-    protected readonly languageService: LanguageService,
-    protected readonly reqIngCheckListService: RequiredIngredientCheckboxListService, // better use separated instance for each list
-    protected readonly localeService: LocaleService,
     private readonly fb: FormBuilder,
     private readonly router: ActivatedRoute,
-    private readonly dataCollectionService: DataCollectionService,
-    private readonly snackbar: SnackBarService,
     private readonly dialog: MatDialog,
     private readonly cdr: ChangeDetectorRef
   ) {}
@@ -72,6 +64,13 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     const detailId = routeParam['id'];
     this.paramId = detailId;
     // TODO create function to parse query params into specified interface
+
+    // Listen for language change
+    this.languageService.onLanguageChange$.pipe(takeUntil(this.subs)).subscribe({
+      next: () => {
+        this.cdr.markForCheck();
+      },
+    });
 
     this.dataCollectionService
       .getDataCollectionPageDetail(detailId)

@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.21.2
+
+- fix problem in `RecipeDetailComponent` to switch languages
+
 ### 1.21.1
 
 - fix npm package vulnerabilities
