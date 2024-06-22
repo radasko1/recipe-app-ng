@@ -3,8 +3,9 @@ import { Localized } from '../../../shared/models/localized.type';
 export interface DataCollectionDetail {
   title: string;
   url: string;
-  calories: string;
-  cookingTime: string | null;
+  calories: number; // kcal
+  image: string | null;
+  cookingTime: number | null; // minutes
   titleLocale: Localized | null;
   ingredients: string[];
   requiredIngredients: number[];

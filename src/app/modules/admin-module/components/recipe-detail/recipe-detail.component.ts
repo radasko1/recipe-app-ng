@@ -1,33 +1,48 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, OnInit, } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
+import { Localized } from '../../../../shared/models/localized.type';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { SnackBarService } from '../../../../shared/services/snackbar/snackbar.service';
 import { GeneralLocale } from '../../../localization-module/services/general-locale.token';
 import { LocaleService } from '../../../localization-module/services/locale.service';
-import { parseNull } from '../../functions/parse-null.function';
-import { CreateFormControlData } from '../../models/create-form-control-data.type';
+import { Locale } from '../../../search-module/models/locale.interface';
 import { DataCollectionDetail } from '../../models/data-collection-detail.interface';
 import { DataFieldCustomAction } from '../../models/data-field-custom-action.type';
 import { RecipeIngredientDialogData } from '../../models/recipe-ingredient-dialog-data.type';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { RequiredIngredientCheckboxListService } from '../../services/required-ingredient-checkbox-list.service';
-import { CreateFormControlComponent } from '../create-form-control/create-form-control.component';
 import { RecipeIngredientDialogComponent } from '../recipe-ingredient-dialog/recipe-ingredient-dialog.component';
 import locale from './recipe-detail.locale.json';
 
-/** Dynamic type for FormGroup */
-type PageDataFormGroup = {
-  // [P in keyof DataCollectionDetail]: FormControl<DataCollectionDetail[P]>;
-  [key: string]: FormControl<string | null>;
+/**
+ * Dynamic type for FormGroup
+ * @description Transformed from {@link DataCollectionDetail}
+ * @see DataCollectionDetail
+ */
+type RecipeFormGroup = {
+  // TODO should be change to form field which can show string without quotation marks, numbers, array or objects
+  // [field in keyof DataCollectionDetail]: FormControl<DataCollectionDetail[field]>;
+  title: FormControl<string>;
+  url: FormControl<string>;
+  image: FormControl<string | null>;
+  calories: FormControl<number>; // kcal
+  cookingTime: FormControl<number | null>; // minutes
+  titleLocale: FormControl<Localized>;
+  // ingredients: FormArray<FormControl<string | unknown>>; // unknown for empty array
+  ingredients: FormControl<string>;
+  // requiredIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
+  requiredIngredients: FormControl<string>;
+  // optionalIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
+  optionalIngredients: FormControl<string>;
 };
 
 type FormControlFieldConfiguration = {
-  formControlName: string;
-  formControlLabel: string;
-  formControlCustomAction?: DataFieldCustomAction[];
+  propertyName: string;
+  title: string;
+  customAction?: DataFieldCustomAction[];
 };
 
 @Component({
@@ -39,11 +54,37 @@ type FormControlFieldConfiguration = {
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();
   private paramId: number | undefined;
-  /** Empty Form Group. Form Controls will be added when fetch complete */
-  protected dataCollectionFormGroup = this.fb.group<PageDataFormGroup>({});
+  private readonly fb = inject(FormBuilder);
+
+  /** Recipe title from fetched data */
+  protected recipeTitle: string = '';
+  /** Translated Recipe title from fetched data */
+  protected recipeLocalizedTitle: Locale | null = null;
+  /** Recipe URL link from fetched data */
+  protected recipeURL: string | undefined;
+  /** Form Controls will be added when fetch complete */
+  protected formGroup = this.fb.group<RecipeFormGroup>({
+    title: this.fb.control('', { nonNullable: true, validators: [Validators.required] }),
+    url: this.fb.control('', { nonNullable: true, validators: [Validators.required] }),
+    image: this.fb.control('', { validators: [Validators.required] }),
+    cookingTime: this.fb.control(0, Validators.required),
+    calories: this.fb.control(0, { nonNullable: true, validators: [Validators.required] }),
+    titleLocale: this.fb.control<Locale>(
+      { en: '', cs: '' },
+      { validators: [Validators.required], nonNullable: true }
+    ),
+    ingredients: this.fb.control('', { nonNullable: true, validators: [Validators.required] }),
+    optionalIngredients: this.fb.control('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    requiredIngredients: this.fb.control('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+  });
   /** List of Form Control field with configuration */
   protected formControlConfiguration: FormControlFieldConfiguration[] = [];
-  protected dataCollectionDetail: DataCollectionDetail | undefined;
   protected readonly locale = locale;
   protected readonly generalLocale = inject(GeneralLocale);
   protected readonly languageService = inject(LanguageService);
@@ -53,7 +94,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   private readonly snackbar = inject(SnackBarService);
 
   constructor(
-    private readonly fb: FormBuilder,
     private readonly router: ActivatedRoute,
     private readonly dialog: MatDialog,
     private readonly cdr: ChangeDetectorRef
@@ -74,11 +114,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
     this.dataCollectionService
       .getDataCollectionPageDetail(detailId)
-      .pipe(takeUntil(this.subs))
-      .subscribe((value) => {
-        this.dataCollectionDetail = value;
-        this.setupFormControlConfiguration<DataCollectionDetail>(value);
-        this.cdr.markForCheck();
+      .pipe(
+        takeUntil(this.subs),
+        map((recipe) => {
+          this.recipeURL = recipe.url;
+          this.recipeTitle = recipe.title;
+          this.recipeLocalizedTitle = recipe.titleLocale;
+          return recipe;
+        })
+      )
+      .subscribe((response) => {
+        // TODO what if data is empty
+        this.assignFormControlData(response);
+        this.setFormGroupValues<DataCollectionDetail>(response);
+        this.cdr.detectChanges();
       });
   }
 
@@ -106,20 +155,41 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
    * @param responseObject
    * @protected
    */
-  protected setupFormControlConfiguration<T>(responseObject: any) {
+  protected assignFormControlData(responseObject: any) {
     const formControlKeys = Object.keys(responseObject);
     formControlKeys.forEach((k) => {
-      const _k = k as keyof T;
-      const value = parseNull(responseObject[_k]);
-      // TODO merge together?
-      this.addFormControl(k, value);
       // setup custom actions
       this.formControlConfiguration.push({
-        formControlName: k,
-        formControlLabel: this.localeService.getLocaleValue(locale, 'FormControlName_' + k),
-        formControlCustomAction: this.setupCustomAction(k),
+        propertyName: k,
+        title: this.localeService.getLocaleValue(locale, 'FormControlName_' + k),
+        customAction: this.setupCustomAction(k),
       });
     });
+  }
+
+  /**
+   * Set values of form controls in form group from fetched data
+   * @param fetchedDataObject
+   * @private
+   */
+  private setFormGroupValues<T>(fetchedDataObject: T) {
+    for (const prop in fetchedDataObject) {
+      const fetchedDataValue: any = fetchedDataObject[prop];
+      const formControlWithPropertyName = this.formGroup.get(prop);
+
+      // property does not exist
+      if (!formControlWithPropertyName) {
+        continue;
+      }
+      // whether it's array
+      if (Array.isArray(fetchedDataValue)) {
+        const arrayString: any = fetchedDataValue.toString(); // array transformed into string
+        formControlWithPropertyName.setValue(arrayString);
+        continue;
+      }
+      // is form-control
+      formControlWithPropertyName.setValue(fetchedDataValue);
+    }
   }
 
   /**
@@ -128,10 +198,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
    * @protected
    */
   protected setupCustomAction(formControlName: string): DataFieldCustomAction[] | undefined {
-    if (!this.dataCollectionDetail) {
-      return undefined;
-    }
-    const { requiredIngredients, optionalIngredients } = this.dataCollectionDetail;
     const language = this.languageService.language;
 
     if (formControlName === 'titleLocale') {
@@ -150,8 +216,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
           onClick: () => {
             this.openDialogForIngredients(
               locale[language].RequiredIngredients,
-              'requiredIngredients',
-              requiredIngredients
+              this.formGroup.controls.requiredIngredients
             );
           },
         },
@@ -163,8 +228,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
           onClick: () => {
             this.openDialogForIngredients(
               locale[language].OptionalIngredients,
-              'optionalIngredients',
-              optionalIngredients
+              this.formGroup.controls.optionalIngredients
             );
           },
         },
@@ -174,50 +238,53 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Add new Form Control with specified name into Form Group
-   * @param formControlName
-   * @param value
-   * @protected
+   * Transform FormControl from FormGroup values into DataCollectionDetail
    */
-  protected addFormControl(formControlName: string, value: string | null = null): void {
-    this.dataCollectionFormGroup.addControl(formControlName, this.fb.control<string | null>(value));
+  protected formatFormControl(): DataCollectionDetail {
+    // TODO would be nice to have it dynamic
+    const output: DataCollectionDetail = {
+      url: this.formGroup.controls.url.value,
+      title: this.formGroup.controls.title.value,
+      calories: this.formGroup.controls.calories.value,
+      cookingTime: this.formGroup.controls.cookingTime.value,
+      image: this.formGroup.controls.image.value,
+      titleLocale: this.formGroup.controls.titleLocale.value,
+      ingredients: this.formGroup.controls.ingredients.value.split(','),
+      optionalIngredients: this.transformToArray(this.formGroup.controls.optionalIngredients.value),
+      requiredIngredients: this.transformToArray(this.formGroup.controls.requiredIngredients.value),
+    };
+    return output;
   }
 
   /**
-   * Transform FormControl values into string
+   * Transform String array back into Array format
+   * @param value
+   * @private
    */
-  protected formatFormControl(): string {
-    const formControlCollection = Object.keys(this.dataCollectionFormGroup.controls);
-    const dataObject = formControlCollection.reduce((result, formControlName) => {
-      const control = this.dataCollectionFormGroup.get(formControlName);
-      return control ? { ...result, [formControlName]: JSON.parse(control.value) } : result;
-    }, {});
-    return JSON.stringify(dataObject);
+  private transformToArray(value: string): any[] {
+    if (!value.length) {
+      return [];
+    }
+    return value.split(',').map((v) => parseInt(v, 10));
   }
 
   /**
    * Open dialog with RecipeIngredientDialogComponent.
    * @param dialogTitle
-   * @param formControlName
-   * @param itemList
+   * @param itemList Array turned into String
    */
-  protected openDialogForIngredients(
-    dialogTitle: string,
-    formControlName: string,
-    itemList: any[]
-  ) {
-    if (!this.dataCollectionDetail) {
-      return;
-    }
+  protected openDialogForIngredients(dialogTitle: string, itemList: FormControl<string>) {
+    const parsedArray = itemList.value.split(',').map((item) => parseInt(item, 10));
+
     this.dialog.open<RecipeIngredientDialogComponent, RecipeIngredientDialogData>(
       RecipeIngredientDialogComponent,
       {
         data: {
           dialogTitle: dialogTitle,
-          list: itemList,
+          list: parsedArray,
           serviceInstance: this.reqIngCheckListService,
           onSave: (value: string) => {
-            this.dataCollectionFormGroup.controls[formControlName].setValue(value);
+            itemList.setValue(value); // re-assign values
           },
         },
       }
@@ -226,27 +293,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   /** Set default value to 'titleLocale' form control */
   protected setLocaleDefaultValue() {
-    const value = JSON.stringify({ cs: '', en: '' });
-    this.dataCollectionFormGroup.controls['titleLocale'].setValue(value);
-  }
-
-  /** Open dialog to create new Form Control */
-  protected openCreateFormControlDialog() {
-    this.dialog.open<CreateFormControlComponent, CreateFormControlData>(
-      CreateFormControlComponent,
-      {
-        data: {
-          onSave: (formControlName: string) => {
-            this.formControlConfiguration.push({
-              formControlName: formControlName,
-              formControlLabel: formControlName,
-            });
-            this.addFormControl(formControlName);
-            this.cdr.markForCheck();
-          },
-        },
-      }
-    );
+    const value: Locale = { cs: '', en: '' };
+    this.formGroup.controls.titleLocale.setValue(value);
   }
 
   /** Save Recipe Ingredients for specific Data Collection */
@@ -255,19 +303,21 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const parsedDataCollection = this.formatFormControl();
-    this.dataCollectionService.updatePageData(this.paramId, parsedDataCollection).subscribe({
-      next: () => {
-        this.snackbar.showSimpleMessage(
-          this.localeService.getLocaleValue(this.generalLocale, 'SaveSuccessful')
-        );
-      },
-      error: () => {
-        this.snackbar.showSimpleMessage(
-          this.localeService.getLocaleValue(this.generalLocale, 'SaveFailed')
-        );
-      },
-    });
+    const dataCollection = this.formatFormControl();
+    this.dataCollectionService
+      .updatePageData(this.paramId, JSON.stringify(dataCollection))
+      .subscribe({
+        next: () => {
+          this.snackbar.showSimpleMessage(
+            this.localeService.getLocaleValue(this.generalLocale, 'SaveSuccessful')
+          );
+        },
+        error: () => {
+          this.snackbar.showSimpleMessage(
+            this.localeService.getLocaleValue(this.generalLocale, 'SaveFailed')
+          );
+        },
+      });
   }
 
   /** Delete PageData from DataCollection */
@@ -278,11 +328,19 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.dataCollectionService.deletePageData(this.paramId).subscribe();
   }
 
-  /** Approve PageData from DataCollection */
+  /**
+   * Approve PageData from DataCollection
+   */
   protected approveData() {
     if (!this.paramId) {
       return;
     }
-    this.dataCollectionService.approvePageData(this.paramId).subscribe();
+    this.dataCollectionService.approvePageData(this.paramId).subscribe({
+      next: () => {
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(this.generalLocale, 'ApproveSuccessful')
+        );
+      },
+    });
   }
 }

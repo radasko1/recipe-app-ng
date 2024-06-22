@@ -10,6 +10,17 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.22.1
+
+- created message for Recipe approval in component `RecipeDetailComponent`
+
+### 1.22.0
+
+-refactor `RecipeDetailComponent`
+  - fetch data about Recipe and assign them into form group
+  - rename `TextDataFieldComponent` selector
+  - new component `NumberFieldComponent` to handle number value in form control
+
 ### 1.21.2
 
 - fix problem in `RecipeDetailComponent` to switch languages

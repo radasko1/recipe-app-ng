@@ -3,9 +3,9 @@
     {{ title }}
   </label>
   <textarea
-    [value]="textValue"
+    [value]="numberValue"
     class="block rounded border outline-0 p-2 w-full"
-    [class.border-red-600]="textValue === null"
+    [class.border-red-600]="numberValue === null"
     (change)="valueChange($event)"
   ></textarea>
   <!--setting icon-->
@@ -27,7 +27,7 @@
       class="px-2 rounded bg-blue-700 text-white text-sm font-medium"
       (click)="toNull()"
     >
-      {{ locale[lang.language].NullButtonLabel }}
+      Set to NULL
     </button>
   </div>
 </div>
