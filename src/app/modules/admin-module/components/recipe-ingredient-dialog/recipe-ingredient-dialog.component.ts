@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { IngredientService } from '../../../../shared/services/ingredient-service/ingredient.service';
@@ -64,8 +57,7 @@ export class RecipeIngredientDialogComponent implements OnInit, OnDestroy {
   /** Replace collection 'requiredIngredients' with list from this dialog */
   protected addToCollection() {
     const idList = this.transformedList.map((ing) => ing.id);
-    const str = JSON.stringify(idList);
-    this.data.onSave(str);
+    this.data.onSave(idList.toString());
 
     this.dialogRef.close();
   }

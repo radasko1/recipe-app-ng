@@ -9,22 +9,21 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { DataFieldCustomAction } from '../../../admin-module/models/data-field-custom-action.type';
-import locale from './text-data-field.locale.json';
 
 @Component({
-  selector: 'app-text-field',
-  templateUrl: 'text-data-field.component.html',
+  selector: 'app-number-field',
+  templateUrl: './number-field.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TextDataFieldComponent),
+      useExisting: forwardRef(() => NumberFieldComponent),
       multi: true,
     },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextDataFieldComponent implements ControlValueAccessor {
+export class NumberFieldComponent implements ControlValueAccessor {
   /** Label for input field */
   @Input({ required: true }) title!: string;
   /** List of custom actions */
@@ -36,16 +35,15 @@ export class TextDataFieldComponent implements ControlValueAccessor {
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
 
-  protected readonly locale = locale;
-  protected textValue: string | null = '';
+  protected numberValue: number | null = 0;
 
   constructor(
     private readonly cdr: ChangeDetectorRef,
     protected readonly lang: LanguageService
   ) {}
 
-  writeValue(value: string | null) {
-    this.textValue = value;
+  writeValue(value: number | null) {
+    this.numberValue = value;
     this.cdr.markForCheck();
   }
 
@@ -63,13 +61,13 @@ export class TextDataFieldComponent implements ControlValueAccessor {
    */
   protected valueChange(event: Event) {
     const target = event.target as HTMLTextAreaElement;
-    this.textValue = target.value;
+    this.numberValue = parseInt(target.value);
     this.onChange(target.value);
   }
 
   /** Set form control value to NULL */
   protected toNull() {
-    this.textValue = null;
+    this.numberValue = null;
     this.onChange(null);
   }
 }

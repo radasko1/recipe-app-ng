@@ -1,49 +1,57 @@
-<div class="page-container" *ngIf="dataCollectionDetail as dataCollection">
+<div class="page-container">
   <!--breadcrumb-->
-  <ng-breadcrumb [pageList]="getBreadcrumbPageList(dataCollection.title)" />
+  <ng-breadcrumb [pageList]="getBreadcrumbPageList(recipeTitle)" />
   <!--content-->
   <div class="py-9">
     <div class="flex flex-row justify-start items-center mb-4">
       <h2 class="text-4xl font-medium">
-        {{
-          dataCollection.titleLocale
-            | localizedTitle: languageService.language : dataCollection.title
-        }}
+        {{ recipeLocalizedTitle | localizedTitle: languageService.language : recipeTitle }}
       </h2>
     </div>
     <!--link to the page-->
     <div class="inline-flex items-center">
       <mat-icon fontIcon="link" class="text-blue-400"></mat-icon>
-      <a
-        [href]="dataCollection.url"
-        target="_blank"
-        rel="noreferrer noopener"
-        class="ml-3 underline"
-      >
+      <a [href]="recipeURL" target="_blank" rel="noreferrer noopener" class="ml-3 underline">
         {{ locale[languageService.language].RecipeLink }}
       </a>
     </div>
+
     <!---->
     <hr class="my-5" />
-    <!--Create Form Control Button-->
-    <div class="block text-right w-full my-6">
-      <button
-        type="button"
-        class="rounded inline-block px-2 py-1 bg-black text-white font-medium"
-        (click)="openCreateFormControlDialog()"
-      >
-        {{ locale[languageService.language].CreateFormControlButtonLabel }}
-      </button>
-    </div>
+
     <!--Render all FormControl from FormGroup-->
-    <form class="block" [formGroup]="dataCollectionFormGroup">
-      <app-text-data-field
-        *ngFor="let control of formControlConfiguration"
-        [title]="control.formControlLabel"
-        [formControlName]="control.formControlName"
-        [customActionList]="control.formControlCustomAction"
-      />
+    <form class="block" [formGroup]="formGroup">
+      <ng-template ngFor let-control [ngForOf]="formControlConfiguration">
+        <!--Calories, Cooking Time-->
+        <ng-container
+          *ngIf="control.propertyName === 'calories' || control.propertyName === 'cookingTime'"
+        >
+          <app-number-field
+            [title]="control.title"
+            [formControlName]="control.propertyName"
+            [customActionList]="control.customAction"
+          />
+        </ng-container>
+        <!--URL, Title, Image-->
+        <ng-container
+          *ngIf="
+            control.propertyName === 'title' ||
+            control.propertyName === 'url' ||
+            control.propertyName === 'image' ||
+            control.propertyName === 'ingredients' ||
+            control.propertyName === 'optionalIngredients' ||
+            control.propertyName === 'requiredIngredients'
+          "
+        >
+          <app-text-field
+            [title]="control.title"
+            [formControlName]="control.propertyName"
+            [customActionList]="control.customAction"
+          />
+        </ng-container>
+      </ng-template>
     </form>
+
     <!---->
     <div class="mt-6 text-right">
       <button
