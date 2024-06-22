@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.22.1
+
+- created message for Recipe approval in component `RecipeDetailComponent`
+
 ### 1.22.0
 
 -refactor `RecipeDetailComponent`

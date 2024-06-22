@@ -328,12 +328,19 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.dataCollectionService.deletePageData(this.paramId).subscribe();
   }
 
-  /** Approve PageData from DataCollection */
+  /**
+   * Approve PageData from DataCollection
+   */
   protected approveData() {
     if (!this.paramId) {
       return;
     }
-    // TODO show some message after approve recipe
-    this.dataCollectionService.approvePageData(this.paramId).subscribe();
+    this.dataCollectionService.approvePageData(this.paramId).subscribe({
+      next: () => {
+        this.snackbar.showSimpleMessage(
+          this.localeService.getLocaleValue(this.generalLocale, 'ApproveSuccessful')
+        );
+      },
+    });
   }
 }

@@ -9,7 +9,8 @@
     "Reset": "Reset",
     "ErrorOccurred": "Něco se nepovedlo. Zkuste tuto akci později.",
     "SaveSuccessful": "Uložení proběhlo v pořádku.",
-    "SaveFailed": "Nepodařilo se uložit změny. Někde se stala chyba."
+    "SaveFailed": "Nepodařilo se uložit změny. Někde se stala chyba.",
+    "ApproveSuccessful": "Recept byl odeslán ke schválení."
   },
   "en": {
     "Close": "Close",
@@ -21,6 +22,7 @@
     "Reset": "Reset",
     "ErrorOccurred": "Something bad happened. Try it again later.",
     "SaveSuccessful": "Save was successful",
-    "SaveFailed": "Failed to save changes. Something happened."
+    "SaveFailed": "Failed to save changes. Something happened.",
+    "ApproveSuccessful": "The Recipe was sent for approval."
   }
 }
