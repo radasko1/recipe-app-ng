@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.22.2
+
+- add units into locale text for `preparation time` and `calories` in `RecipeDetailComponent`
+
 ### 1.22.1
 
 - created message for Recipe approval in component `RecipeDetailComponent`
