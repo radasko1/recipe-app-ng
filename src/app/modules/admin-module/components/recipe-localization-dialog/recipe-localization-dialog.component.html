@@ -1,0 +1,31 @@
+<h2 class="text-xl" mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="formGroup" class="min-w-[24rem]">
+    <ng-container *ngFor="let control of formControlNames">
+      <app-text-field
+        [title]="control"
+        [formControlName]="control"
+        [customActionList]="undefined"
+        [showResetButton]="false"
+      />
+    </ng-container>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="mx-4 w-full">
+    <button
+      mat-dialog-close
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-black text-white mr-2"
+    >
+      {{ generalLocale | translate: 'Close' : lang.language }}
+    </button>
+    <button
+      type="button"
+      class="inline-block rounded px-4 py-2 bg-blue-700 text-white"
+      (click)="onSave()"
+    >
+      {{ generalLocale | translate: 'Save' : lang.language }}
+    </button>
+  </div>
+</mat-dialog-actions>

@@ -29,6 +29,8 @@ export class TextDataFieldComponent implements ControlValueAccessor {
   @Input({ required: true }) title!: string;
   /** List of custom actions */
   @Input() customActionList: DataFieldCustomAction[] | undefined;
+  /** Whether show action which set form control to NULL */
+  @Input() showResetButton: boolean = true;
 
   // TODO add error message
   // TODO add form control validator
