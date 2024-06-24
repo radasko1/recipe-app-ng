@@ -33,11 +33,8 @@ type RecipeFormGroup = {
   calories: FormControl<number>; // kcal
   cookingTime: FormControl<number | null>; // minutes
   titleLocale: FormControl<Localized>;
-  // ingredients: FormArray<FormControl<string | unknown>>; // unknown for empty array
   ingredients: FormControl<string>;
-  // requiredIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
   requiredIngredients: FormControl<string>;
-  // optionalIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
   optionalIngredients: FormControl<string>;
 };
 

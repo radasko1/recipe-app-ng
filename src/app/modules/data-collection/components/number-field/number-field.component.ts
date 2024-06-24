@@ -3,12 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   forwardRef,
+  inject,
   Input,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { DataFieldCustomAction } from '../../../admin-module/models/data-field-custom-action.type';
+import locale from '../../field.locale.json';
 
 @Component({
   selector: 'app-number-field',
@@ -30,17 +32,14 @@ export class NumberFieldComponent implements ControlValueAccessor {
   @Input() customActionList: DataFieldCustomAction[] | undefined;
 
   // TODO add error message
-  // TODO add form control validator
 
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
 
+  protected readonly lang = inject(LanguageService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  protected readonly locale = locale;
   protected numberValue: number | null = 0;
-
-  constructor(
-    private readonly cdr: ChangeDetectorRef,
-    protected readonly lang: LanguageService
-  ) {}
 
   writeValue(value: number | null) {
     this.numberValue = value;

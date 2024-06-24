@@ -3,13 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   forwardRef,
+  inject,
   Input,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import { DataFieldCustomAction } from '../../../admin-module/models/data-field-custom-action.type';
-import locale from './text-data-field.locale.json';
+import locale from '../../field.locale.json';
 
 @Component({
   selector: 'app-text-field',
@@ -33,18 +34,14 @@ export class TextDataFieldComponent implements ControlValueAccessor {
   @Input() showResetButton: boolean = true;
 
   // TODO add error message
-  // TODO add form control validator
 
   protected onChange = (value: any) => {};
   protected onTouched = () => {};
 
+  protected readonly lang = inject(LanguageService);
+  private readonly cdr = inject(ChangeDetectorRef);
   protected readonly locale = locale;
   protected textValue: string | null = '';
-
-  constructor(
-    private readonly cdr: ChangeDetectorRef,
-    protected readonly lang: LanguageService
-  ) {}
 
   writeValue(value: string | null) {
     this.textValue = value;

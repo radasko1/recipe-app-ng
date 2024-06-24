@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.22.4
+
+- refactor and sync components to show values from form control - `TextDataFieldComponent` and `NumberFieldComponent`
+
 ### 1.22.3
 
 - create dialog for localization title in `RecipeDetailComponent`
