@@ -12,9 +12,11 @@ import { Locale } from '../../../search-module/models/locale.interface';
 import { DataCollectionDetail } from '../../models/data-collection-detail.interface';
 import { DataFieldCustomAction } from '../../models/data-field-custom-action.type';
 import { RecipeIngredientDialogData } from '../../models/recipe-ingredient-dialog-data.type';
+import { RecipeLocaleTitleDialogData } from '../../models/recipe-locale-title-dialog-data.type';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { RequiredIngredientCheckboxListService } from '../../services/required-ingredient-checkbox-list.service';
 import { RecipeIngredientDialogComponent } from '../recipe-ingredient-dialog/recipe-ingredient-dialog.component';
+import { RecipeLocalizationDialogComponent } from '../recipe-localization-dialog/recipe-localization-dialog.component';
 import locale from './recipe-detail.locale.json';
 
 /**
@@ -31,11 +33,8 @@ type RecipeFormGroup = {
   calories: FormControl<number>; // kcal
   cookingTime: FormControl<number | null>; // minutes
   titleLocale: FormControl<Localized>;
-  // ingredients: FormArray<FormControl<string | unknown>>; // unknown for empty array
   ingredients: FormControl<string>;
-  // requiredIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
   requiredIngredients: FormControl<string>;
-  // optionalIngredients: FormArray<FormControl<number | unknown>>; // unknown for empty array
   optionalIngredients: FormControl<string>;
 };
 
@@ -203,9 +202,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     if (formControlName === 'titleLocale') {
       return [
         {
-          label: this.localeService.getLocaleValue(this.generalLocale, 'Reset'),
+          label: this.localeService.getLocaleValue(this.generalLocale, 'Edit'),
           onClick: () => {
-            this.setLocaleDefaultValue();
+            this.editTitleLocale();
           },
         },
       ];
@@ -241,7 +240,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
    * Transform FormControl from FormGroup values into DataCollectionDetail
    */
   protected formatFormControl(): DataCollectionDetail {
-    // TODO would be nice to have it dynamic
+    // TODO would be nice to have it dynamic - getRawValue?
     const output: DataCollectionDetail = {
       url: this.formGroup.controls.url.value,
       title: this.formGroup.controls.title.value,
@@ -291,10 +290,23 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  /** Set default value to 'titleLocale' form control */
-  protected setLocaleDefaultValue() {
-    const value: Locale = { cs: '', en: '' };
-    this.formGroup.controls.titleLocale.setValue(value);
+  /**
+   * Open dialog for 'titleLocale' to edit all translations
+   * @private
+   */
+  private editTitleLocale() {
+    this.dialog.open<RecipeLocalizationDialogComponent, RecipeLocaleTitleDialogData>(
+      RecipeLocalizationDialogComponent,
+      {
+        data: {
+          title: this.locale[this.languageService.language].Localization,
+          localization: this.formGroup.controls.titleLocale.value,
+          onSave: (value: Locale) => {
+            this.formGroup.controls.titleLocale.setValue(value);
+          },
+        },
+      }
+    );
   }
 
   /** Save Recipe Ingredients for specific Data Collection */
