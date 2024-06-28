@@ -10,6 +10,10 @@ Run command for (without commit):
 
 ## Versions
 
+### 1.22.5
+
+- partly refactor of `RecipeComponent` into declarative model
+
 ### 1.22.4
 
 - refactor and sync components to show values from form control - `TextDataFieldComponent` and `NumberFieldComponent`
@@ -30,9 +34,10 @@ Run command for (without commit):
 ### 1.22.0
 
 -refactor `RecipeDetailComponent`
-  - fetch data about Recipe and assign them into form group
-  - rename `TextDataFieldComponent` selector
-  - new component `NumberFieldComponent` to handle number value in form control
+
+- fetch data about Recipe and assign them into form group
+- rename `TextDataFieldComponent` selector
+- new component `NumberFieldComponent` to handle number value in form control
 
 ### 1.21.2
 
