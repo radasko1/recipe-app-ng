@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation, } from '@angular/core';
+import { AfterViewInit, Component, HostListener, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { Subject, switchMap, takeUntil } from 'rxjs';
@@ -20,6 +20,28 @@ const INTERVAL = 2;
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
+  styles: [
+    `
+      @keyframes ingredient-list-tooltip-pulse {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) scale(0.92);
+        }
+        70% {
+          opacity: 1;
+          transform: translateX(-50%) scale(1.07);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(-50%) scale(1);
+        }
+      }
+
+      .ingredient-list-tooltip-visible {
+        animation: ingredient-list-tooltip-pulse 350ms ease-in forwards;
+      }
+    `,
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -35,6 +57,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(AutocompleteComponent, { static: false }) autocompleteComponent:
     | AutocompleteComponent
     | undefined;
+  protected showIngredientListTooltip = false;
 
   constructor(
     protected readonly langService: LanguageService,
@@ -59,6 +82,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
         this.autocompleteFocus();
       },
     });
+    this.openIngredientListTooltip();
+  }
+
+  @HostListener('document:click')
+  @HostListener('document:keydown')
+  protected hideIngredientListTooltip() {
+    this.showIngredientListTooltip = false;
   }
 
   ngOnDestroy() {
@@ -131,5 +161,11 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.autocompleteComponent.focus();
+  }
+
+  private openIngredientListTooltip() {
+    setTimeout(() => {
+      this.showIngredientListTooltip = true;
+    });
   }
 }

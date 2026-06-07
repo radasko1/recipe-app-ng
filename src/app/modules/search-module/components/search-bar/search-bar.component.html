@@ -10,30 +10,41 @@
         (onSelect)="onSelect($event)"
       ></ng-autocomplete>
     </ng-container>
+
     <!-- List button -->
-    <button
-      aria-label="Ingredient List Button"
-      type="button"
-      class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
-      (click)="openIngredientDialog()"
-    >
-      <!--NO INGREDIENTS SELECTED-->
-      <div class="h-6" *ngIf="!ingredientDialogService.selectedCount">
-        <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
-      </div>
-      <!--SELECTED INGREDIENTS-->
-      <div *ngIf="ingredientDialogService.selectedCount">
-        <!--TEXT VARIANT-->
-        <div class="hidden md:block">
-          <span class="inline">{{ ingredientDialogService.selectedCount }}</span>
-          <span class="inline ml-2">{{ locale[langService.language].ListButton }}</span>
-        </div>
-        <!--ICON VARIANT-->
-        <div class="h-6 block md:hidden">
+    <div class="relative inline-flex">
+      <button
+        aria-label="Ingredient List Button"
+        type="button"
+        class="bg-transparent border-x-[1px] border-black text-gray-950 outline-0 py-1 px-4 inline-flex items-center text-sm font-medium hover:bg-gray-950 hover:text-white hover:border-white"
+        (click)="openIngredientDialog()"
+      >
+        <!--NO INGREDIENTS SELECTED-->
+        <div class="h-6" *ngIf="!ingredientDialogService.selectedCount">
           <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
         </div>
+        <!--SELECTED INGREDIENTS-->
+        <div *ngIf="ingredientDialogService.selectedCount">
+          <!--TEXT VARIANT-->
+          <div class="hidden md:block">
+            <span class="inline">{{ ingredientDialogService.selectedCount }}</span>
+            <span class="inline ml-2">{{ locale[langService.language].ListButton }}</span>
+          </div>
+          <!--ICON VARIANT-->
+          <div class="h-6 block md:hidden">
+            <mat-icon aria-hidden="false" fontIcon="kitchen"></mat-icon>
+          </div>
+        </div>
+      </button>
+      <div
+        role="tooltip"
+        class="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 scale-95 whitespace-nowrap rounded bg-gray-950 px-3 py-2 text-xs font-medium text-white opacity-0 shadow-lg"
+        [class.ingredient-list-tooltip-visible]="showIngredientListTooltip"
+      >
+        <span class="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-gray-950"></span>
+        {{ locale[langService.language].SelectIngredients }}
       </div>
-    </button>
+    </div>
     <!-- Search button -->
     <button
       aria-label="Search Recipe Button"
