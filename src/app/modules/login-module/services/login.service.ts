@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -10,9 +10,9 @@ export interface LoginPayload {
 
 @Injectable()
 export class LoginService {
-  private readonly loginUrl = environment.SERVER_API + '/user/login';
+  private readonly http = inject(HttpClient);
 
-  constructor(private readonly http: HttpClient) {}
+  private readonly loginUrl = environment.SERVER_API + '/user/login';
 
   login(payload: LoginPayload): Observable<unknown> {
     return this.http.post<unknown>(this.loginUrl, payload);

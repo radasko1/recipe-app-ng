@@ -1,0 +1,14 @@
+{
+  "cs": {
+    "ColRecipe": "Recept",
+    "ColIngredient": "Ingredience",
+    "ColAction": "Akce",
+    "NoRecipeFound": "Žádný recept"
+  },
+  "en": {
+    "ColRecipe": "Recipe",
+    "ColIngredient": "Ingredient",
+    "ColAction": "Action",
+    "NoRecipeFound": "No recipe found"
+  }
+}

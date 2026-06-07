@@ -1,5 +1,4 @@
 <div class="relative overflow-x-auto mx-auto max-w-[1200px]">
-
   <!--breadcrumb-->
   <ng-breadcrumb
     [pageList]="[
@@ -10,94 +9,113 @@
 
   <!--content-->
   <ng-container *ngIf="dataCollection$ | async as rawCollection">
-    <ng-container *ngIf="filteredCollection(rawCollection) as collection">
-      <section class="admin-table-panel">
-        <div class="admin-table-toolbar">
-          <div class="flex flex-col gap-2 sm:flex-row justify-between w-full">
-            <input
-              type="search"
-              class="admin-table-search"
-              placeholder="Search recipes"
-              [value]="searchTerm"
-              (input)="onSearch($any($event.target).value)"
-            />
-            <select
-              class="admin-table-select"
-              [value]="statusFilter"
-              (change)="onStatusFilter($any($event.target).value)"
+    <section class="admin-table-panel">
+      <div class="admin-table-toolbar">
+        <div class="flex flex-col gap-2 sm:flex-row justify-between w-full">
+          <input
+            type="search"
+            class="admin-table-search"
+            placeholder="Search recipes"
+            [value]="searchTerm"
+            (input)="onSearch($any($event.target).value)"
+          />
+          <select
+            class="admin-table-select"
+            [value]="statusFilter"
+            (change)="onStatusFilter($any($event.target).value)"
+          >
+            <option value="all">All statuses</option>
+            <option value="collected">Collected</option>
+            <option value="approved">Approved</option>
+            <option value="created">Created</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th scope="col" class="w-12"></th>
+              <th scope="col">{{ recipeLocale[langService.language].ColRecipe }}</th>
+              <th scope="col">{{ recipeLocale[langService.language].ColIngredient }}</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-right">{{ recipeLocale[langService.language].ColAction }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of rawCollection | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize
+              "
             >
-              <option value="all">All statuses</option>
-              <option value="collected">Collected</option>
-              <option value="approved">Approved</option>
-              <option value="created">Created</option>
-            </select>
-          </div>
-        </div>
+              <td>
+                <input
+                  type="checkbox"
+                  class="admin-table-checkbox"
+                  [attr.aria-label]="'Select ' + item.page_data.title"
+                />
+              </td>
+              <td>
+                <a
+                  class="admin-table-title-link"
+                  [href]="item.page_url"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  {{ item.page_data.title }}
+                </a>
+                <span class="admin-table-muted">{{ item.page_url }}</span>
+              </td>
+              <td class="whitespace-nowrap">{{ item.page_data.ingredients.length || 0 }} items</td>
+              <td>
+                <span
+                  class="admin-status-chip admin-status-chip-collected"
+                  *ngIf="statusOf(item) === 'collected'"
+                  >collected</span
+                >
+                <span
+                  class="admin-status-chip admin-status-chip-approved"
+                  *ngIf="statusOf(item) === 'approved'"
+                  >approved</span
+                >
+                <span
+                  class="admin-status-chip admin-status-chip-created"
+                  *ngIf="statusOf(item) === 'created'"
+                  >created</span
+                >
+              </td>
+              <td class="text-right">
+                <a
+                  [routerLink]="['/', 'admin', 'page', item.id]"
+                  class="admin-table-action"
+                  rel="noreferrer noopener"
+                  aria-label="Open detail"
+                  title="Detail"
+                >
+                  <span class="material-icons text-lg">visibility</span>
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="!rawCollection.length">
+              <td colspan="5" class="text-center text-slate-500">
+                {{ recipeLocale[langService.language].NoRecipeFound }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div class="overflow-x-auto">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th scope="col" class="w-12"></th>
-                <th scope="col">Recept</th>
-                <th scope="col">Ingredients</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="text-right">Akce</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of collection | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize">
-                <td>
-                  <input
-                    type="checkbox"
-                    class="admin-table-checkbox"
-                    [attr.aria-label]="'Select ' + item.page_data.title"
-                  />
-                </td>
-                <td>
-                  <a class="admin-table-title-link" [href]="item.page_url" rel="noreferrer noopener" target="_blank">
-                    {{ item.page_data.title }}
-                  </a>
-                  <span class="admin-table-muted">{{ item.page_url }}</span>
-                </td>
-                <td class="whitespace-nowrap">
-                  {{ item.page_data.ingredients.length || 0 }} items
-                </td>
-                <td>
-                  <span class="admin-status-chip admin-status-chip-collected" *ngIf="statusOf(item) === 'collected'">collected</span>
-                  <span class="admin-status-chip admin-status-chip-approved" *ngIf="statusOf(item) === 'approved'">approved</span>
-                  <span class="admin-status-chip admin-status-chip-created" *ngIf="statusOf(item) === 'created'">created</span>
-                </td>
-                <td class="text-right">
-                  <a
-                    [routerLink]="['/', 'admin', 'page', item.id]"
-                    class="admin-table-action"
-                    rel="noreferrer noopener"
-                    aria-label="Open detail"
-                    title="Detail"
-                  >
-                    <span class="material-icons text-lg">visibility</span>
-                  </a>
-                </td>
-              </tr>
-              <tr *ngIf="!collection.length">
-                <td colspan="5" class="text-center text-slate-500">No recipes found</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="admin-table-footer">
-          <mat-paginator
-            #paginator
-            [length]="collection.length"
-            [pageSize]="pageSize"
-            [pageIndex]="pageIndex"
-            [pageSizeOptions]="[10, 25, 50]"
-            (page)="onPage($event)"
-          ></mat-paginator>
-        </div>
-      </section>
-    </ng-container>
+      <div class="admin-table-footer">
+        <mat-paginator
+          #paginator
+          [length]="rawCollection.length"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[10, 25, 50]"
+          (page)="onPage($event)"
+        ></mat-paginator>
+      </div>
+    </section>
   </ng-container>
 </div>
