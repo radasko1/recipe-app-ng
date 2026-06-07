@@ -1,0 +1,34 @@
+<div class="py-5 md:py-10 mx-auto max-w-[420px]">
+  <h1 class="font-bold text-3xl md:text-5xl text-center">
+    {{ locale | translate: 'Title' : lang.language }}
+  </h1>
+  <p class="text-center mt-4 mb-8">
+    {{ locale | translate: 'Description' : lang.language }}
+  </p>
+
+  <form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="block">
+      <span class="block font-medium mb-2">{{ locale | translate: 'Email' : lang.language }}</span>
+      <input
+        class="block w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-700"
+        type="email"
+        autocomplete="email"
+        formControlName="email"
+      />
+    </label>
+
+    <label class="block">
+      <span class="block font-medium mb-2">{{ locale | translate: 'Password' : lang.language }}</span>
+      <input
+        class="block w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-700"
+        type="password"
+        autocomplete="current-password"
+        formControlName="password"
+      />
+    </label>
+
+    <button type="submit" class="button-primary w-full" [disabled]="isSubmitting">
+      {{ locale | translate: 'Submit' : lang.language }}
+    </button>
+  </form>
+</div>

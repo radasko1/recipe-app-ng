@@ -8,6 +8,11 @@ import { SourceDetailComponent } from './components/source-detail/source-detail.
 import { SourceListPageComponent } from './components/source-list-page/source-list-page.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
   { path: 'dashboard', component: AdminDashboardPageComponent },
   { path: 'page', component: RecipeListPageComponent },
   { path: 'page/:id', component: RecipeDetailComponent },

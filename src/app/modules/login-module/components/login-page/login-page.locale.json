@@ -1,0 +1,18 @@
+{
+  "cs": {
+    "Title": "Přihlášení",
+    "Email": "E-mail",
+    "Password": "Heslo",
+    "Submit": "Přihlásit se",
+    "SuccessMessage": "Přihlášení proběhlo úspěšně.",
+    "FailedMessage": "Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo."
+  },
+  "en": {
+    "Title": "Login",
+    "Email": "Email",
+    "Password": "Password",
+    "Submit": "Login",
+    "SuccessMessage": "Login successful.",
+    "FailedMessage": "Login failed. Check your email and password."
+  }
+}

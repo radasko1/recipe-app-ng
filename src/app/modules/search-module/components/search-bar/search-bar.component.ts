@@ -45,14 +45,15 @@ const INTERVAL = 2;
   encapsulation: ViewEncapsulation.None,
 })
 export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
+  private readonly timestampService = inject(TimestampService);
+  private readonly recaptchaService = inject(ReCaptchaV3Service);
+  private readonly helperService = inject(SearchPageHelperService);
+
   /** Timestamp when were submitted search form */
   private prevTimestamp: number | undefined;
   private subs = new Subject<boolean>();
   protected readonly locale = locale;
   protected readonly ingredientList$ = this.ingredientService.getList();
-  private readonly timestampService = inject(TimestampService);
-  private readonly recaptchaService = inject(ReCaptchaV3Service);
-  private readonly helperService = inject(SearchPageHelperService);
 
   @ViewChild(AutocompleteComponent, { static: false }) autocompleteComponent:
     | AutocompleteComponent
