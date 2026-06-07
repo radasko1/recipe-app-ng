@@ -18,9 +18,7 @@ export const AuthGuard: CanActivateFn = (
     .pipe(
       map((authenticated) => {
         // whether is authenticated, allow user continue
-        if (authenticated) {
-          return true;
-        }
+        if (authenticated) return true;
 
         // whether is not authenticated, redirect to the root page
         return router.createUrlTree(['/']);
