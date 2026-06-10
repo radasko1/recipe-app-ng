@@ -2,7 +2,7 @@ import { CheckboxListService } from './checkbox-list-service.interface';
 
 export type RecipeIngredientDialogData = {
   dialogTitle: string;
-  list: number[]; // list of IDs
+  list: string[]; // list of IDs
   serviceInstance: CheckboxListService;
   onSave: (value: string) => void;
 };

@@ -52,7 +52,7 @@ type FormControlFieldConfiguration = {
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();
-  private paramId: number | undefined;
+  private paramId: string | undefined;
   private readonly fb = inject(FormBuilder);
 
   /** Recipe title from fetched data */
@@ -273,7 +273,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
    * @param itemList Array turned into String
    */
   protected openDialogForIngredients(dialogTitle: string, itemList: FormControl<string>) {
-    const parsedArray = itemList.value.split(',').map((item) => parseInt(item, 10));
+    const parsedArray = itemList.value.split(',');
 
     this.dialog.open<RecipeIngredientDialogComponent, RecipeIngredientDialogData>(
       RecipeIngredientDialogComponent,

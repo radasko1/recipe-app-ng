@@ -1,5 +1,5 @@
 export interface DataCollectionSource {
-  id: number;
+  id: string;
   url: string;
   origin: string;
   config: Object; //

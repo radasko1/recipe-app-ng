@@ -16,7 +16,7 @@ import locale from '../../admin.locale.json';
 })
 export class SourceDetailComponent implements OnInit, OnDestroy {
   private subs = new Subject<boolean>();
-  private paramId: number | undefined;
+  private paramId: string | undefined;
   protected sourceDetail: DataCollectionSource | undefined;
   protected readonly locale = locale;
   protected config = this.fb.control<string>('', { validators: [Validators.required] });

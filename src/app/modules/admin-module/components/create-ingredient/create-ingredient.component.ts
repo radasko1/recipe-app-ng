@@ -58,7 +58,7 @@ export class CreateIngredientComponent {
       return;
     }
     const { name, locale, category } = this.formGroup.value as IngredientForm;
-    const category_id = parseInt(category, 10);
+    const category_id = category;
     const localization = JSON.parse(locale) as Locale;
     this.ingredientService
       .create({ name, locale: localization, category_id })

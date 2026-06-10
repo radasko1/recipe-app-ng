@@ -21,7 +21,7 @@ export class DataCollectionService {
   }
 
   /** */
-  public getDataCollectionPageDetail(id: number) {
+  public getDataCollectionPageDetail(id: string) {
     const url = this.pageUrl + '/detail/' + id;
     return this.httpClient.get<DataCollectionDetail>(url);
   }
@@ -33,7 +33,7 @@ export class DataCollectionService {
   }
 
   /** */
-  public getDataCollectionSourceDetail(id: number) {
+  public getDataCollectionSourceDetail(id: string) {
     const url = this.sourceUrl + '/detail/' + id;
     return this.httpClient.get<DataCollectionSource>(url);
   }
@@ -43,19 +43,19 @@ export class DataCollectionService {
    * @param id
    * @param data
    */
-  public updatePageData(id: number, data: string) {
+  public updatePageData(id: string, data: string) {
     const url = this.pageUrl + '/page-data';
     return this.httpClient.put(url, { id, data });
   }
 
   /** */
-  public deletePageData(id: number) {
+  public deletePageData(id: string) {
     const url = this.pageUrl + '/delete-data';
     return this.httpClient.post(url, { id });
   }
 
   /** */
-  public approvePageData(id: number) {
+  public approvePageData(id: string) {
     const url = this.pageUrl + '/approve-data';
     return this.httpClient.post(url, { id });
   }
@@ -65,7 +65,7 @@ export class DataCollectionService {
    * @param id
    * @param link
    */
-  public addSourceLink(id: number, link: string) {
+  public addSourceLink(id: string, link: string) {
     const url = this.pageUrl + '/add-link';
     return this.httpClient.post(url, { id, link });
   }
@@ -84,7 +84,7 @@ export class DataCollectionService {
    * @param id
    * @param source
    */
-  public updateDataSource(id: number, source: DataCollectionSource) {
+  public updateDataSource(id: string, source: DataCollectionSource) {
     const url = this.sourceUrl + '/data-source';
     return this.httpClient.patch<DataCollectionSource>(url, { id, config: source });
   }
@@ -95,7 +95,7 @@ export class DataCollectionService {
    * @param title
    * @param locale
    */
-  public updatePageTitleLocale(id: number, title: string, locale: Localized) {
+  public updatePageTitleLocale(id: string, title: string, locale: Localized) {
     const url = this.pageUrl + '/page-title-locale';
     return this.httpClient.patch(url, { id, title, locale });
   }

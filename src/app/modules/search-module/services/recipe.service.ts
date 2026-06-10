@@ -17,13 +17,13 @@ export class RecipeService {
    * @param token Recaptcha token
    * @param ingredients List of ingredient codenames
    */
-  findRecipes(token = '', ingredients: number[]): Observable<ResponseList<Recipe>> {
-    const params = new HttpParams()
-      .set('ingredients', JSON.stringify(ingredients))
-      .set('token', token);
+  findRecipes(token = '', ingredients: string[]): Observable<ResponseList<Recipe>> {
     return this.http
       .get<ResponseList<Recipe>>(`${environment.SERVER_API}/recipe/by-ingredients`, {
-        params,
+        params: {
+          'ingredients': ingredients,
+          'token': token,
+        },
       })
       .pipe(tap((recipes) => this.onSearch.next(recipes)));
   }
