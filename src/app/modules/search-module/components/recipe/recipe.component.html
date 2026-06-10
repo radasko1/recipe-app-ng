@@ -55,21 +55,21 @@
               *ngFor="let selectIngredient of recipe.selectedIngredients"
               class="inline-flex items-center gap-1 bg-green-600 text-gray-50 rounded-md px-2 py-1 text-xs font-medium"
             >
-              {{ selectIngredient.locale[lang.language] }}
+              {{ selectIngredient.locale ? selectIngredient.locale[lang.language] : '' }}
             </span>
             <!--required = unavailable (red)-->
             <span
               *ngFor="let requestIngredient of recipe.requiredIngredients"
               class="inline-flex items-center gap-1 bg-red-500 text-white rounded-md px-2 py-1 text-xs font-medium"
             >
-              {{ requestIngredient.locale[lang.language] }}
+              {{ requestIngredient.locale ? requestIngredient.locale[lang.language] : '' }}
             </span>
             <!--optional = don't need (orange)-->
             <span
               *ngFor="let requestIngredient of recipe.optionalIngredients"
               class="inline-flex items-center gap-1 bg-amber-300 text-white rounded-md px-2 py-1 text-xs font-medium"
             >
-              {{ requestIngredient.locale[lang.language] }}
+              {{ requestIngredient.locale ? requestIngredient.locale[lang.language] : '' }}
             </span>
           </div>
         </div>

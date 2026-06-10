@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostListener, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { AutocompleteComponent } from '../../../../reusable-component/autocomplete/autocomplete.component';
 import { IngredientService } from '../../../../shared/services/ingredient-service/ingredient.service';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
@@ -151,9 +151,12 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
       .execute('submit')
       .pipe(
         switchMap((token) => this.recipeService.findRecipes(token, ids)),
-        takeUntil(this.subs)
+        takeUntil(this.subs),
+        finalize(() => this.recipeLoader.stop())
       )
-      .subscribe();
+      .subscribe({
+        error: () => undefined,
+      });
   }
 
   /** Trigger autocomplete focus */

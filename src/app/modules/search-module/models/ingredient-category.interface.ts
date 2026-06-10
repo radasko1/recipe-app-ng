@@ -4,6 +4,6 @@ import { Ingredient } from './ingredient.interface';
 export interface IngredientCategory {
   id: number;
   name: string;
-  locale: Locale;
+  locale: Locale | null;
   ingredients: Ingredient[];
 }

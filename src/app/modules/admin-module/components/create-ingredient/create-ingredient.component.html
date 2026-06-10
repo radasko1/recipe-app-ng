@@ -38,7 +38,7 @@
           class="border rounded block p-3 w-full"
         >
           <option *ngFor="let category of categoryList" [value]="category.id">
-            {{ category.locale[languageService.language] }}
+            {{ category.locale ? category.locale[languageService.language] : '' }}
           </option>
         </select>
       </div>

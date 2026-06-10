@@ -4,10 +4,9 @@
     <ng-container *ngIf="categoryList$ | async as categoryList">
       <div
         *ngFor="let category of categoryList; last as category_last"
-        [class.mb-6]="!category_last"
-      >
+        [class.mb-6]="!category_last">
         <h2 class="font-bold text-xl text-black mb-2">
-          {{ category.locale[langService.language] | titlecase }}
+          {{ (category.locale ? category.locale[langService.language] : '') | titlecase }}
         </h2>
         <div class="gap-2 flex-wrap flex">
           <span
@@ -17,9 +16,8 @@
               'text-amber-50 bg-amber-500': ingredient.selected,
               'text-gray-900 bg-gray-100': !ingredient.selected
             }"
-            (click)="toggleSelectedState(ingredient, !ingredient.selected)"
-          >
-            {{ ingredient.locale[langService.language] }}
+            (click)="toggleSelectedState(ingredient, !ingredient.selected)">
+            {{ ingredient.locale ? ingredient.locale[langService.language] : '' }}
           </span>
         </div>
       </div>
@@ -29,8 +27,7 @@
     <button
       type="button"
       mat-dialog-close
-      class="rounded text-white bg-black outline-0 py-2 px-4 block text-sm font-medium"
-    >
+      class="rounded text-white bg-black outline-0 py-2 px-4 block text-sm font-medium">
       {{ generalLocale | translate: 'Close' : langService.language }}
     </button>
   </mat-dialog-actions>

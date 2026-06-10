@@ -8,6 +8,8 @@ export class RequiredIngredientCheckboxListService implements CheckboxListServic
   constructor(private readonly languageService: LanguageService) {}
 
   getLabel(value: Ingredient): string {
-    return value.locale[this.languageService.language];
+    return value.locale
+      ? value.locale[this.languageService.language]
+      : '';
   }
 }
