@@ -133,15 +133,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit, OnDestroy {
    * @protected
    */
   protected onSearch() {
-    if (!this.canSubmit()) {
-      return;
-    }
+    if (!this.canSubmit()) return;
+
     this.prevTimestamp = this.timestampService.currentTimestamp;
 
     const selectedIngredients = this.ingredientDialogService.selectedList;
-    if (!selectedIngredients.length) {
-      return;
-    }
+    if (!selectedIngredients.length) return;
+
     // start loading
     this.recipeLoader.start();
     // collect all Ids
