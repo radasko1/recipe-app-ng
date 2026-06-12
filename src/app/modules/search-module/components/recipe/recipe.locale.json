@@ -2,13 +2,13 @@
   "cs": {
     "MINUTES": "minut",
     "Link": "Odkaz na recept",
-    "EmptySearchResult": "Omlouváme se. Nepodařilo se nám najít žádný recept podle zvolených ingrediencí.",
+    "EmptySearchResult": "Omlouváme se, ale nepodařilo se nám najít žádný recept podle zvolených ingrediencí.",
     "LoaderText": "Vyhledávám recepty..."
   },
   "en": {
     "MINUTES": "minutes",
     "Link": "Link to the recipe",
-    "EmptySearchResult": "Sorry. We were unable to find any recipe containing these ingredients.",
+    "EmptySearchResult": "We're sorry, but we couldn't find any recipes based on the selected ingredients.",
     "LoaderText": "Looking for recipes..."
   }
 }
