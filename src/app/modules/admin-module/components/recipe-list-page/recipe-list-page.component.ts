@@ -9,6 +9,7 @@ import { DataCollectionService } from '../../services/data-collection.service';
 @Component({
   selector: 'app-recipe-list-page',
   templateUrl: './recipe-list-page.component.html',
+  styleUrl: 'recipe-list-page.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class RecipeListPageComponent {

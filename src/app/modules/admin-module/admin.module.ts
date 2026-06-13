@@ -10,6 +10,7 @@ import { AdminDashboardPageComponent } from './components/admin-dashboard-page/a
 import { CheckboxListComponent } from './components/checkbox-list/checkbox-list.component';
 import { CreateFormControlComponent } from './components/create-form-control/create-form-control.component';
 import { CreateIngredientComponent } from './components/create-ingredient/create-ingredient.component';
+import { CreateDataCollectionPageDialogComponent } from './components/create-data-collection-page-dialog/create-data-collection-page-dialog.component';
 import { RecipeDetailComponent } from './components/recipe-detail/recipe-detail.component';
 import {
   RecipeIngredientDialogComponent
@@ -37,6 +38,7 @@ import { DataCollectionService } from './services/data-collection.service';
     RecipeIngredientDialogComponent,
     CreateFormControlComponent,
     CreateIngredientComponent,
+    CreateDataCollectionPageDialogComponent,
     RecipeLocalizationDialogComponent,
   ],
   imports: [

@@ -18,6 +18,7 @@ import locale from './recipe.locale.json';
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
+  styleUrl: './recipe.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {

@@ -5,6 +5,7 @@ import { DataCollectionSource } from '../../models/data-collection-source.interf
 import { DataCollectionService } from '../../services/data-collection.service';
 import { SourceDialogComponent } from '../source-dialog/source-dialog.component';
 import { SourcePageDialogComponent } from '../source-page-dialog/source-page-dialog.component';
+import { CreateDataCollectionPageDialogComponent } from '../create-data-collection-page-dialog/create-data-collection-page-dialog.component';
 import locale from '../../admin.locale.json';
 
 @Component({
@@ -27,6 +28,13 @@ export class SourceListPageComponent {
    */
   protected addSource() {
     this.dialog.open(SourceDialogComponent);
+  }
+
+  /**
+   * Add new recipe page
+   */
+  protected addNewRecipe() {
+    this.dialog.open(CreateDataCollectionPageDialogComponent);
   }
 
   /**

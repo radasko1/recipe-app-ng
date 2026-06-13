@@ -18,7 +18,22 @@
     "LocalizedTitle": "Lokalizovatelný Název",
     "SourceAddedMessage": "Zdroj byl úspěšně přidán.",
     "SourcePageAddedMessage": "Stránka byla úspěšně přidána.",
-    "ExistMessage": "Tato položka už existuje. Zkontrolujte vyplněné údaje a zkuste to znovu."
+    "ExistMessage": "Tato položka už existuje. Zkontrolujte vyplněné údaje a zkuste to znovu.",
+    "AddNewRecipe": "Přidat nový recept",
+    "PageUrl": "URL stránky",
+    "UsePredefinedConfiguration": "Použít předdefinované nastavení domény",
+    "PredefinedConfiguration": "Předdefinované nastavení",
+    "CustomConfiguration": "Vlastní nastavení",
+    "DomainConfiguration": "Nastavení domény",
+    "DomainConfigurationPlaceholder": "Vyberte nastavení domény",
+    "TitleSelector": "Selektor názvu",
+    "ImageSelector": "Selektor obrázku",
+    "CaloriesSelector": "Selektor kalorií",
+    "CookingTimeSelector": "Selektor času vaření",
+    "IngredientItemSelector": "Selektor položek ingrediencí",
+    "IngredientItemSelectorHint": "Hodnoty oddělte čárkou.",
+    "RecipeCreatedMessage": "Recept byl úspěšně přidán.",
+    "RecipeCreateFailedMessage": "Recept se nepodařilo přidat."
   },
   "en": {
     "SourceList": "Source list",
@@ -39,6 +54,21 @@
     "LocalizedTitle": "Localized Title",
     "SourceAddedMessage": "Source was successfully added.",
     "SourcePageAddedMessage": "Source page was successfully added.",
-    "ExistMessage": "This item has already exist. Check your data and try again."
+    "ExistMessage": "This item has already exist. Check your data and try again.",
+    "AddNewRecipe": "Add new recipe",
+    "PageUrl": "Page URL",
+    "UsePredefinedConfiguration": "Use predefined domain configuration",
+    "PredefinedConfiguration": "Predefined configuration",
+    "CustomConfiguration": "Custom configuration",
+    "DomainConfiguration": "Domain configuration",
+    "DomainConfigurationPlaceholder": "Select domain configuration",
+    "TitleSelector": "Title selector",
+    "ImageSelector": "Image selector",
+    "CaloriesSelector": "Calories selector",
+    "CookingTimeSelector": "Cooking time selector",
+    "IngredientItemSelector": "Ingredient item selector",
+    "IngredientItemSelectorHint": "Separate values with comma.",
+    "RecipeCreatedMessage": "Recipe was successfully added.",
+    "RecipeCreateFailedMessage": "Recipe could not be added."
   }
 }

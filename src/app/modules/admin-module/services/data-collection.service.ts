@@ -6,6 +6,7 @@ import { DataCollectionSourceForm } from '../models/data-collection-source-form.
 import { DataCollectionSource } from '../models/data-collection-source.interface';
 import { DataCollection } from '../models/data-collection.interface';
 import { DataCollectionDetail } from '../models/data-collection-detail.interface';
+import { CreateDataCollectionPagePayload } from '../models/create-data-collection-page-payload.type';
 
 @Injectable()
 export class DataCollectionService {
@@ -68,6 +69,12 @@ export class DataCollectionService {
   public addSourceLink(id: string, link: string) {
     const url = this.pageUrl + '/add-link';
     return this.httpClient.post(url, { id, link });
+  }
+
+  /** */
+  public createDataCollectionPage(payload: CreateDataCollectionPagePayload) {
+    const url = this.pageUrl + '/create';
+    return this.httpClient.post(url, payload);
   }
 
   /**

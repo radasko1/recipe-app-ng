@@ -1,0 +1,160 @@
+<h2 mat-dialog-title class="text-black">
+  {{ locale | translate: 'AddNewRecipe' : langService.language }}
+</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="block mb-5">
+      <label for="page_url" class="block font-medium mb-1 text-black">
+        {{ locale | translate: 'PageUrl' : langService.language }}
+      </label>
+      <input
+        id="page_url"
+        type="text"
+        formControlName="page_url"
+        class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+        [class.border-rose-500]="form.controls.page_url.invalid && form.controls.page_url.touched"
+      />
+    </div>
+
+    <div class="block mb-5">
+      <label class="block font-medium mb-2 text-black" id="configurationModeLabel">
+        {{ locale | translate: 'UsePredefinedConfiguration' : langService.language }}
+      </label>
+      <button
+        type="button"
+        class="inline-flex items-center gap-3 rounded border px-3 py-2 text-black"
+        role="switch"
+        aria-labelledby="configurationModeLabel"
+        [attr.aria-checked]="form.controls.usePredefinedConfiguration.value"
+        (click)="toggleConfigurationMode()"
+      >
+        <span
+          class="relative inline-flex h-6 w-11 shrink-0 rounded-full bg-gray-300 transition-colors"
+          [class.bg-blue-700]="form.controls.usePredefinedConfiguration.value"
+        >
+          <span
+            class="inline-block h-5 w-5 translate-x-0.5 translate-y-0.5 rounded-full bg-white transition-transform"
+            [class.translate-x-5]="form.controls.usePredefinedConfiguration.value"
+          ></span>
+        </span>
+        <span>
+          {{
+            locale
+              | translate
+                : (form.controls.usePredefinedConfiguration.value
+                    ? 'PredefinedConfiguration'
+                    : 'CustomConfiguration')
+                : langService.language
+          }}
+        </span>
+      </button>
+    </div>
+
+    <ng-container *ngIf="form.controls.usePredefinedConfiguration.value; else customConfiguration">
+      <div class="block">
+        <label for="domainConfigurationId" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'DomainConfiguration' : langService.language }}
+        </label>
+        <select
+          id="domainConfigurationId"
+          formControlName="domainConfigurationId"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          [class.border-rose-500]="
+            form.controls.domainConfigurationId.invalid && form.controls.domainConfigurationId.touched
+          "
+        >
+          <option value="">
+            {{ locale | translate: 'DomainConfigurationPlaceholder' : langService.language }}
+          </option>
+          <option *ngFor="let source of sourceList$ | async" [value]="source.id">
+            {{ source.origin || source.url }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+
+    <ng-template #customConfiguration>
+      <div class="block mb-5">
+        <label for="titleSelector" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'TitleSelector' : langService.language }}
+        </label>
+        <input
+          id="titleSelector"
+          type="text"
+          formControlName="titleSelector"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          [class.border-rose-500]="
+            form.controls.titleSelector.invalid && form.controls.titleSelector.touched
+          "
+        />
+      </div>
+
+      <div class="block mb-5">
+        <label for="imageSelector" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'ImageSelector' : langService.language }}
+        </label>
+        <input
+          id="imageSelector"
+          type="text"
+          formControlName="imageSelector"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          [class.border-rose-500]="
+            form.controls.imageSelector.invalid && form.controls.imageSelector.touched
+          "
+        />
+      </div>
+
+      <div class="block mb-5">
+        <label for="caloriesSelector" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'CaloriesSelector' : langService.language }}
+        </label>
+        <input
+          id="caloriesSelector"
+          type="text"
+          formControlName="caloriesSelector"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+        />
+      </div>
+
+      <div class="block mb-5">
+        <label for="cookingTimeSelector" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'CookingTimeSelector' : langService.language }}
+        </label>
+        <input
+          id="cookingTimeSelector"
+          type="text"
+          formControlName="cookingTimeSelector"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+        />
+      </div>
+
+      <div class="block">
+        <label for="ingredientItemSelector" class="block font-medium mb-1 text-black">
+          {{ locale | translate: 'IngredientItemSelector' : langService.language }}
+        </label>
+        <textarea
+          id="ingredientItemSelector"
+          class="block rounded border outline-none leading-tight appearance-none p-3 w-full"
+          formControlName="ingredientItemSelector"
+          rows="3"
+          cols="70"
+          [class.border-rose-500]="
+            form.controls.ingredientItemSelector.invalid &&
+            form.controls.ingredientItemSelector.touched
+          "
+        ></textarea>
+        <p class="mt-1 text-sm text-gray-500">
+          {{ locale | translate: 'IngredientItemSelectorHint' : langService.language }}
+        </p>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <div class="mx-4">
+      <button type="submit" class="block rounded px-4 py-2 bg-blue-700 text-white">
+        {{ generalLocale | translate: 'Add' : langService.language }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>
