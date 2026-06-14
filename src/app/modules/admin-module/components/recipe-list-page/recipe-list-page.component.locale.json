@@ -3,12 +3,12 @@
     "ColRecipe": "Recept",
     "ColIngredient": "Ingredience",
     "ColAction": "Akce",
-    "NoRecipeFound": "Žádný recept"
+    "EmptyResultState": "Nejsou k dispozici žádné záznamy"
   },
   "en": {
     "ColRecipe": "Recipe",
     "ColIngredient": "Ingredient",
     "ColAction": "Action",
-    "NoRecipeFound": "No recipe found"
+    "EmptyResultState": "There are no record available"
   }
 }
