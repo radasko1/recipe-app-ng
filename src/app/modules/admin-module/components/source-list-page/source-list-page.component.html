@@ -9,14 +9,6 @@
   <!--content-->
   <h1 class="font-medium text-3xl my-6">{{ locale[langService.language].SourceList }}</h1>
   <div class="my-3 flex justify-end gap-2">
-    <button
-      type="button"
-      class="inline-flex items-center gap-2 rounded px-4 py-2 bg-blue-700 text-white"
-      (click)="addNewRecipe()"
-    >
-      <mat-icon aria-hidden="true">add</mat-icon>
-      <span>{{ locale[langService.language].AddNewRecipe }}</span>
-    </button>
     <button type="button" class="rounded px-4 py-2 bg-blue-700 text-white" (click)="addSource()">
       {{ locale[langService.language].AddSource }}
     </button>

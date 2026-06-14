@@ -7,6 +7,18 @@
     ]"
   />
 
+  <!--buttons-->
+  <div class="my-3 flex justify-end gap-2">
+    <button
+      type="button"
+      class="inline-flex items-center gap-2 rounded px-4 py-2 bg-blue-700 text-white"
+      (click)="addNewRecipe()"
+    >
+      <mat-icon aria-hidden="true">add</mat-icon>
+      <span>{{ locale[langService.language].AddNewRecipe }}</span>
+    </button>
+  </div>
+
   <!--content-->
   <ng-container *ngIf="dataCollection$ | async as rawCollection">
     <section class="admin-table-panel">

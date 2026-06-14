@@ -6,6 +6,8 @@ import recipeLocale from './recipe-list-page.component.locale.json';
 import { DataCollectionStatus } from '../../models/data-collection-status.type';
 import { DataCollectionService } from '../../services/data-collection.service';
 import { DataCollection } from '../../models/data-collection.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateDataCollectionPageDialogComponent } from '../create-data-collection-page-dialog/create-data-collection-page-dialog.component';
 
 @Component({
   selector: 'app-recipe-list-page',
@@ -16,6 +18,7 @@ import { DataCollection } from '../../models/data-collection.interface';
 export class RecipeListPageComponent {
   private readonly dataCollectionService = inject(DataCollectionService);
   protected readonly langService = inject(LanguageService);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly locale = locale;
   protected readonly recipeLocale = recipeLocale;
@@ -44,6 +47,13 @@ export class RecipeListPageComponent {
   protected onStatusFilter(value: DataCollectionStatus | 'all') {
     this.statusFilter = value;
     this.pageIndex = 0;
+  }
+
+  /**
+   * Add new recipe page
+   */
+  protected addNewRecipe() {
+    this.dialog.open(CreateDataCollectionPageDialogComponent);
   }
 
   protected deletePageData(item: DataCollection) {

@@ -31,13 +31,6 @@ export class SourceListPageComponent {
   }
 
   /**
-   * Add new recipe page
-   */
-  protected addNewRecipe() {
-    this.dialog.open(CreateDataCollectionPageDialogComponent);
-  }
-
-  /**
    * Open dialog to add new page url to the source
    * @param source
    */
