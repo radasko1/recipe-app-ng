@@ -60,14 +60,20 @@
   .admin-status-chip {
     @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
   }
-  .admin-status-chip-collected {
+  .admin-status-chip-queued {
     @apply bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-100;
+  }
+  .admin-status-chip-scraped {
+    @apply bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-100;
   }
   .admin-status-chip-approved {
     @apply bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-100;
   }
   .admin-status-chip-created {
     @apply bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-100;
+  }
+  .admin-status-chip-failed {
+    @apply bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-100;
   }
   .admin-table-action {
     @apply inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200;

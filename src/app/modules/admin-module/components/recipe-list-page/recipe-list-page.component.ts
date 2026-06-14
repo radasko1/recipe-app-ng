@@ -3,8 +3,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { LanguageService } from '../../../../shared/services/language-service/language.service';
 import locale from '../../admin.locale.json';
 import recipeLocale from './recipe-list-page.component.locale.json';
-import { DataCollection } from '../../models/data-collection.interface';
+import { DataCollectionStatus } from '../../models/data-collection-status.type';
 import { DataCollectionService } from '../../services/data-collection.service';
+import { DataCollection } from '../../models/data-collection.interface';
 
 @Component({
   selector: 'app-recipe-list-page',
@@ -18,11 +19,13 @@ export class RecipeListPageComponent {
 
   protected readonly locale = locale;
   protected readonly recipeLocale = recipeLocale;
-  protected readonly dataCollection$ = this.dataCollectionService.getDataCollectionPageList();
+  protected readonly DataCollectionStatus = DataCollectionStatus;
+  protected readonly statusOptions = Object.values(DataCollectionStatus);
+  protected dataCollection$ = this.dataCollectionService.getDataCollectionPageList();
   protected pageSize = 10; // items per page
   protected pageIndex = 0;
   protected searchTerm = '';
-  protected statusFilter: 'all' | 'collected' | 'approved' | 'created' = 'all';
+  protected statusFilter: DataCollectionStatus | 'all' = 'all';
 
   /**
    * On page change in Paginator
@@ -38,20 +41,14 @@ export class RecipeListPageComponent {
     this.pageIndex = 0;
   }
 
-  protected onStatusFilter(value: 'all' | 'collected' | 'approved' | 'created') {
+  protected onStatusFilter(value: DataCollectionStatus | 'all') {
     this.statusFilter = value;
     this.pageIndex = 0;
   }
 
-  protected statusOf(item: DataCollection): 'collected' | 'approved' | 'created' {
-    if (item.recipe_id) {
-      return 'created';
-    }
-
-    if (item.approved) {
-      return 'approved';
-    }
-
-    return 'collected';
+  protected deletePageData(item: DataCollection) {
+    this.dataCollectionService.deletePageData(item.id).subscribe(() => {
+      this.dataCollection$ = this.dataCollectionService.getDataCollectionPageList();
+    });
   }
 }

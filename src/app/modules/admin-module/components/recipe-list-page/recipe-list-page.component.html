@@ -25,9 +25,9 @@
             (change)="onStatusFilter($any($event.target).value)"
           >
             <option value="all">All statuses</option>
-            <option value="collected">Collected</option>
-            <option value="approved">Approved</option>
-            <option value="created">Created</option>
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ status | uppercase }}
+            </option>
           </select>
         </div>
       </div>
@@ -40,7 +40,9 @@
               <th scope="col">{{ recipeLocale[langService.language].ColRecipe }}</th>
               <th scope="col">{{ recipeLocale[langService.language].ColIngredient }}</th>
               <th scope="col">Status</th>
-              <th scope="col" class="text-right">{{ recipeLocale[langService.language].ColAction }}</th>
+              <th scope="col" class="text-right">
+                {{ recipeLocale[langService.language].ColAction }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +55,7 @@
                 <input
                   type="checkbox"
                   class="admin-table-checkbox"
-                  [attr.aria-label]="'Select ' + item.page_data.title"
+                  [attr.aria-label]="item.page_data ? 'Select ' + item.page_data.title : ''"
                 />
               </td>
               <td>
@@ -62,36 +64,43 @@
                   [href]="item.page_url"
                   rel="noreferrer noopener"
                   target="_blank"
+                  *ngIf="item.page_data"
                 >
                   {{ item.page_data.title }}
                 </a>
                 <span class="admin-table-muted">{{ item.page_url }}</span>
               </td>
-              <td class="whitespace-nowrap">{{ item.page_data.ingredients.length || 0 }} items</td>
+              <td class="whitespace-nowrap">
+                <span *ngIf="item.page_data">{{ item.page_data.ingredients.length || 0 }} items</span>
+                <span *ngIf="!item.page_data">-</span>
+              </td>
               <td>
-                <span
-                  class="admin-status-chip admin-status-chip-collected"
-                  *ngIf="statusOf(item) === 'collected'"
-                  >collected</span>
-                <span
-                  class="admin-status-chip admin-status-chip-approved"
-                  *ngIf="statusOf(item) === 'approved'"
-                  >approved</span>
-                <span
-                  class="admin-status-chip admin-status-chip-created"
-                  *ngIf="statusOf(item) === 'created'"
-                  >created</span>
+                <span class="admin-status-chip" [ngClass]="'admin-status-chip-' + item.status">
+                  {{ item.status | uppercase }}
+                </span>
               </td>
               <td class="text-right">
-                <a
-                  [routerLink]="['/', 'admin', 'page', item.id]"
-                  class="admin-table-action"
-                  rel="noreferrer noopener"
-                  aria-label="Open detail"
-                  title="Detail"
-                >
-                  <span class="material-icons text-lg">visibility</span>
-                </a>
+                <div class="inline-flex gap-2">
+                  <a
+                    *ngIf="item.status !== DataCollectionStatus.QUEUED"
+                    [routerLink]="['/', 'admin', 'page', item.id]"
+                    class="admin-table-action"
+                    rel="noreferrer noopener"
+                    aria-label="Open detail"
+                    title="Detail"
+                  >
+                    <span class="material-icons text-lg">visibility</span>
+                  </a>
+                  <button
+                    type="button"
+                    class="admin-table-action"
+                    aria-label="Delete"
+                    title="Delete"
+                    (click)="deletePageData(item)"
+                  >
+                    <span class="material-icons text-lg">delete</span>
+                  </button>
+                </div>
               </td>
             </tr>
             <tr *ngIf="!rawCollection.length">
